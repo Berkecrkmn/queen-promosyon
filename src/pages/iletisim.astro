@@ -1,0 +1,39 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import QuotePanel from "@components/QuotePanel.astro";
+import { site } from "@data/site";
+
+const contactSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  name: "Queen Promosyon iletişim",
+  url: `${site.url}/iletisim`,
+};
+---
+
+<BaseLayout
+  title="İletişim"
+  description="Queen Promosyon ile kurumsal promosyon ürünleri, logolu hediyelik setler ve baskı çözümleri için iletişime geçin."
+  canonical="/iletisim"
+  structuredData={contactSchema}
+>
+  <section class="contact-hero">
+    <div data-reveal>
+      <Breadcrumbs items={[{ label: "İletişim" }]} />
+      <span class="eyebrow">İletişim</span>
+      <h1>Promosyon ürün talebiniz için Queen ekibine ulaşın.</h1>
+      <p>
+        Ürün adı, adet, baskı notu ve teslimat şehrini paylaşmanız teklif sürecini hızlandırır.
+      </p>
+    </div>
+
+    <div class="contact-panel" data-reveal>
+      <h2>İletişim bilgileri</h2>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <p>WhatsApp ve telefon bilgisi eklendiğinde bu alan merkezi config üzerinden güncellenecek.</p>
+    </div>
+  </section>
+
+  <QuotePanel />
+</BaseLayout>

@@ -1,0 +1,84 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+import QuotePanel from "@components/QuotePanel.astro";
+import { site } from "@data/site";
+
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "Queen Promosyon Kurumsal",
+  url: `${site.url}/kurumsal`,
+};
+---
+
+<BaseLayout
+  title="Kurumsal"
+  description="Queen Promosyon, markalar için logolu promosyon ürünleri, kurumsal hediye setleri ve baskılı tanıtım çözümleri sunar."
+  canonical="/kurumsal"
+  structuredData={aboutSchema}
+>
+  <section class="page-hero">
+    <Breadcrumbs items={[{ label: "Kurumsal" }]} />
+    <div data-reveal>
+      <span class="eyebrow">Kurumsal yaklaşım</span>
+      <h1>Promosyonu sadece ürün değil, marka teması olarak ele alıyoruz.</h1>
+      <p>
+        Queen Promosyon, kurumsal markaların müşteri, çalışan, bayi ve etkinlik iletişiminde tutarlı,
+        kaliteli ve hatırlanabilir ürün deneyimleri tasarlaması için kuruldu.
+      </p>
+    </div>
+  </section>
+
+  <section class="editorial-grid">
+    <article data-reveal>
+      <span>01</span>
+      <h2>Seçilebilir katalog</h2>
+      <p>
+        Kategoriler, gerçek satın alma niyetlerine göre ayrılır. Kullanıcı ürün grubunu hızlı bulur,
+        detay sayfasında minimum adet ve baskı bilgisini görür.
+      </p>
+    </article>
+    <article data-reveal>
+      <span>02</span>
+      <h2>Markaya uygun sunum</h2>
+      <p>
+        Gold, krem ve koyu tonlardan oluşan premium dil, Queen’in kurumsal hediye algısını destekler;
+        sade ama ayırt edilebilir bir deneyim oluşturur.
+      </p>
+    </article>
+    <article data-reveal>
+      <span>03</span>
+      <h2>Teklif odaklı akış</h2>
+      <p>
+        İlk sürümde sepete veya ödeme sistemine gerek duymadan, ürün ve kategori sayfalarından doğrudan
+        teklif talebi oluşturulur.
+      </p>
+    </article>
+  </section>
+
+  <section class="section-block alt-band">
+    <SectionHeading
+      eyebrow="Kime uygun?"
+      title="Bayi, etkinlik, lansman ve çalışan deneyimleri için"
+      text="Queen Promosyon yapısı, promosyon satın alma sürecini hem kurumsal ekipler hem de ajanslar için hızlı okunur hale getirir."
+    />
+    <div class="audience-grid">
+      <div data-reveal>
+        <h3>Satın alma ekipleri</h3>
+        <p>Ürün grubu, adet, baskı ve teslim bilgilerini hızlı değerlendirir.</p>
+      </div>
+      <div data-reveal>
+        <h3>Pazarlama ekipleri</h3>
+        <p>Kampanya, fuar ve lansman hedeflerine göre görünürlük etkisini planlar.</p>
+      </div>
+      <div data-reveal>
+        <h3>Ajanslar</h3>
+        <p>Müşteri brieflerine uygun ürünleri kısa listeler ve teklif sürecini hızlandırır.</p>
+      </div>
+    </div>
+  </section>
+
+  <QuotePanel />
+</BaseLayout>

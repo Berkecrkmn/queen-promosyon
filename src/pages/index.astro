@@ -1,0 +1,210 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import CategoryCard from "@components/CategoryCard.astro";
+import ProductCard from "@components/ProductCard.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+import { categories, products } from "@data/catalog";
+import { site } from "@data/site";
+
+const featuredCategorySlugs = ["hediyelik-setler", "promosyon-kalem", "defter-ajanda", "tekstil", "canta"];
+const featuredCategories = featuredCategorySlugs
+  .map((slug) => categories.find((category) => category.slug === slug))
+  .filter((category) => category !== undefined);
+const popularProducts = products.filter((product) => product.popular).slice(0, 4);
+const categoryLoop = [...categories, ...categories];
+const experienceTiles = [
+  {
+    title: "Hediye setleri",
+    text: "Yönetici, bayi ve lansman hediyeleri için premium sunum.",
+    href: "/kategoriler/hediyelik-setler",
+    image: "/assets/images/queen-promosyon-deneyim-hediye-setleri.webp",
+    alt: "Premium promosyon termos hediye seti",
+  },
+  {
+    title: "Ofis prestiji",
+    text: "Defter, kalem ve masaüstü ürünlerde kurumsal duruş.",
+    href: "/kategoriler/defter-ajanda",
+    image: "/assets/images/queen-promosyon-deneyim-ofis-prestiji.webp",
+    alt: "Promosyon defter ve kalem seti",
+  },
+  {
+    title: "Teknoloji ürünleri",
+    text: "Powerbank, USB ve günlük kullanım ürünlerinde marka görünürlüğü.",
+    href: "/kategoriler/powerbank",
+    image: "/assets/images/queen-promosyon-deneyim-teknoloji.webp",
+    alt: "Queen Promosyon powerbank ürünü",
+  },
+];
+const portalLinks = [
+  {
+    label: "Koleksiyonlar",
+    href: "/kategoriler",
+    text: "Hediyelik setlerden tekstile kadar marka temasına uygun ürün gruplarını keşfedin.",
+  },
+  {
+    label: "Ürün Seçkisi",
+    href: "/urunler",
+    text: "Kurumsal kampanyalar için öne çıkan promosyon ürünlerini karşılaştırın.",
+  },
+  {
+    label: "Baskı Atölyesi",
+    href: "/baski-ve-uretim-sureci",
+    text: "Logo uygulaması, numune, üretim ve teslim adımlarının nasıl ilerlediğini görün.",
+  },
+  {
+    label: "Teklif Akışı",
+    href: "/teklif-al",
+    text: "Ürün, adet ve baskı notuyla doğru teklif görüşmesini başlatın.",
+  },
+];
+const homeSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: site.name,
+  url: site.url,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${site.url}/kategoriler?search={search_term_string}`,
+    "query-input": "required name=search_term_string",
+  },
+};
+---
+
+<BaseLayout
+  title="Kurumsal Promosyon Ürünleri"
+  description="Queen Promosyon; logolu promosyon ürünleri, kurumsal hediye setleri, baskılı tekstil ve teknoloji ürünleri için katalog ve teklif çözümleri sunar."
+  structuredData={homeSchema}
+>
+  <section class="hero-section">
+    <div class="hero-copy" data-reveal>
+      <span class="eyebrow">Queen Promosyon</span>
+      <h1>Markanıza değer katan promosyon deneyimi</h1>
+      <p>
+        Kurumsal hediyeler, logo baskılı ürünler ve özel üretim çözümleri; markanızın tonu, hedef kitlesi
+        ve kampanya ritmiyle uyumlu bir vitrin diliyle hazırlanır.
+      </p>
+      <div class="hero-actions">
+        <a class="button-primary" href="/kategoriler">Koleksiyonları keşfet</a>
+        <a class="button-secondary" href="/teklif-al">Teklif al</a>
+      </div>
+      <div class="hero-proof" aria-label="Queen Promosyon hizmet odağı">
+        <span>Kurumsal hediye</span>
+        <span>Logo baskı</span>
+        <span>Özel üretim</span>
+      </div>
+    </div>
+
+    <div class="hero-showcase" aria-label="Queen Promosyon ürün vitrini" data-reveal>
+      <div class="showcase-orbit" aria-hidden="true"></div>
+      <img class="showcase-main" src="/assets/images/queen-promosyon-hero-defter-kalem.webp" alt="Queen Promosyon defter ve kalem seti" width="900" height="720" />
+      <img class="showcase-float showcase-float-one" src="/assets/images/queen-promosyon-hero-termos-detay.webp" alt="Logo baskılı promosyon termos" width="360" height="300" />
+      <img class="showcase-float showcase-float-two" src="/assets/images/queen-promosyon-hero-teknoloji-detay.webp" alt="Promosyon teknoloji ürünü" width="360" height="300" />
+      <div class="showcase-ribbon" aria-hidden="true">Logo baskılı kurumsal ürünler</div>
+      <div class="showcase-ledger" aria-hidden="true">
+        <span>Queen seçkisi</span>
+        <strong>{categories.length} kategori</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="brand-experience" aria-label="Queen Promosyon marka vitrini">
+    <div class="brand-experience-copy" data-reveal>
+      <span class="eyebrow">Marka vitrini</span>
+      <h2>Promosyon ürünü sadece ürün değil, markanın elde taşınan hali.</h2>
+      <p>
+        Set kurgusu, baskı tekniği, renk uyumu ve teslim süreci tek bir kurumsal izlenim oluşturur.
+        Queen Promosyon bu izlenimi sıcak, premium ve hatırlanabilir bir web deneyimiyle sunar.
+      </p>
+    </div>
+
+    <div class="experience-stage" data-reveal>
+      {experienceTiles.map((tile, index) => (
+        <a class={`experience-tile experience-tile-${index + 1}`} href={tile.href}>
+          <img src={tile.image} alt={tile.alt} loading="lazy" width="620" height="520" />
+          <strong>
+            {tile.title}
+            <small>{tile.text}</small>
+          </strong>
+        </a>
+      ))}
+      <div class="experience-seal" aria-hidden="true">
+        <span>Queen</span>
+        <strong>Promosyon</strong>
+      </div>
+    </div>
+
+    <div class="category-marquee" data-reveal aria-label="Queen Promosyon ürün kategorileri">
+      <div class="category-marquee-track">
+        {categoryLoop.map((category) => (
+          <a href={`/kategoriler/${category.slug}`}>
+            <span>{category.eyebrow}</span>
+            <strong>{category.title}</strong>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="metric-band" aria-label="Queen Promosyon katalog özeti" data-reveal>
+    <div>
+      <strong>10+</strong>
+      <span>Ana ürün kategorisi</span>
+    </div>
+    <div>
+      <strong>3</strong>
+      <span>Baskı ve üretim önerisi</span>
+    </div>
+    <div>
+      <strong>24 sa</strong>
+      <span>Hızlı dönüş odağı</span>
+    </div>
+  </section>
+
+  <section class="portal-panels" aria-label="Queen Promosyon sayfa yönlendirmeleri">
+    {portalLinks.map((item, index) => (
+      <a href={item.href} data-reveal style={`--panel-index: ${index + 1}`}>
+        <span>{String(index + 1).padStart(2, "0")}</span>
+        <strong>{item.label}</strong>
+        <p>{item.text}</p>
+      </a>
+    ))}
+  </section>
+
+  <section class="section-block home-snapshot">
+    <SectionHeading
+      eyebrow="Katalog kapıları"
+      title="Öne çıkan kategori girişleri"
+      text="Kurumsal hediye, ofis, tekstil ve çanta gruplarını görsel bir vitrin akışıyla keşfedin."
+    />
+    <div class="category-grid">
+      {featuredCategories.map((category, index) => (
+        <CategoryCard category={category} large={index === 0} index={index} />
+      ))}
+    </div>
+  </section>
+
+  <section class="section-block alt-band home-products">
+    <SectionHeading
+      eyebrow="Hızlı bakış"
+      title="Popüler ürünlerden kısa vitrin"
+      text="Markaların sık tercih ettiği ürünleri kısa bir vitrin akışıyla inceleyin."
+    />
+    <div class="product-grid">
+      {popularProducts.map((product) => <ProductCard product={product} />)}
+    </div>
+    <div class="section-action" data-reveal>
+      <a class="button-primary" href="/urunler">Tüm ürünleri listele</a>
+    </div>
+  </section>
+
+  <section class="split-cta">
+    <div data-reveal>
+      <span class="eyebrow">Sonraki adım</span>
+      <h2>Doğru ürünü seçin, baskı ve teslim detaylarını birlikte netleştirelim.</h2>
+    </div>
+    <div class="split-cta-actions" data-reveal>
+      <a class="button-primary" href="/kategoriler">Kategori seç</a>
+      <a class="button-secondary" href="/baski-ve-uretim-sureci">Baskı sürecini incele</a>
+    </div>
+  </section>
+</BaseLayout>

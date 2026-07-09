@@ -1,0 +1,45 @@
+---
+import { categories } from "@data/catalog";
+import { navItems, site } from "@data/site";
+
+const footerCategories = categories.slice(0, 6);
+---
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <section class="footer-brand" aria-label="Queen Promosyon">
+      <img src="/assets/brand/queen-logo-transparent.png" alt="Queen Promosyon logo" width="96" height="96" loading="lazy" />
+      <p>
+        Kurumsal markalar için logolu promosyon ürünleri, özel hediye setleri ve baskılı tanıtım çözümleri.
+      </p>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+    </section>
+
+    <section>
+      <h2>Menü</h2>
+      <ul>
+        {navItems.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Kategoriler</h2>
+      <ul>
+        {footerCategories.map((category) => (
+          <li><a href={`/kategoriler/${category.slug}`}>{category.title}</a></li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Teklif</h2>
+      <p>Ürün, adet, baskı ve teslimat bilgilerini gönderin; size uygun çözümü birlikte netleştirelim.</p>
+      <a class="footer-action" href="/teklif-al">Teklif talebi oluştur</a>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Queen Promosyon. Tüm hakları saklıdır.</span>
+    <a href="https://queenpromosyon.com">queenpromosyon.com</a>
+  </div>
+</footer>

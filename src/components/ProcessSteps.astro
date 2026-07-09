@@ -1,0 +1,30 @@
+---
+const steps = [
+  {
+    title: "Ürün Seçimi",
+    text: "Hedef kitle, kullanım senaryosu ve bütçeye göre kategori ve ürün grubu netleşir.",
+  },
+  {
+    title: "Baskı Planı",
+    text: "Logo, renk, baskı alanı ve uygulama tekniği üretime uygun şekilde kontrol edilir.",
+  },
+  {
+    title: "Numune ve Onay",
+    text: "Gerekli projelerde dijital çalışma veya numune üzerinden son görünüm onaylanır.",
+  },
+  {
+    title: "Üretim ve Teslim",
+    text: "Baskı, kalite kontrol, paketleme ve teslimat akışı tek merkezden takip edilir.",
+  },
+];
+---
+
+<section class="process-strip">
+  {steps.map((step, index) => (
+    <article data-reveal style={`--step-index: ${index + 1}`}>
+      <span>{String(index + 1).padStart(2, "0")}</span>
+      <h3>{step.title}</h3>
+      <p>{step.text}</p>
+    </article>
+  ))}
+</section>

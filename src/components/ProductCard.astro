@@ -1,0 +1,52 @@
+---
+import type { Product } from "@data/catalog";
+import { getCategoryForProduct } from "@data/catalog";
+
+type Props = {
+  product: Product;
+};
+
+const { product } = Astro.props;
+const category = getCategoryForProduct(product);
+const productCode = `QP-${product.slug
+  .split("-")
+  .map((part) => part.slice(0, 2).toUpperCase())
+  .join("")
+  .slice(0, 6)}`;
+const printingOptions = product.printing.slice(0, 2);
+---
+
+<article class="product-card" data-reveal>
+  <a class="product-media" href={`/urunler/${product.slug}`} aria-label={`${product.name} detay sayfası`}>
+    <img src={product.image} alt={product.alt} loading="lazy" width="640" height="520" />
+    {product.popular && <span class="product-badge">Çok talep edilen</span>}
+    <span class="product-code">{productCode}</span>
+  </a>
+  <div class="product-card-body">
+    <div class="product-meta-row">
+      <a class="product-category" href={`/kategoriler/${category?.slug}`}>{category?.title}</a>
+      <span>{product.minQuantity}</span>
+    </div>
+    <h3><a href={`/urunler/${product.slug}`}>{product.name}</a></h3>
+    <p>{product.summary}</p>
+    <ul class="print-chip-list" aria-label={`${product.name} baskı seçenekleri`}>
+      {printingOptions.map((option) => <li>{option}</li>)}
+    </ul>
+    <dl>
+      <div>
+        <dt>Teslim</dt>
+        <dd>{product.leadTime}</dd>
+      </div>
+      <div>
+        <dt>Uygulama</dt>
+        <dd>{product.printing.length} teknik</dd>
+      </div>
+    </dl>
+    <div class="product-actions">
+      <a href={`/urunler/${product.slug}`}>Detay</a>
+      <button type="button" data-quote-product={product.name} data-quote-category={category?.title}>
+        Teklif Al
+      </button>
+    </div>
+  </div>
+</article>

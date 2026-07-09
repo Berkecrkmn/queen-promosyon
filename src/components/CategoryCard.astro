@@ -1,0 +1,26 @@
+---
+import type { Category } from "@data/catalog";
+
+type Props = {
+  category: Category;
+  large?: boolean;
+  index?: number;
+};
+
+const { category, large = false, index } = Astro.props;
+---
+
+<a class:list={["category-card", { "category-card-large": large }]} href={`/kategoriler/${category.slug}`} data-reveal>
+  <figure>
+    <img src={category.image} alt={category.alt} loading="lazy" width="720" height="540" />
+  </figure>
+  <div class="category-card-content">
+    {index !== undefined && <b>{String(index + 1).padStart(2, "0")}</b>}
+    <span>{category.eyebrow}</span>
+    <h3>{category.title}</h3>
+    <p>{category.description}</p>
+    <ul aria-label={`${category.title} etiketleri`}>
+      {category.tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+  </div>
+</a>

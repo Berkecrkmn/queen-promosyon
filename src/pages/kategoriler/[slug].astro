@@ -1,0 +1,71 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import ProductCard from "@components/ProductCard.astro";
+import QuotePanel from "@components/QuotePanel.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+import { categories, getProductsByCategory } from "@data/catalog";
+import { site } from "@data/site";
+
+export function getStaticPaths() {
+  return categories.map((category) => ({
+    params: { slug: category.slug },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+const categoryProducts = getProductsByCategory(category.slug);
+const categorySchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: category.title,
+  description: category.seoDescription,
+  url: `${site.url}/kategoriler/${category.slug}`,
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: categoryProducts.map((product, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: product.name,
+      url: `${site.url}/urunler/${product.slug}`,
+    })),
+  },
+};
+---
+
+<BaseLayout
+  title={category.seoTitle}
+  description={category.seoDescription}
+  canonical={`/kategoriler/${category.slug}`}
+  image={category.image}
+  structuredData={categorySchema}
+>
+  <section class="category-hero">
+    <div class="category-hero-copy" data-reveal>
+      <Breadcrumbs items={[{ label: "Kategoriler", href: "/kategoriler" }, { label: category.title }]} />
+      <span class="eyebrow">{category.eyebrow}</span>
+      <h1>{category.title}</h1>
+      <p>{category.description}</p>
+      <div class="tag-row">
+        {category.tags.map((tag) => <span>{tag}</span>)}
+      </div>
+    </div>
+    <figure data-reveal>
+      <img src={category.image} alt={category.alt} width="900" height="680" />
+    </figure>
+  </section>
+
+  <section class="section-block">
+    <SectionHeading
+      eyebrow="Örnek ürünler"
+      title={`${category.title} için teklif başlangıçları`}
+      text="Bu ürünler örnek katalog içeriğidir; gerçek ürün listesi geldiğinde aynı sayfa yapısında güncellenir."
+    />
+    <div class="product-grid">
+      {categoryProducts.map((product) => <ProductCard product={product} />)}
+    </div>
+  </section>
+
+  <QuotePanel />
+</BaseLayout>

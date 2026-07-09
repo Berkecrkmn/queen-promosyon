@@ -1,0 +1,120 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import ProductCard from "@components/ProductCard.astro";
+import QuotePanel from "@components/QuotePanel.astro";
+import { getCategoryForProduct, getProductsByCategory, products } from "@data/catalog";
+import { makeMailto, site } from "@data/site";
+
+export function getStaticPaths() {
+  return products.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+const category = getCategoryForProduct(product);
+const relatedProducts = getProductsByCategory(product.categorySlug)
+  .filter((item) => item.slug !== product.slug)
+  .slice(0, 3);
+const quoteBody = [
+  "Merhaba Queen Promosyon,",
+  "",
+  `${product.name} ürünü için teklif almak istiyorum.`,
+  `Kategori: ${category?.title}`,
+  "Tahmini adet:",
+  "Logo/baskı bilgisi:",
+  "Teslimat şehri:",
+  "",
+  "Teşekkürler.",
+].join("\n");
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: product.name,
+  description: product.description,
+  image: new URL(product.image, site.url).toString(),
+  brand: {
+    "@type": "Brand",
+    name: site.name,
+  },
+  category: category?.title,
+  offers: {
+    "@type": "Offer",
+    availability: "https://schema.org/PreOrder",
+    priceCurrency: "TRY",
+    url: `${site.url}/urunler/${product.slug}`,
+  },
+};
+---
+
+<BaseLayout
+  title={`${product.name} | ${category?.title}`}
+  description={`${product.name}: ${product.summary} Minimum adet ${product.minQuantity}. ${product.printing.join(", ")} seçenekleriyle teklif alın.`}
+  canonical={`/urunler/${product.slug}`}
+  image={product.image}
+  structuredData={productSchema}
+>
+  <section class="product-detail-hero">
+    <div class="product-detail-copy" data-reveal>
+      <Breadcrumbs items={[
+        { label: "Kategoriler", href: "/kategoriler" },
+        { label: category?.title || "Kategori", href: `/kategoriler/${category?.slug}` },
+        { label: product.name },
+      ]} />
+      <span class="eyebrow">{category?.title}</span>
+      <h1>{product.name}</h1>
+      <p>{product.description}</p>
+      <div class="product-detail-actions">
+        <a class="button-primary" href={makeMailto(`${product.name} teklif talebi`, quoteBody)}>Mail ile teklif al</a>
+        <button class="button-secondary" type="button" data-quote-product={product.name} data-quote-category={category?.title}>
+          Hızlı teklif taslağı
+        </button>
+      </div>
+    </div>
+    <figure data-reveal>
+      <img src={product.image} alt={product.alt} width="920" height="720" />
+    </figure>
+  </section>
+
+  <section class="product-spec-section">
+    <article data-reveal>
+      <h2>Teklif bilgileri</h2>
+      <dl class="spec-list">
+        <div>
+          <dt>Minimum adet</dt>
+          <dd>{product.minQuantity}</dd>
+        </div>
+        <div>
+          <dt>Tahmini teslim</dt>
+          <dd>{product.leadTime}</dd>
+        </div>
+        <div>
+          <dt>Baskı seçenekleri</dt>
+          <dd>{product.printing.join(", ")}</dd>
+        </div>
+      </dl>
+    </article>
+    <article data-reveal>
+      <h2>Ürün özellikleri</h2>
+      <ul class="check-list">
+        {product.specs.map((spec) => <li>{spec}</li>)}
+      </ul>
+    </article>
+  </section>
+
+  {relatedProducts.length > 0 && (
+    <section class="section-block alt-band">
+      <div class="section-heading" data-reveal>
+        <span>Benzer ürünler</span>
+        <h2>{category?.title} kategorisinden diğer seçenekler</h2>
+      </div>
+      <div class="product-grid">
+        {relatedProducts.map((item) => <ProductCard product={item} />)}
+      </div>
+    </section>
+  )}
+
+  <QuotePanel />
+</BaseLayout>

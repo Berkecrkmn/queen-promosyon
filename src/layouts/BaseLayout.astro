@@ -1,0 +1,137 @@
+---
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import { site } from "@data/site";
+import "@styles/global.css";
+
+type Props = {
+  title: string;
+  description: string;
+  canonical?: string;
+  image?: string;
+  robots?: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+};
+
+const {
+  title,
+  description,
+  canonical = Astro.url.pathname,
+  image = "/assets/brand/queen-logo-transparent.png",
+  robots = "index, follow",
+  structuredData = [],
+} = Astro.props;
+
+const canonicalUrl = new URL(canonical, site.url).toString();
+const imageUrl = new URL(image, site.url).toString();
+const titleTemplate = title.includes(site.name) ? title : `${title} | ${site.name}`;
+const schema = Array.isArray(structuredData) ? structuredData : [structuredData];
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: site.name,
+  url: site.url,
+  email: site.email,
+  logo: new URL("/assets/brand/queen-logo-transparent.png", site.url).toString(),
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Istanbul",
+    addressCountry: "TR",
+  },
+};
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{titleTemplate}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#352218" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={titleTemplate} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={titleTemplate} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <link rel="icon" type="image/png" href="/assets/brand/queen-logo-transparent.png" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify([organizationSchema, ...schema])} />
+  </head>
+  <body>
+    <Header />
+    <main id="icerik">
+      <slot />
+    </main>
+    <Footer />
+    <script is:inline define:vars={{ contactEmail: site.email }}>
+      document.documentElement.classList.add("motion-ready");
+
+      const body = document.body;
+      const menuButton = document.querySelector("[data-menu-toggle]");
+      const navPanel = document.querySelector("[data-nav-panel]");
+
+      menuButton?.addEventListener("click", () => {
+        const isOpen = body.classList.toggle("nav-open");
+        menuButton.setAttribute("aria-expanded", String(isOpen));
+      });
+
+      navPanel?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          body.classList.remove("nav-open");
+          menuButton?.setAttribute("aria-expanded", "false");
+        });
+      });
+
+      const revealItems = document.querySelectorAll("[data-reveal]");
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (!prefersReducedMotion && "IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.14 }
+        );
+
+        revealItems.forEach((item) => observer.observe(item));
+      } else {
+        revealItems.forEach((item) => item.classList.add("is-visible"));
+      }
+
+      document.querySelectorAll("[data-quote-product]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const product = button.getAttribute("data-quote-product") || "Queen Promosyon ürünü";
+          const category = button.getAttribute("data-quote-category") || "Promosyon";
+          const bodyText = [
+            "Merhaba Queen Promosyon,",
+            "",
+            `${product} (${category}) için teklif almak istiyorum.`,
+            "Tahmini adet:",
+            "Logo/baskı bilgisi:",
+            "Teslimat şehri:",
+            "",
+            "Teşekkürler.",
+          ].join("\n");
+          const params = new URLSearchParams({
+            subject: `${product} teklif talebi`,
+            body: bodyText,
+          });
+          window.location.href = `mailto:${contactEmail}?${params.toString()}`;
+        });
+      });
+    </script>
+  </body>
+</html>

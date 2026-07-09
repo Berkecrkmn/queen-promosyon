@@ -1,0 +1,57 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { categories } from "@data/catalog";
+
+const quickLinks = [
+  { label: "Anasayfa", href: "/" },
+  { label: "Koleksiyonlar", href: "/kategoriler" },
+  { label: "Ürün Seçkisi", href: "/urunler" },
+  { label: "Teklif Al", href: "/teklif-al" },
+];
+const featuredCategories = categories.slice(0, 5);
+---
+
+<BaseLayout
+  title="Sayfa Bulunamadı"
+  description="Aradığınız Queen Promosyon sayfası bulunamadı. Koleksiyonlara, ürün seçkisine veya teklif sayfasına hızlıca dönebilirsiniz."
+  canonical="/404"
+  robots="noindex, follow"
+>
+  <section class="not-found-page">
+    <div class="not-found-copy" data-reveal>
+      <span class="eyebrow">404</span>
+      <h1>Bu ürün yolu vitrinden ayrılmış görünüyor.</h1>
+      <p>
+        Aradığınız sayfa taşınmış ya da adresi değişmiş olabilir. Queen Promosyon koleksiyonlarına dönerek
+        kurumsal hediye, baskılı ürün ve teklif akışına hızlıca devam edebilirsiniz.
+      </p>
+
+      <div class="not-found-actions" aria-label="404 yönlendirme bağlantıları">
+        {quickLinks.map((item, index) => (
+          <a class={index === 0 ? "button-primary" : "button-secondary"} href={item.href}>{item.label}</a>
+        ))}
+      </div>
+    </div>
+
+    <div class="not-found-stage" aria-label="Hareketli promosyon ürünleri" data-reveal>
+      <div class="not-found-orbit" aria-hidden="true"></div>
+      <strong aria-hidden="true">404</strong>
+      <img class="not-found-product not-found-product-one" src="/assets/images/queen-promosyon-404-defter-kalem.webp" alt="Queen Promosyon defter ve kalem ürünü" width="520" height="420" />
+      <img class="not-found-product not-found-product-two" src="/assets/images/queen-promosyon-404-termos.webp" alt="Queen Promosyon promosyon termos ürünü" width="420" height="420" />
+      <img class="not-found-product not-found-product-three" src="/assets/images/queen-promosyon-404-powerbank.webp" alt="Queen Promosyon powerbank ürünü" width="420" height="360" />
+      <span class="not-found-badge">Sayfa bulunamadı</span>
+    </div>
+  </section>
+
+  <section class="not-found-collections" aria-label="Önerilen koleksiyonlar" data-reveal>
+    <span class="eyebrow">Devam edebileceğiniz yerler</span>
+    <div>
+      {featuredCategories.map((category) => (
+        <a href={`/kategoriler/${category.slug}`}>
+          <span>{category.eyebrow}</span>
+          <strong>{category.title}</strong>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

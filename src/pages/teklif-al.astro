@@ -1,0 +1,66 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { categories } from "@data/catalog";
+import { makeMailto, site } from "@data/site";
+
+const body = [
+  "Merhaba Queen Promosyon,",
+  "",
+  "Aşağıdaki bilgilerle teklif almak istiyorum:",
+  "",
+  "Ürün/kategori:",
+  "Tahmini adet:",
+  "Baskı türü veya logo notu:",
+  "Teslimat şehri:",
+  "Termin beklentisi:",
+  "",
+  "Teşekkürler.",
+].join("\n");
+const contactSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  name: "Queen Promosyon teklif al",
+  url: `${site.url}/teklif-al`,
+};
+---
+
+<BaseLayout
+  title="Teklif Al"
+  description="Queen Promosyon ürünleri için kategori, ürün, adet ve baskı bilgisiyle hızlı teklif talebi oluşturun."
+  canonical="/teklif-al"
+  structuredData={contactSchema}
+>
+  <section class="quote-page">
+    <div class="quote-page-copy" data-reveal>
+      <Breadcrumbs items={[{ label: "Teklif Al" }]} />
+      <span class="eyebrow">Hızlı teklif</span>
+      <h1>Ürün fikrini yazın, teklif talebiniz hazır metne dönüşsün.</h1>
+      <p>
+        İlgilendiğiniz ürün grubunu, tahmini adedi, logo uygulama notunu ve teslim beklentinizi paylaşın;
+        Queen Promosyon ekibi sizin için en uygun seçenekleri netleştirsin.
+      </p>
+      <a class="button-primary" href={makeMailto("Queen Promosyon teklif talebi", body)}>Mail taslağını aç</a>
+    </div>
+
+    <aside class="quote-checklist" data-reveal>
+      <h2>Mailde paylaşılması gerekenler</h2>
+      <ul class="check-list">
+        <li>İlgilendiğiniz ürün veya kategori</li>
+        <li>Tahmini adet ve teslimat şehri</li>
+        <li>Logo dosyası veya baskı notu</li>
+        <li>Etkinlik, lansman veya termin tarihi</li>
+      </ul>
+    </aside>
+  </section>
+
+  <section class="section-block alt-band">
+    <div class="section-heading" data-reveal>
+      <span>Kategori seçimi</span>
+      <h2>Tekliften önce ürün grubunu seçmek isterseniz</h2>
+    </div>
+    <div class="quick-category-list" data-reveal>
+      {categories.map((category) => <a href={`/kategoriler/${category.slug}`}>{category.title}</a>)}
+    </div>
+  </section>
+</BaseLayout>

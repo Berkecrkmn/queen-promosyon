@@ -1,0 +1,53 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import CategoryCard from "@components/CategoryCard.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+import QuotePanel from "@components/QuotePanel.astro";
+import { categories } from "@data/catalog";
+import { site } from "@data/site";
+
+const itemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Queen Promosyon kategorileri",
+  itemListElement: categories.map((category, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: category.title,
+    url: `${site.url}/kategoriler/${category.slug}`,
+  })),
+};
+---
+
+<BaseLayout
+  title="Promosyon Ürün Kategorileri"
+  description="Queen Promosyon katalog kategorileri: hediyelik setler, kalem, defter, termos, powerbank, USB bellek, tekstil, matbaa ve çanta ürünleri."
+  canonical="/kategoriler"
+  structuredData={itemListSchema}
+>
+  <section class="page-hero compact">
+    <Breadcrumbs items={[{ label: "Kategoriler" }]} />
+    <div data-reveal>
+      <span class="eyebrow">Katalog</span>
+      <h1>Promosyon ürün kategorileri</h1>
+      <p>
+        Ürün seçimini hızlandırmak için kategorileri kullanım amacı, baskı yöntemi ve kurumsal algı gücüne göre
+        düzenledik.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <SectionHeading
+      eyebrow="Tüm kategoriler"
+      title="Teklif almaya hazır ürün grupları"
+      text="Her kategori, marka görünürlüğünü güçlendirecek ürün fikirleri ve baskı seçenekleriyle ayrı ayrı hazırlanır."
+    />
+    <div class="category-grid category-grid-all">
+      {categories.map((category, index) => <CategoryCard category={category} index={index} />)}
+    </div>
+  </section>
+
+  <QuotePanel />
+</BaseLayout>

@@ -1,0 +1,61 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import ProcessSteps from "@components/ProcessSteps.astro";
+import QuotePanel from "@components/QuotePanel.astro";
+import { site } from "@data/site";
+
+const processSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "Queen Promosyon baskı ve üretim süreci",
+  description: "Promosyon ürünlerinde ürün seçimi, baskı planı, onay, üretim ve teslimat adımları.",
+  step: [
+    "Ürün seçimi",
+    "Baskı planı",
+    "Numune ve onay",
+    "Üretim ve teslim",
+  ].map((name) => ({ "@type": "HowToStep", name })),
+  url: `${site.url}/baski-ve-uretim-sureci`,
+};
+---
+
+<BaseLayout
+  title="Baskı ve Üretim Süreci"
+  description="Promosyon ürünlerinde baskı, logo uygulama, numune, üretim ve teslimat süreci Queen Promosyon ile nasıl ilerler?"
+  canonical="/baski-ve-uretim-sureci"
+  structuredData={processSchema}
+>
+  <section class="page-hero compact">
+    <Breadcrumbs items={[{ label: "Baskı ve Üretim Süreci" }]} />
+    <div data-reveal>
+      <span class="eyebrow">Süreç</span>
+      <h1>Baskı kararlarını üretime uygun, sade ve takip edilebilir hale getiriyoruz.</h1>
+      <p>
+        Her promosyon ürününde doğru baskı tekniği, doğru yüzey ve doğru teslim planı gerekir. Akış bu
+        üç kararı hızlandırmak için tasarlandı.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <ProcessSteps />
+  </section>
+
+  <section class="method-grid">
+    <article data-reveal>
+      <h2>Lazer baskı</h2>
+      <p>Metal kalem, termos, powerbank ve seçili aksesuar yüzeylerinde kalıcı, şık ve premium görünüm sağlar.</p>
+    </article>
+    <article data-reveal>
+      <h2>Serigrafi ve tampon</h2>
+      <p>Kalem, çanta, tekstil ve geniş yüzeyli ürünlerde adet avantajı ve net marka görünürlüğü sunar.</p>
+    </article>
+    <article data-reveal>
+      <h2>UV ve dijital baskı</h2>
+      <p>Renkli logo, özel görsel ve tam yüzey uygulamaları için esnek çözümler üretir.</p>
+    </article>
+  </section>
+
+  <QuotePanel />
+</BaseLayout>

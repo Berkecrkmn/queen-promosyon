@@ -1,0 +1,75 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import ProductCard from "@components/ProductCard.astro";
+import QuotePanel from "@components/QuotePanel.astro";
+import { categories, getProductsByCategory, products } from "@data/catalog";
+import { site } from "@data/site";
+
+const categoryCounts = categories.map((category) => ({
+  ...category,
+  count: getProductsByCategory(category.slug).length,
+}));
+
+const itemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Queen Promosyon ürün kataloğu",
+  itemListElement: products.map((product, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: product.name,
+    url: `${site.url}/urunler/${product.slug}`,
+  })),
+};
+---
+
+<BaseLayout
+  title="Promosyon Ürün Kataloğu"
+  description="Queen Promosyon ürün kataloğu: logolu hediyelik setler, kalem, defter, termos, powerbank, USB bellek, tekstil, matbaa, çanta ve masaüstü ürünleri."
+  canonical="/urunler"
+  structuredData={itemListSchema}
+>
+  <section class="catalog-hero">
+    <div data-reveal>
+      <Breadcrumbs items={[{ label: "Ürünler" }]} />
+      <span class="eyebrow">Ürün kataloğu</span>
+      <h1>Teklif almaya hazır promosyon ürünleri</h1>
+      <p>
+        Ürün sayfalarında minimum adet, teslim süresi, baskı seçenekleri ve teklif bağlantısı hazırdır.
+        Kategoriye göre tarayın, kısa liste oluşturun ve toplu teklif talebi gönderin.
+      </p>
+    </div>
+    <aside class="catalog-summary" data-reveal>
+      <strong>{products.length}</strong>
+      <span>ürün</span>
+      <p>Hediyelik setlerden teknoloji ürünlerine kadar teklif başlangıcı için düzenlenmiş katalog.</p>
+    </aside>
+  </section>
+
+  <section class="catalog-layout">
+    <aside class="catalog-sidebar" data-reveal>
+      <h2>Kategoriler</h2>
+      <nav aria-label="Ürün kategorileri">
+        {categoryCounts.map((category) => (
+          <a href={`/kategoriler/${category.slug}`}>
+            <span>{category.title}</span>
+            <strong>{category.count}</strong>
+          </a>
+        ))}
+      </nav>
+    </aside>
+
+    <div class="catalog-products">
+      <div class="catalog-toolbar" data-reveal>
+        <span>{products.length} ürün listeleniyor</span>
+        <a href="/teklif-al">Toplu teklif talebi</a>
+      </div>
+      <div class="product-grid product-grid-catalog">
+        {products.map((product) => <ProductCard product={product} />)}
+      </div>
+    </div>
+  </section>
+
+  <QuotePanel />
+</BaseLayout>

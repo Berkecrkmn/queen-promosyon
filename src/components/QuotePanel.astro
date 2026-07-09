@@ -1,0 +1,30 @@
+---
+import { makeMailto, site } from "@data/site";
+
+const body = [
+  "Merhaba Queen Promosyon,",
+  "",
+  "Promosyon ürünleri için teklif almak istiyorum.",
+  "İlgilendiğim kategori/ürün:",
+  "Tahmini adet:",
+  "Logo/baskı bilgisi:",
+  "Teslimat şehri:",
+  "",
+  "Teşekkürler.",
+].join("\n");
+---
+
+<section class="quote-panel" data-reveal>
+  <div>
+    <span>Hızlı teklif</span>
+    <h2>Ürünü, adedi ve baskı fikrini paylaşın; uygun çözümü birlikte netleştirelim.</h2>
+    <p>
+      İlgilendiğiniz ürün grubunu, tahmini adedi ve logo uygulama notunuzu iletin; size uygun ürün,
+      baskı ve teslim alternatifi için hızlıca geri dönüş hazırlayalım.
+    </p>
+  </div>
+  <div class="quote-actions">
+    <a class="button-primary" href={makeMailto("Queen Promosyon teklif talebi", body)}>Mail ile teklif al</a>
+    <a class="button-secondary" href={`mailto:${site.email}`}>{site.email}</a>
+  </div>
+</section>
