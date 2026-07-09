@@ -2,6 +2,7 @@
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import { site } from "@data/site";
+import { withBase } from "@utils/paths";
 import "@styles/global.css";
 
 type Props = {
@@ -22,8 +23,8 @@ const {
   structuredData = [],
 } = Astro.props;
 
-const canonicalUrl = new URL(canonical, site.url).toString();
-const imageUrl = new URL(image, site.url).toString();
+const canonicalUrl = new URL(withBase(canonical), site.url).toString();
+const imageUrl = new URL(withBase(image), site.url).toString();
 const titleTemplate = title.includes(site.name) ? title : `${title} | ${site.name}`;
 const schema = Array.isArray(structuredData) ? structuredData : [structuredData];
 const organizationSchema = {
@@ -32,7 +33,7 @@ const organizationSchema = {
   name: site.name,
   url: site.url,
   email: site.email,
-  logo: new URL("/assets/brand/queen-logo-transparent.png", site.url).toString(),
+  logo: new URL(withBase("/assets/brand/queen-logo-transparent.png"), site.url).toString(),
   address: {
     "@type": "PostalAddress",
     addressLocality: "Istanbul",
@@ -62,7 +63,7 @@ const organizationSchema = {
     <meta name="twitter:title" content={titleTemplate} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
-    <link rel="icon" type="image/png" href="/assets/brand/queen-logo-transparent.png" />
+    <link rel="icon" type="image/png" href={withBase("/assets/brand/queen-logo-transparent.png")} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify([organizationSchema, ...schema])} />
   </head>
   <body>

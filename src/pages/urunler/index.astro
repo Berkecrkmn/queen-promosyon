@@ -5,6 +5,7 @@ import ProductCard from "@components/ProductCard.astro";
 import QuotePanel from "@components/QuotePanel.astro";
 import { categories, getProductsByCategory, products } from "@data/catalog";
 import { site } from "@data/site";
+import { withBase } from "@utils/paths";
 
 const categoryCounts = categories.map((category) => ({
   ...category,
@@ -52,7 +53,7 @@ const itemListSchema = {
       <h2>Kategoriler</h2>
       <nav aria-label="Ürün kategorileri">
         {categoryCounts.map((category) => (
-          <a href={`/kategoriler/${category.slug}`}>
+          <a href={withBase(`/kategoriler/${category.slug}`)}>
             <span>{category.title}</span>
             <strong>{category.count}</strong>
           </a>
@@ -63,7 +64,7 @@ const itemListSchema = {
     <div class="catalog-products">
       <div class="catalog-toolbar" data-reveal>
         <span>{products.length} ürün listeleniyor</span>
-        <a href="/teklif-al">Toplu teklif talebi</a>
+        <a href={withBase("/teklif-al")}>Toplu teklif talebi</a>
       </div>
       <div class="product-grid product-grid-catalog">
         {products.map((product) => <ProductCard product={product} />)}

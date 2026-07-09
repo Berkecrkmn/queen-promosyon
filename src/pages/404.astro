@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { categories } from "@data/catalog";
+import { withBase } from "@utils/paths";
 
 const quickLinks = [
   { label: "Anasayfa", href: "/" },
@@ -28,7 +29,7 @@ const featuredCategories = categories.slice(0, 5);
 
       <div class="not-found-actions" aria-label="404 yönlendirme bağlantıları">
         {quickLinks.map((item, index) => (
-          <a class={index === 0 ? "button-primary" : "button-secondary"} href={item.href}>{item.label}</a>
+          <a class={index === 0 ? "button-primary" : "button-secondary"} href={withBase(item.href)}>{item.label}</a>
         ))}
       </div>
     </div>
@@ -36,9 +37,9 @@ const featuredCategories = categories.slice(0, 5);
     <div class="not-found-stage" aria-label="Hareketli promosyon ürünleri" data-reveal>
       <div class="not-found-orbit" aria-hidden="true"></div>
       <strong aria-hidden="true">404</strong>
-      <img class="not-found-product not-found-product-one" src="/assets/images/queen-promosyon-404-defter-kalem.webp" alt="Queen Promosyon defter ve kalem ürünü" width="520" height="420" />
-      <img class="not-found-product not-found-product-two" src="/assets/images/queen-promosyon-404-termos.webp" alt="Queen Promosyon promosyon termos ürünü" width="420" height="420" />
-      <img class="not-found-product not-found-product-three" src="/assets/images/queen-promosyon-404-powerbank.webp" alt="Queen Promosyon powerbank ürünü" width="420" height="360" />
+      <img class="not-found-product not-found-product-one" src={withBase("/assets/images/queen-promosyon-404-defter-kalem.webp")} alt="Queen Promosyon defter ve kalem ürünü" width="520" height="420" />
+      <img class="not-found-product not-found-product-two" src={withBase("/assets/images/queen-promosyon-404-termos.webp")} alt="Queen Promosyon promosyon termos ürünü" width="420" height="420" />
+      <img class="not-found-product not-found-product-three" src={withBase("/assets/images/queen-promosyon-404-powerbank.webp")} alt="Queen Promosyon powerbank ürünü" width="420" height="360" />
       <span class="not-found-badge">Sayfa bulunamadı</span>
     </div>
   </section>
@@ -47,7 +48,7 @@ const featuredCategories = categories.slice(0, 5);
     <span class="eyebrow">Devam edebileceğiniz yerler</span>
     <div>
       {featuredCategories.map((category) => (
-        <a href={`/kategoriler/${category.slug}`}>
+        <a href={withBase(`/kategoriler/${category.slug}`)}>
           <span>{category.eyebrow}</span>
           <strong>{category.title}</strong>
         </a>

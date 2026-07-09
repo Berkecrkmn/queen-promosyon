@@ -1,5 +1,6 @@
 ---
 import type { Category } from "@data/catalog";
+import { withBase } from "@utils/paths";
 
 type Props = {
   category: Category;
@@ -10,9 +11,9 @@ type Props = {
 const { category, large = false, index } = Astro.props;
 ---
 
-<a class:list={["category-card", { "category-card-large": large }]} href={`/kategoriler/${category.slug}`} data-reveal>
+<a class:list={["category-card", { "category-card-large": large }]} href={withBase(`/kategoriler/${category.slug}`)} data-reveal>
   <figure>
-    <img src={category.image} alt={category.alt} loading="lazy" width="720" height="540" />
+    <img src={withBase(category.image)} alt={category.alt} loading="lazy" width="720" height="540" />
   </figure>
   <div class="category-card-content">
     {index !== undefined && <b>{String(index + 1).padStart(2, "0")}</b>}

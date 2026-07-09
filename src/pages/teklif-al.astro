@@ -3,6 +3,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import Breadcrumbs from "@components/Breadcrumbs.astro";
 import { categories } from "@data/catalog";
 import { makeMailto, site } from "@data/site";
+import { withBase } from "@utils/paths";
 
 const body = [
   "Merhaba Queen Promosyon,",
@@ -60,7 +61,7 @@ const contactSchema = {
       <h2>Tekliften önce ürün grubunu seçmek isterseniz</h2>
     </div>
     <div class="quick-category-list" data-reveal>
-      {categories.map((category) => <a href={`/kategoriler/${category.slug}`}>{category.title}</a>)}
+      {categories.map((category) => <a href={withBase(`/kategoriler/${category.slug}`)}>{category.title}</a>)}
     </div>
   </section>
 </BaseLayout>

@@ -1,7 +1,9 @@
+const siteUrl = (import.meta.env.PUBLIC_SITE_URL || "https://queenpromosyon.com").replace(/\/$/, "");
+
 export const site = {
   name: "Queen Promosyon",
   shortName: "Queen",
-  url: "https://queenpromosyon.com",
+  url: siteUrl,
   email: "info@queenpromosyon.com",
   phone: "",
   whatsapp: "",

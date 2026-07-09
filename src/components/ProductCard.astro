@@ -1,6 +1,7 @@
 ---
 import type { Product } from "@data/catalog";
 import { getCategoryForProduct } from "@data/catalog";
+import { withBase } from "@utils/paths";
 
 type Props = {
   product: Product;
@@ -17,17 +18,17 @@ const printingOptions = product.printing.slice(0, 2);
 ---
 
 <article class="product-card" data-reveal>
-  <a class="product-media" href={`/urunler/${product.slug}`} aria-label={`${product.name} detay sayfası`}>
-    <img src={product.image} alt={product.alt} loading="lazy" width="640" height="520" />
+  <a class="product-media" href={withBase(`/urunler/${product.slug}`)} aria-label={`${product.name} detay sayfası`}>
+    <img src={withBase(product.image)} alt={product.alt} loading="lazy" width="640" height="520" />
     {product.popular && <span class="product-badge">Çok talep edilen</span>}
     <span class="product-code">{productCode}</span>
   </a>
   <div class="product-card-body">
     <div class="product-meta-row">
-      <a class="product-category" href={`/kategoriler/${category?.slug}`}>{category?.title}</a>
+      <a class="product-category" href={withBase(`/kategoriler/${category?.slug}`)}>{category?.title}</a>
       <span>{product.minQuantity}</span>
     </div>
-    <h3><a href={`/urunler/${product.slug}`}>{product.name}</a></h3>
+    <h3><a href={withBase(`/urunler/${product.slug}`)}>{product.name}</a></h3>
     <p>{product.summary}</p>
     <ul class="print-chip-list" aria-label={`${product.name} baskı seçenekleri`}>
       {printingOptions.map((option) => <li>{option}</li>)}
@@ -43,7 +44,7 @@ const printingOptions = product.printing.slice(0, 2);
       </div>
     </dl>
     <div class="product-actions">
-      <a href={`/urunler/${product.slug}`}>Detay</a>
+      <a href={withBase(`/urunler/${product.slug}`)}>Detay</a>
       <button type="button" data-quote-product={product.name} data-quote-category={category?.title}>
         Teklif Al
       </button>

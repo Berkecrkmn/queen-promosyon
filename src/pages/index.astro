@@ -5,6 +5,7 @@ import ProductCard from "@components/ProductCard.astro";
 import SectionHeading from "@components/SectionHeading.astro";
 import { categories, products } from "@data/catalog";
 import { site } from "@data/site";
+import { withBase } from "@utils/paths";
 
 const featuredCategorySlugs = ["hediyelik-setler", "promosyon-kalem", "defter-ajanda", "tekstil", "canta"];
 const featuredCategories = featuredCategorySlugs
@@ -84,8 +85,8 @@ const homeSchema = {
         ve kampanya ritmiyle uyumlu bir vitrin diliyle hazırlanır.
       </p>
       <div class="hero-actions">
-        <a class="button-primary" href="/kategoriler">Koleksiyonları keşfet</a>
-        <a class="button-secondary" href="/teklif-al">Teklif al</a>
+        <a class="button-primary" href={withBase("/kategoriler")}>Koleksiyonları keşfet</a>
+        <a class="button-secondary" href={withBase("/teklif-al")}>Teklif al</a>
       </div>
       <div class="hero-proof" aria-label="Queen Promosyon hizmet odağı">
         <span>Kurumsal hediye</span>
@@ -96,9 +97,9 @@ const homeSchema = {
 
     <div class="hero-showcase" aria-label="Queen Promosyon ürün vitrini" data-reveal>
       <div class="showcase-orbit" aria-hidden="true"></div>
-      <img class="showcase-main" src="/assets/images/queen-promosyon-hero-defter-kalem.webp" alt="Queen Promosyon defter ve kalem seti" width="900" height="720" />
-      <img class="showcase-float showcase-float-one" src="/assets/images/queen-promosyon-hero-termos-detay.webp" alt="Logo baskılı promosyon termos" width="360" height="300" />
-      <img class="showcase-float showcase-float-two" src="/assets/images/queen-promosyon-hero-teknoloji-detay.webp" alt="Promosyon teknoloji ürünü" width="360" height="300" />
+      <img class="showcase-main" src={withBase("/assets/images/queen-promosyon-hero-defter-kalem.webp")} alt="Queen Promosyon defter ve kalem seti" width="900" height="720" />
+      <img class="showcase-float showcase-float-one" src={withBase("/assets/images/queen-promosyon-hero-termos-detay.webp")} alt="Logo baskılı promosyon termos" width="360" height="300" />
+      <img class="showcase-float showcase-float-two" src={withBase("/assets/images/queen-promosyon-hero-teknoloji-detay.webp")} alt="Promosyon teknoloji ürünü" width="360" height="300" />
       <div class="showcase-ribbon" aria-hidden="true">Logo baskılı kurumsal ürünler</div>
       <div class="showcase-ledger" aria-hidden="true">
         <span>Queen seçkisi</span>
@@ -119,8 +120,8 @@ const homeSchema = {
 
     <div class="experience-stage" data-reveal>
       {experienceTiles.map((tile, index) => (
-        <a class={`experience-tile experience-tile-${index + 1}`} href={tile.href}>
-          <img src={tile.image} alt={tile.alt} loading="lazy" width="620" height="520" />
+        <a class={`experience-tile experience-tile-${index + 1}`} href={withBase(tile.href)}>
+          <img src={withBase(tile.image)} alt={tile.alt} loading="lazy" width="620" height="520" />
           <strong>
             {tile.title}
             <small>{tile.text}</small>
@@ -136,7 +137,7 @@ const homeSchema = {
     <div class="category-marquee" data-reveal aria-label="Queen Promosyon ürün kategorileri">
       <div class="category-marquee-track">
         {categoryLoop.map((category) => (
-          <a href={`/kategoriler/${category.slug}`}>
+          <a href={withBase(`/kategoriler/${category.slug}`)}>
             <span>{category.eyebrow}</span>
             <strong>{category.title}</strong>
           </a>
@@ -162,7 +163,7 @@ const homeSchema = {
 
   <section class="portal-panels" aria-label="Queen Promosyon sayfa yönlendirmeleri">
     {portalLinks.map((item, index) => (
-      <a href={item.href} data-reveal style={`--panel-index: ${index + 1}`}>
+      <a href={withBase(item.href)} data-reveal style={`--panel-index: ${index + 1}`}>
         <span>{String(index + 1).padStart(2, "0")}</span>
         <strong>{item.label}</strong>
         <p>{item.text}</p>
@@ -193,7 +194,7 @@ const homeSchema = {
       {popularProducts.map((product) => <ProductCard product={product} />)}
     </div>
     <div class="section-action" data-reveal>
-      <a class="button-primary" href="/urunler">Tüm ürünleri listele</a>
+      <a class="button-primary" href={withBase("/urunler")}>Tüm ürünleri listele</a>
     </div>
   </section>
 
@@ -203,8 +204,8 @@ const homeSchema = {
       <h2>Doğru ürünü seçin, baskı ve teslim detaylarını birlikte netleştirelim.</h2>
     </div>
     <div class="split-cta-actions" data-reveal>
-      <a class="button-primary" href="/kategoriler">Kategori seç</a>
-      <a class="button-secondary" href="/baski-ve-uretim-sureci">Baskı sürecini incele</a>
+      <a class="button-primary" href={withBase("/kategoriler")}>Kategori seç</a>
+      <a class="button-secondary" href={withBase("/baski-ve-uretim-sureci")}>Baskı sürecini incele</a>
     </div>
   </section>
 </BaseLayout>

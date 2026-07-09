@@ -5,6 +5,7 @@ import ProductCard from "@components/ProductCard.astro";
 import QuotePanel from "@components/QuotePanel.astro";
 import { getCategoryForProduct, getProductsByCategory, products } from "@data/catalog";
 import { makeMailto, site } from "@data/site";
+import { withBase } from "@utils/paths";
 
 export function getStaticPaths() {
   return products.map((product) => ({
@@ -34,7 +35,7 @@ const productSchema = {
   "@type": "Product",
   name: product.name,
   description: product.description,
-  image: new URL(product.image, site.url).toString(),
+  image: new URL(withBase(product.image), site.url).toString(),
   brand: {
     "@type": "Brand",
     name: site.name,
@@ -74,7 +75,7 @@ const productSchema = {
       </div>
     </div>
     <figure data-reveal>
-      <img src={product.image} alt={product.alt} width="920" height="720" />
+      <img src={withBase(product.image)} alt={product.alt} width="920" height="720" />
     </figure>
   </section>
 
