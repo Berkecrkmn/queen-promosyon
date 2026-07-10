@@ -1,63 +1,89 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import CategoryCard from "@components/CategoryCard.astro";
-import ProductCard from "@components/ProductCard.astro";
-import SectionHeading from "@components/SectionHeading.astro";
-import { categories, products } from "@data/catalog";
+import { categories } from "@data/catalog";
 import { site } from "@data/site";
 import { withBase } from "@utils/paths";
 
-const featuredCategorySlugs = ["hediyelik-setler", "promosyon-kalem", "defter-ajanda", "tekstil", "canta"];
-const featuredCategories = featuredCategorySlugs
-  .map((slug) => categories.find((category) => category.slug === slug))
-  .filter((category) => category !== undefined);
-const popularProducts = products.filter((product) => product.popular).slice(0, 4);
-const categoryLoop = [...categories, ...categories];
-const experienceTiles = [
+const categoryRail = categories.slice(0, 10);
+
+const highlights = [
   {
-    title: "Hediye setleri",
-    text: "Yönetici, bayi ve lansman hediyeleri için premium sunum.",
+    theme: "highlight-slide-dark",
+    eyebrow: "Queen Seçkisi",
+    title: "Bir kutu. Birçok güçlü iz.",
+    text: "Yeni çalışanlardan iş ortaklarına kadar her karşılaşmayı özenli bir marka deneyimine dönüştüren setler.",
     href: "/kategoriler/hediyelik-setler",
-    image: "/assets/images/queen-promosyon-deneyim-hediye-setleri.webp",
-    alt: "Premium promosyon termos hediye seti",
+    images: [
+      { src: "/assets/images/queen-promosyon-premium-kutulu-hediye-seti.webp", alt: "Premium kutulu kurumsal hediye seti" },
+      { src: "/assets/images/queen-promosyon-termo-deri-defter-urun.webp", alt: "Termo deri kurumsal defter" },
+      { src: "/assets/images/queen-promosyon-celik-termos-500ml.webp", alt: "Logo baskıya uygun çelik termos" },
+    ],
   },
   {
-    title: "Ofis prestiji",
-    text: "Defter, kalem ve masaüstü ürünlerde kurumsal duruş.",
-    href: "/kategoriler/defter-ajanda",
-    image: "/assets/images/queen-promosyon-deneyim-ofis-prestiji.webp",
-    alt: "Promosyon defter ve kalem seti",
-  },
-  {
-    title: "Teknoloji ürünleri",
-    text: "Powerbank, USB ve günlük kullanım ürünlerinde marka görünürlüğü.",
-    href: "/kategoriler/powerbank",
-    image: "/assets/images/queen-promosyon-deneyim-teknoloji.webp",
-    alt: "Queen Promosyon powerbank ürünü",
-  },
-];
-const portalLinks = [
-  {
-    label: "Koleksiyonlar",
-    href: "/kategoriler",
-    text: "Hediyelik setlerden tekstile kadar marka temasına uygun ürün gruplarını keşfedin.",
-  },
-  {
-    label: "Ürün Seçkisi",
-    href: "/urunler",
-    text: "Kurumsal kampanyalar için öne çıkan promosyon ürünlerini karşılaştırın.",
-  },
-  {
-    label: "Baskı Atölyesi",
+    theme: "highlight-slide-gold",
+    eyebrow: "Baskı & Üretim",
+    title: "Detayda tutarlı. Elde etkileyici.",
+    text: "Renk, malzeme ve baskı tekniğini aynı sistemde buluşturan kurumsal üretim yaklaşımı.",
     href: "/baski-ve-uretim-sureci",
-    text: "Logo uygulaması, numune, üretim ve teslim adımlarının nasıl ilerlediğini görün.",
+    image: { src: "/assets/images/queen-promosyon-kurumsal-kimlik-baski-seti.webp", alt: "Kurumsal kimlik ve baskı uygulama seti" },
   },
   {
-    label: "Teklif Akışı",
-    href: "/teklif-al",
-    text: "Ürün, adet ve baskı notuyla doğru teklif görüşmesini başlatın.",
+    theme: "highlight-slide-blue",
+    eyebrow: "Teknoloji",
+    title: "Günlük hayatın içinde. Markanızla birlikte.",
+    text: "Powerbank, USB ve bağlantı ürünlerinde kullanışlı, modern ve baskıya hazır çözümler.",
+    href: "/kategoriler/powerbank",
+    image: { src: "/assets/images/queen-promosyon-teknoloji-hediye-seti.webp", alt: "Kurumsal teknoloji hediye seti" },
+  },
+  {
+    theme: "highlight-slide-light",
+    eyebrow: "Kurumsal Tekstil",
+    title: "Ekibiniz için tek ve güçlü bir görünüm.",
+    text: "Etkinlik, saha ve ofis ekipleri için baskı ve nakış seçenekleriyle tamamlanan tekstil seçkisi.",
+    href: "/kategoriler/tekstil",
+    image: { src: "/assets/images/queen-promosyon-nakisli-sweatshirt.webp", alt: "Nakış uygulamalı kurumsal sweatshirt" },
   },
 ];
+
+const promoTiles = [
+  {
+    className: "promo-tile-light",
+    eyebrow: "Defter & Ajanda",
+    title: "Her fikre iyi bir başlangıç.",
+    text: "Kurumsal not alma deneyimi, markanıza özel.",
+    href: "/kategoriler/defter-ajanda",
+    image: "/assets/images/queen-apple-desk.webp",
+    alt: "Minimal çalışma masasında defter, kalem ve ofis ürünleri",
+  },
+  {
+    className: "promo-tile-dark",
+    eyebrow: "Çanta",
+    title: "Markanız her yerde sizinle.",
+    text: "Günlük kullanıma uygun, baskıya hazır çanta seçkisi.",
+    href: "/kategoriler/canta",
+    image: "/assets/images/queen-apple-tote.webp",
+    alt: "Minimal bir ortamda taşınan premium kanvas çanta",
+  },
+  {
+    className: "promo-tile-image",
+    eyebrow: "Tekstil",
+    title: "Ekibiniz. Tek bir görünüm.",
+    text: "Baskı ve nakış seçenekleriyle kurumsal tekstil.",
+    href: "/kategoriler/tekstil",
+    image: "/assets/images/queen-promosyon-nakisli-sweatshirt.webp",
+    alt: "Farklı renklerde kurumsal tekstil ürünleri",
+  },
+  {
+    className: "promo-tile-paper",
+    eyebrow: "Matbaa Ürünleri",
+    title: "İyi tasarım, elde de etkileyici.",
+    text: "Kartvizitten kataloğa eksiksiz kurumsal baskı.",
+    href: "/kategoriler/matbaa-urunleri",
+    image: "/assets/images/queen-promosyon-katalog-baski.webp",
+    alt: "Kurumsal kimlik ve matbaa baskı seti",
+  },
+];
+
 const homeSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -76,136 +102,173 @@ const homeSchema = {
   description="Queen Promosyon; logolu promosyon ürünleri, kurumsal hediye setleri, baskılı tekstil ve teknoloji ürünleri için katalog ve teklif çözümleri sunar."
   structuredData={homeSchema}
 >
-  <section class="hero-section">
-    <div class="hero-copy" data-reveal>
-      <span class="eyebrow">Queen Promosyon</span>
-      <h1>Markanıza değer katan promosyon deneyimi</h1>
-      <p>
-        Kurumsal hediyeler, logo baskılı ürünler ve özel üretim çözümleri; markanızın tonu, hedef kitlesi
-        ve kampanya ritmiyle uyumlu bir vitrin diliyle hazırlanır.
-      </p>
-      <div class="hero-actions">
-        <a class="button-primary" href={withBase("/kategoriler")}>Koleksiyonları keşfet</a>
-        <a class="button-secondary" href={withBase("/teklif-al")}>Teklif al</a>
-      </div>
-      <div class="hero-proof" aria-label="Queen Promosyon hizmet odağı">
-        <span>Kurumsal hediye</span>
-        <span>Logo baskı</span>
-        <span>Özel üretim</span>
-      </div>
-    </div>
+  <div class="shop-ribbon">
+    <p>Türkiye’nin her yerine kurumsal üretim ve teslimat. <a href={withBase("/baski-ve-uretim-sureci")}>Süreci inceleyin <span>›</span></a></p>
+  </div>
 
-    <div class="hero-showcase" aria-label="Queen Promosyon ürün vitrini" data-reveal>
-      <div class="showcase-orbit" aria-hidden="true"></div>
-      <img class="showcase-main" src={withBase("/assets/images/queen-promosyon-hero-defter-kalem.webp")} alt="Queen Promosyon defter ve kalem seti" width="900" height="720" />
-      <img class="showcase-float showcase-float-one" src={withBase("/assets/images/queen-promosyon-hero-termos-detay.webp")} alt="Logo baskılı promosyon termos" width="360" height="300" />
-      <img class="showcase-float showcase-float-two" src={withBase("/assets/images/queen-promosyon-hero-teknoloji-detay.webp")} alt="Promosyon teknoloji ürünü" width="360" height="300" />
-      <div class="showcase-ribbon" aria-hidden="true">Logo baskılı kurumsal ürünler</div>
-      <div class="showcase-ledger" aria-hidden="true">
-        <span>Queen seçkisi</span>
-        <strong>{categories.length} kategori</strong>
+  <div class="apple-home">
+    <section class="apple-hero apple-hero-workspace" aria-labelledby="hero-title">
+      <div class="hero-product-shell">
+        <div class="apple-hero-copy apple-hero-copy-dark" data-reveal="copy">
+          <span>Queen Promosyon</span>
+          <h1 id="hero-title">Markanızın.<br />En iyi hali.</h1>
+          <p>İnsanların gerçekten kullanmak isteyeceği kurumsal ürünler.</p>
+          <div class="apple-actions">
+            <a class="apple-button" href={withBase("/kategoriler")}>Koleksiyonu keşfedin</a>
+            <a class="apple-button apple-button-outline" href={withBase("/teklif-al")}>Teklif alın</a>
+          </div>
+        </div>
+        <figure class="hero-product-visual" data-reveal="media">
+          <img data-parallax src={withBase("/assets/images/queen-home-hero-stationery.webp")} alt="Açık renkli çalışma masasında defter ve kalem seçkisi" width="2400" height="3600" />
+        </figure>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="brand-experience" aria-label="Queen Promosyon marka vitrini">
-    <div class="brand-experience-copy" data-reveal>
-      <span class="eyebrow">Marka vitrini</span>
-      <h2>Promosyon ürünü sadece ürün değil, markanın elde taşınan hali.</h2>
-      <p>
-        Set kurgusu, baskı tekniği, renk uyumu ve teslim süreci tek bir kurumsal izlenim oluşturur.
-        Queen Promosyon bu izlenimi sıcak, premium ve hatırlanabilir bir web deneyimiyle sunar.
-      </p>
-    </div>
-
-    <div class="experience-stage" data-reveal>
-      {experienceTiles.map((tile, index) => (
-        <a class={`experience-tile experience-tile-${index + 1}`} href={withBase(tile.href)}>
-          <img src={withBase(tile.image)} alt={tile.alt} loading="lazy" width="620" height="520" />
-          <strong>
-            {tile.title}
-            <small>{tile.text}</small>
-          </strong>
-        </a>
-      ))}
-      <div class="experience-seal" aria-hidden="true">
-        <span>Queen</span>
-        <strong>Promosyon</strong>
+    <section class="apple-hero apple-hero-bottle" aria-labelledby="bottle-title">
+      <div class="apple-hero-copy apple-hero-copy-dark" data-reveal="copy">
+        <span>Termos & Matara</span>
+        <h2 id="bottle-title">Her gün görünür.<br />Her yudumda hatırlanır.</h2>
+        <p>Uzun ömürlü kullanım için seçilen premium modeller.</p>
+        <div class="apple-actions">
+          <a class="apple-button" href={withBase("/kategoriler/termos-matara")}>Daha fazla bilgi</a>
+          <a class="apple-button apple-button-outline" href={withBase("/teklif-al")}>Teklif alın</a>
+        </div>
       </div>
-    </div>
+      <img data-parallax src={withBase("/assets/images/queen-apple-bottle.webp")} alt="Yeşil tonlu çelik matara" loading="lazy" width="1800" height="2700" />
+    </section>
 
-    <div class="category-marquee" data-reveal aria-label="Queen Promosyon ürün kategorileri">
-      <div class="category-marquee-track">
-        {categoryLoop.map((category) => (
+    <section class="apple-hero apple-hero-tech" aria-labelledby="tech-title">
+      <div class="tech-story-shell">
+        <div class="apple-hero-copy apple-hero-copy-dark" data-reveal="copy">
+          <span>Teknoloji Ürünleri</span>
+          <h2 id="tech-title">Gücünüz yanınızda.<br />Markanız akılda.</h2>
+          <p>Powerbank, USB ve günlük kullanıma hazır şarj çözümleri.</p>
+          <div class="apple-actions">
+            <a class="apple-button" href={withBase("/kategoriler/powerbank")}>Ürünleri keşfedin</a>
+            <a class="apple-button apple-button-outline" href={withBase("/teklif-al")}>Teklif alın</a>
+          </div>
+        </div>
+        <figure class="tech-product-visual" data-reveal="media">
+          <img data-parallax src={withBase("/assets/images/queen-home-tech-powerbank.webp")} alt="Beyaz powerbank ve mavi çoklu şarj kabloları" loading="lazy" width="2400" height="1600" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="category-showcase" aria-labelledby="category-title">
+      <div class="category-showcase-heading" data-reveal="heading">
+        <h2 id="category-title">Tüm ürünler. <span>Markanız için en iyisini seçin.</span></h2>
+        <a href={withBase("/kategoriler")}>Tüm kategorileri görün <span>›</span></a>
+      </div>
+      <div class="category-rail" data-reveal="rail">
+        {categoryRail.map((category) => (
           <a href={withBase(`/kategoriler/${category.slug}`)}>
-            <span>{category.eyebrow}</span>
+            <figure>
+              <img src={withBase(category.image)} alt={category.alt} loading="lazy" width="320" height="240" />
+            </figure>
             <strong>{category.title}</strong>
+            <span>{category.eyebrow}</span>
           </a>
         ))}
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="metric-band" aria-label="Queen Promosyon katalog özeti" data-reveal>
-    <div>
-      <strong>10+</strong>
-      <span>Ana ürün kategorisi</span>
-    </div>
-    <div>
-      <strong>3</strong>
-      <span>Baskı ve üretim önerisi</span>
-    </div>
-    <div>
-      <strong>24 sa</strong>
-      <span>Hızlı dönüş odağı</span>
-    </div>
-  </section>
+    <section class="apple-highlights" data-highlights aria-labelledby="highlights-title">
+      <div class="apple-highlights-heading" data-reveal="heading">
+        <h2 id="highlights-title">İşte öne çıkanlar. <span>Queen dünyasından dört başlık.</span></h2>
+      </div>
 
-  <section class="portal-panels" aria-label="Queen Promosyon sayfa yönlendirmeleri">
-    {portalLinks.map((item, index) => (
-      <a href={withBase(item.href)} data-reveal style={`--panel-index: ${index + 1}`}>
-        <span>{String(index + 1).padStart(2, "0")}</span>
-        <strong>{item.label}</strong>
-        <p>{item.text}</p>
-      </a>
-    ))}
-  </section>
+      <div class="highlight-track" data-highlight-track tabindex="0" aria-label="Öne çıkan Queen çözümleri">
+        {highlights.map((highlight, index) => (
+          <article class={`highlight-slide ${highlight.theme}`} data-highlight-slide aria-label={`${index + 1} / ${highlights.length}: ${highlight.title}`}>
+            <div class="highlight-copy">
+              <span>{highlight.eyebrow}</span>
+              <h3>{highlight.title}</h3>
+              <p>{highlight.text}</p>
+              <a href={withBase(highlight.href)}>Daha fazla bilgi <span aria-hidden="true">›</span></a>
+            </div>
 
-  <section class="section-block home-snapshot">
-    <SectionHeading
-      eyebrow="Katalog kapıları"
-      title="Öne çıkan kategori girişleri"
-      text="Kurumsal hediye, ofis, tekstil ve çanta gruplarını görsel bir vitrin akışıyla keşfedin."
-    />
-    <div class="category-grid">
-      {featuredCategories.map((category, index) => (
-        <CategoryCard category={category} large={index === 0} index={index} />
+            {highlight.images ? (
+              <div class="highlight-triptych" aria-hidden="true">
+                {highlight.images.map((image) => (
+                  <figure><img src={withBase(image.src)} alt={image.alt} loading="lazy" width="900" height="900" /></figure>
+                ))}
+              </div>
+            ) : highlight.image ? (
+              <figure class="highlight-visual">
+                <img src={withBase(highlight.image.src)} alt={highlight.image.alt} loading="lazy" width="1800" height="1200" />
+              </figure>
+            ) : null}
+          </article>
+        ))}
+      </div>
+
+      <div class="highlight-controls" aria-label="Öne çıkanlar kontrolleri">
+        <div class="highlight-pagination">
+          {highlights.map((highlight, index) => (
+            <button type="button" data-highlight-dot aria-label={`${index + 1}. başlığa git: ${highlight.title}`} aria-current={index === 0 ? "true" : "false"}><span></span></button>
+          ))}
+        </div>
+        <button class="highlight-toggle" type="button" data-highlight-toggle aria-pressed="false">Duraklat</button>
+      </div>
+      <span class="sr-only" data-highlight-status aria-live="polite"></span>
+    </section>
+
+    <section class="apple-promo-grid" aria-label="Öne çıkan Queen koleksiyonları">
+      {promoTiles.map((tile) => (
+        <article class={`apple-promo-tile ${tile.className}`} data-reveal>
+          <img src={withBase(tile.image)} alt={tile.alt} loading="lazy" width="1800" height="1350" />
+          <div>
+            <span>{tile.eyebrow}</span>
+            <h2>{tile.title}</h2>
+            <p>{tile.text}</p>
+            <div class="apple-tile-actions">
+              <a class="apple-button apple-button-small" href={withBase(tile.href)}>Daha fazla bilgi</a>
+              <a class="apple-round-link" href={withBase("/teklif-al")} aria-label={`${tile.eyebrow} için teklif alın`}>+</a>
+            </div>
+          </div>
+        </article>
       ))}
-    </div>
-  </section>
+    </section>
 
-  <section class="section-block alt-band home-products">
-    <SectionHeading
-      eyebrow="Hızlı bakış"
-      title="Popüler ürünlerden kısa vitrin"
-      text="Markaların sık tercih ettiği ürünleri kısa bir vitrin akışıyla inceleyin."
-    />
-    <div class="product-grid">
-      {popularProducts.map((product) => <ProductCard product={product} />)}
-    </div>
-    <div class="section-action" data-reveal>
-      <a class="button-primary" href={withBase("/urunler")}>Tüm ürünleri listele</a>
-    </div>
-  </section>
+    <section class="apple-services" aria-labelledby="services-title">
+      <div class="apple-services-heading" data-reveal="heading">
+        <h2 id="services-title">Queen farkı. <span>Kurumsal siparişin her adımında.</span></h2>
+      </div>
+      <div class="apple-service-grid">
+        <article data-reveal>
+          <span class="service-index" aria-hidden="true">01</span>
+          <h3>Size özel ürün seçimi.</h3>
+          <p>Hedef kitlenize, bütçenize ve kullanım senaryonuza uygun ürünleri birlikte belirleyin.</p>
+          <a href={withBase("/kategoriler")} aria-label="Ürün seçimi hakkında daha fazla bilgi">+</a>
+        </article>
+        <article data-reveal>
+          <span class="service-index" aria-hidden="true">02</span>
+          <h3>Markanıza uygun baskı.</h3>
+          <p>Lazer, serigrafi, UV ve tekstil uygulamalarında ürüne en uygun üretim tekniği.</p>
+          <a href={withBase("/baski-ve-uretim-sureci")} aria-label="Baskı seçenekleri hakkında daha fazla bilgi">+</a>
+        </article>
+        <article data-reveal>
+          <span class="service-index" aria-hidden="true">03</span>
+          <h3>Türkiye geneli teslimat.</h3>
+          <p>Üretim, kalite kontrol, paketleme ve sevkiyat tek bir akışta takip edilir.</p>
+          <a href={withBase("/iletisim")} aria-label="Teslimat hakkında daha fazla bilgi">+</a>
+        </article>
+        <article data-reveal>
+          <span class="service-index" aria-hidden="true">04</span>
+          <h3>Teklif boyunca destek.</h3>
+          <p>Ürün seçiminizden teslimata kadar Queen ekibiyle doğrudan iletişim kurun.</p>
+          <a href={withBase("/teklif-al")} aria-label="Teklif desteği hakkında daha fazla bilgi">+</a>
+        </article>
+      </div>
+    </section>
 
-  <section class="split-cta">
-    <div data-reveal>
-      <span class="eyebrow">Sonraki adım</span>
-      <h2>Doğru ürünü seçin, baskı ve teslim detaylarını birlikte netleştirelim.</h2>
-    </div>
-    <div class="split-cta-actions" data-reveal>
-      <a class="button-primary" href={withBase("/kategoriler")}>Kategori seç</a>
-      <a class="button-secondary" href={withBase("/baski-ve-uretim-sureci")}>Baskı sürecini incele</a>
-    </div>
-  </section>
+    <section class="apple-final-cta" data-reveal>
+      <div>
+        <span>Queen for Business</span>
+        <h2>Bir sonraki projenizi<br />birlikte tasarlayalım.</h2>
+        <p>Ürünü, adedi ve teslim tarihini paylaşın. En doğru çözümü hazırlayalım.</p>
+        <a class="apple-button" href={withBase("/teklif-al")}>Teklif alın</a>
+      </div>
+    </section>
+  </div>
 </BaseLayout>

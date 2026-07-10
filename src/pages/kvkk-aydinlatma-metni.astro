@@ -1,0 +1,72 @@
+---
+import LegalPage from "@components/LegalPage.astro";
+import { site } from "@data/site";
+---
+
+<LegalPage
+  title="KVKK Aydınlatma Metni"
+  description="Queen Promosyon internet sitesi ziyaretçileri ve teklif talebinde bulunan kişiler için kişisel verilerin işlenmesine ilişkin aydınlatma metni."
+  canonical="/kvkk-aydinlatma-metni"
+  eyebrow="Kişisel veriler"
+  intro="Bu metin, Queen Promosyon internet sitesini ziyaret ettiğinizde veya bizimle iletişime geçtiğinizde kişisel verilerinizin nasıl işlendiğini açıklar."
+>
+  <section>
+    <h2>1. Veri sorumlusu</h2>
+    <p>
+      6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında veri sorumlusu {site.legalName}’dur.
+      Veri koruma konularındaki taleplerinizi <a href={`mailto:${site.email}`}>{site.email}</a> adresine iletebilirsiniz.
+    </p>
+  </section>
+  <section>
+    <h2>2. İşlenen kişisel veriler</h2>
+    <p>Siteyi kullanım ve bizimle iletişim biçiminize göre aşağıdaki veri kategorileri işlenebilir:</p>
+    <ul>
+      <li>İletişim verileri: e-posta adresi ve iletişim sırasında paylaştığınız telefon bilgisi.</li>
+      <li>Talep verileri: ürün, adet, baskı, teslimat şehri ve proje notları.</li>
+      <li>İşlem güvenliği verileri: IP adresi, tarih-saat ve temel sunucu kayıtları.</li>
+      <li>Tercih verileri: çerez ve yerel depolama tercihleri.</li>
+    </ul>
+  </section>
+  <section>
+    <h2>3. İşleme amaçları</h2>
+    <ul>
+      <li>Teklif ve bilgi taleplerini yanıtlamak.</li>
+      <li>Ürün, baskı, üretim ve teslimat seçeneklerini planlamak.</li>
+      <li>İletişim güvenliğini ve hizmet sürekliliğini sağlamak.</li>
+      <li>Mevzuattan doğan yükümlülükleri yerine getirmek ve olası uyuşmazlıklarda hakları korumak.</li>
+    </ul>
+  </section>
+  <section>
+    <h2>4. Toplama yöntemi ve hukuki sebepler</h2>
+    <p>
+      Veriler; site ziyareti sırasında otomatik yollarla, e-posta bağlantıları üzerinden veya sizin doğrudan
+      paylaşımınızla elektronik ortamda toplanır. İşleme faaliyetleri; bir sözleşmenin kurulması veya ifası,
+      hukuki yükümlülük, bir hakkın tesisi ya da korunması, meşru menfaat ve gerekli durumlarda açık rıza
+      hukuki sebeplerine dayanır.
+    </p>
+  </section>
+  <section>
+    <h2>5. Verilerin aktarılması</h2>
+    <p>
+      Kişisel verileriniz, amaçla sınırlı olmak üzere barındırma ve e-posta hizmeti sağlayıcılarına,
+      üretim ve lojistik süreçlerinde görev alan tedarikçilere ve kanunen yetkili kamu kurumlarına aktarılabilir.
+      Her aktarımda veri minimizasyonu ve gerekli güvenlik önlemleri esas alınır.
+    </p>
+  </section>
+  <section>
+    <h2>6. Saklama süresi</h2>
+    <p>
+      Veriler, işleme amacı için gerekli süre ve ilgili mevzuatta öngörülen zamanaşımı veya saklama süreleri
+      boyunca tutulur; süre sonunda silinir, yok edilir veya anonim hale getirilir.
+    </p>
+  </section>
+  <section>
+    <h2>7. KVKK kapsamındaki haklarınız</h2>
+    <p>
+      KVKK’nın 11. maddesi kapsamında verilerinizin işlenip işlenmediğini öğrenme, bilgi talep etme,
+      düzeltilmesini veya silinmesini isteme, aktarıldığı üçüncü kişilere bildirilmesini talep etme ve kanunda
+      belirtilen diğer haklara sahipsiniz. Başvurunuzu kimliğinizi doğrulamaya yarayan bilgilerle birlikte
+      <a href={`mailto:${site.email}`}>{site.email}</a> adresine iletebilirsiniz.
+    </p>
+  </section>
+</LegalPage>

@@ -1,6 +1,7 @@
 ---
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
+import CookieConsent from "@components/CookieConsent.astro";
 import { site } from "@data/site";
 import { withBase } from "@utils/paths";
 import "@styles/global.css";
@@ -51,7 +52,7 @@ const organizationSchema = {
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content={robots} />
-    <meta name="theme-color" content="#352218" />
+    <meta name="theme-color" content="#f5f5f7" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="tr_TR" />
     <meta property="og:site_name" content={site.name} />
@@ -72,6 +73,7 @@ const organizationSchema = {
       <slot />
     </main>
     <Footer />
+    <CookieConsent />
     <script is:inline define:vars={{ contactEmail: site.email }}>
       document.documentElement.classList.add("motion-ready");
 
@@ -93,6 +95,14 @@ const organizationSchema = {
 
       const revealItems = document.querySelectorAll("[data-reveal]");
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const siteHeader = document.querySelector(".site-header");
+
+      const updateHeaderState = () => {
+        siteHeader?.classList.toggle("is-scrolled", window.scrollY > 10);
+      };
+
+      updateHeaderState();
+      window.addEventListener("scroll", updateHeaderState, { passive: true });
 
       if (!prefersReducedMotion && "IntersectionObserver" in window) {
         const observer = new IntersectionObserver(
@@ -110,6 +120,125 @@ const organizationSchema = {
         revealItems.forEach((item) => observer.observe(item));
       } else {
         revealItems.forEach((item) => item.classList.add("is-visible"));
+      }
+
+      const parallaxItems = [...document.querySelectorAll("[data-parallax]")];
+      let parallaxFrame = 0;
+
+      const updateParallax = () => {
+        parallaxFrame = 0;
+        const viewportHeight = window.innerHeight;
+        parallaxItems.forEach((item) => {
+          const anchor = item.parentElement || item;
+          const rect = anchor.getBoundingClientRect();
+          if (rect.bottom < -100 || rect.top > viewportHeight + 100) return;
+          const centerDelta = viewportHeight / 2 - (rect.top + rect.height / 2);
+          const progress = Math.max(-1, Math.min(1, centerDelta / (viewportHeight + rect.height)));
+          item.style.setProperty("--parallax-y", `${(progress * 28).toFixed(2)}px`);
+        });
+      };
+
+      if (!prefersReducedMotion && parallaxItems.length) {
+        updateParallax();
+        window.addEventListener("scroll", () => {
+          if (!parallaxFrame) parallaxFrame = requestAnimationFrame(updateParallax);
+        }, { passive: true });
+        window.addEventListener("resize", updateParallax);
+      }
+
+      const highlightSection = document.querySelector("[data-highlights]");
+      const highlightTrack = highlightSection?.querySelector("[data-highlight-track]");
+      const highlightSlides = [...(highlightSection?.querySelectorAll("[data-highlight-slide]") || [])];
+      const highlightDots = [...(highlightSection?.querySelectorAll("[data-highlight-dot]") || [])];
+      const highlightToggle = highlightSection?.querySelector("[data-highlight-toggle]");
+      const highlightStatus = highlightSection?.querySelector("[data-highlight-status]");
+
+      if (highlightSection && highlightTrack && highlightSlides.length) {
+        let highlightIndex = 0;
+        let highlightPaused = prefersReducedMotion;
+        let highlightInView = false;
+        let highlightTimer = 0;
+        let highlightScrollFrame = 0;
+
+        const syncHighlightControls = () => {
+          highlightDots.forEach((dot, index) => dot.setAttribute("aria-current", String(index === highlightIndex)));
+          highlightSection.classList.toggle("is-playing", !highlightPaused);
+          if (highlightToggle) {
+            highlightToggle.textContent = highlightPaused ? "Oynat" : "Duraklat";
+            highlightToggle.setAttribute("aria-pressed", String(highlightPaused));
+          }
+          if (highlightStatus) highlightStatus.textContent = `${highlightIndex + 1}. başlık gösteriliyor.`;
+        };
+
+        const scheduleHighlight = () => {
+          window.clearInterval(highlightTimer);
+          if (!highlightPaused && highlightInView) {
+            highlightTimer = window.setInterval(() => {
+              goToHighlight((highlightIndex + 1) % highlightSlides.length);
+            }, 5600);
+          }
+        };
+
+        const goToHighlight = (index, behavior = "smooth") => {
+          highlightIndex = (index + highlightSlides.length) % highlightSlides.length;
+          const slide = highlightSlides[highlightIndex];
+          const paddingLeft = Number.parseFloat(getComputedStyle(highlightTrack).paddingLeft) || 0;
+          const left = slide.offsetLeft - highlightTrack.offsetLeft - paddingLeft;
+          highlightTrack.scrollTo({ left, behavior });
+          syncHighlightControls();
+          scheduleHighlight();
+        };
+
+        highlightDots.forEach((dot, index) => {
+          dot.addEventListener("click", () => goToHighlight(index));
+        });
+
+        highlightToggle?.addEventListener("click", () => {
+          highlightPaused = !highlightPaused;
+          syncHighlightControls();
+          scheduleHighlight();
+        });
+
+        highlightTrack.addEventListener("scroll", () => {
+          if (highlightScrollFrame) return;
+          highlightScrollFrame = requestAnimationFrame(() => {
+            highlightScrollFrame = 0;
+            const currentLeft = highlightTrack.scrollLeft;
+            let closestIndex = 0;
+            let closestDistance = Number.POSITIVE_INFINITY;
+            highlightSlides.forEach((slide, index) => {
+              const paddingLeft = Number.parseFloat(getComputedStyle(highlightTrack).paddingLeft) || 0;
+              const distance = Math.abs(currentLeft - (slide.offsetLeft - highlightTrack.offsetLeft - paddingLeft));
+              if (distance < closestDistance) {
+                closestDistance = distance;
+                closestIndex = index;
+              }
+            });
+            if (closestIndex !== highlightIndex) {
+              highlightIndex = closestIndex;
+              syncHighlightControls();
+              scheduleHighlight();
+            }
+          });
+        }, { passive: true });
+
+        if ("IntersectionObserver" in window) {
+          const highlightObserver = new IntersectionObserver((entries) => {
+            highlightInView = Boolean(entries[0]?.isIntersecting);
+            scheduleHighlight();
+          }, { threshold: 0.28 });
+          highlightObserver.observe(highlightSection);
+        } else {
+          highlightInView = true;
+        }
+
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) window.clearInterval(highlightTimer);
+          else scheduleHighlight();
+        });
+
+        syncHighlightControls();
+        scheduleHighlight();
       }
 
       document.querySelectorAll("[data-quote-product]").forEach((button) => {
@@ -132,6 +261,86 @@ const organizationSchema = {
           });
           window.location.href = `mailto:${contactEmail}?${params.toString()}`;
         });
+      });
+
+      const consentKey = "queen_cookie_consent_v1";
+      const cookieBanner = document.querySelector("[data-cookie-banner]");
+      const cookieModal = document.querySelector("[data-cookie-modal]");
+      const analyticsToggle = document.querySelector("[data-cookie-analytics]");
+      const marketingToggle = document.querySelector("[data-cookie-marketing]");
+      let cookieReturnFocus = null;
+
+      const readConsent = () => {
+        try {
+          const value = localStorage.getItem(consentKey);
+          return value ? JSON.parse(value) : null;
+        } catch {
+          return null;
+        }
+      };
+
+      const applyConsent = (consent) => {
+        document.documentElement.dataset.analyticsConsent = consent.analytics ? "granted" : "denied";
+        document.documentElement.dataset.marketingConsent = consent.marketing ? "granted" : "denied";
+        window.dispatchEvent(new CustomEvent("queen:consent-updated", { detail: consent }));
+      };
+
+      const saveConsent = (analytics, marketing) => {
+        const consent = {
+          necessary: true,
+          analytics,
+          marketing,
+          updatedAt: new Date().toISOString(),
+        };
+        try {
+          localStorage.setItem(consentKey, JSON.stringify(consent));
+        } catch {}
+        applyConsent(consent);
+        if (cookieBanner) cookieBanner.hidden = true;
+        closeCookieModal();
+      };
+
+      const openCookieModal = (trigger) => {
+        cookieReturnFocus = trigger || document.activeElement;
+        const consent = readConsent();
+        if (analyticsToggle) analyticsToggle.checked = Boolean(consent?.analytics);
+        if (marketingToggle) marketingToggle.checked = Boolean(consent?.marketing);
+        if (cookieModal) cookieModal.hidden = false;
+        document.body.classList.add("cookie-modal-open");
+        document.querySelector("[data-cookie-close]")?.focus();
+      };
+
+      function closeCookieModal() {
+        if (cookieModal) cookieModal.hidden = true;
+        document.body.classList.remove("cookie-modal-open");
+        if (cookieReturnFocus instanceof HTMLElement) cookieReturnFocus.focus();
+        cookieReturnFocus = null;
+      }
+
+      const existingConsent = readConsent();
+      if (existingConsent) {
+        applyConsent(existingConsent);
+      } else if (cookieBanner) {
+        cookieBanner.hidden = false;
+      }
+
+      document.querySelector("[data-cookie-reject]")?.addEventListener("click", () => saveConsent(false, false));
+      document.querySelector("[data-cookie-accept]")?.addEventListener("click", () => saveConsent(true, true));
+      document.querySelector("[data-cookie-customize]")?.addEventListener("click", (event) => openCookieModal(event.currentTarget));
+      document.querySelector("[data-cookie-modal-reject]")?.addEventListener("click", () => saveConsent(false, false));
+      document.querySelector("[data-cookie-modal-accept]")?.addEventListener("click", () => saveConsent(true, true));
+      document.querySelector("[data-cookie-save]")?.addEventListener("click", () => {
+        saveConsent(Boolean(analyticsToggle?.checked), Boolean(marketingToggle?.checked));
+      });
+      document.querySelector("[data-cookie-close]")?.addEventListener("click", closeCookieModal);
+      document.querySelectorAll("[data-cookie-settings]").forEach((button) => {
+        button.addEventListener("click", (event) => openCookieModal(event.currentTarget));
+      });
+      cookieModal?.addEventListener("click", (event) => {
+        if (event.target === cookieModal) closeCookieModal();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && cookieModal && !cookieModal.hidden) closeCookieModal();
       });
     </script>
   </body>

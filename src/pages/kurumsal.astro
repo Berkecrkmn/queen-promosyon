@@ -3,79 +3,89 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import Breadcrumbs from "@components/Breadcrumbs.astro";
 import SectionHeading from "@components/SectionHeading.astro";
 import QuotePanel from "@components/QuotePanel.astro";
+import { categories, products } from "@data/catalog";
 import { site } from "@data/site";
+import { withBase } from "@utils/paths";
 
 const aboutSchema = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
-  name: "Queen Promosyon Kurumsal",
+  name: "Queen Promosyon Hakkımızda",
   url: `${site.url}/kurumsal`,
 };
 ---
 
 <BaseLayout
-  title="Kurumsal"
-  description="Queen Promosyon, markalar için logolu promosyon ürünleri, kurumsal hediye setleri ve baskılı tanıtım çözümleri sunar."
+  title="Hakkımızda"
+  description="Queen Promosyon; markalar için kurumsal hediye, promosyon ürünü, baskı ve üretim süreçlerini tek akışta yöneten çözüm ortağıdır."
   canonical="/kurumsal"
   structuredData={aboutSchema}
 >
-  <section class="page-hero">
-    <Breadcrumbs items={[{ label: "Kurumsal" }]} />
-    <div data-reveal>
-      <span class="eyebrow">Kurumsal yaklaşım</span>
-      <h1>Promosyonu sadece ürün değil, marka teması olarak ele alıyoruz.</h1>
+  <section class="about-hero">
+    <div class="about-hero-copy" data-reveal>
+      <Breadcrumbs items={[{ label: "Hakkımızda" }]} />
+      <span class="eyebrow">Queen Promosyon</span>
+      <h1>Markanızın elde tutulan halini tasarlıyoruz.</h1>
       <p>
-        Queen Promosyon, kurumsal markaların müşteri, çalışan, bayi ve etkinlik iletişiminde tutarlı,
-        kaliteli ve hatırlanabilir ürün deneyimleri tasarlaması için kuruldu.
+        Kurumsal hediyeden etkinlik ürünlerine kadar; doğru ürün, doğru baskı ve doğru teslim planını
+        tek bir özenli süreçte buluşturuyoruz.
       </p>
     </div>
+    <figure data-reveal>
+      <img src={withBase("/assets/images/queen-promosyon-kurumsal-kimlik-baski-seti.webp")} alt="Kurumsal kimlik ve baskı ürünleri için minimal çalışma alanı" width="960" height="780" />
+    </figure>
   </section>
 
-  <section class="editorial-grid">
-    <article data-reveal>
-      <span>01</span>
-      <h2>Seçilebilir katalog</h2>
-      <p>
-        Kategoriler, gerçek satın alma niyetlerine göre ayrılır. Kullanıcı ürün grubunu hızlı bulur,
-        detay sayfasında minimum adet ve baskı bilgisini görür.
-      </p>
-    </article>
-    <article data-reveal>
-      <span>02</span>
-      <h2>Markaya uygun sunum</h2>
-      <p>
-        Gold, krem ve koyu tonlardan oluşan premium dil, Queen’in kurumsal hediye algısını destekler;
-        sade ama ayırt edilebilir bir deneyim oluşturur.
-      </p>
-    </article>
-    <article data-reveal>
-      <span>03</span>
-      <h2>Teklif odaklı akış</h2>
-      <p>
-        İlk sürümde sepete veya ödeme sistemine gerek duymadan, ürün ve kategori sayfalarından doğrudan
-        teklif talebi oluşturulur.
-      </p>
-    </article>
+  <section class="about-stats" aria-label="Queen Promosyon katalog özeti" data-reveal>
+    <div><strong>{categories.length}</strong><span>Ana kategori</span></div>
+    <div><strong>{products.length}+</strong><span>Ürün başlangıcı</span></div>
+    <div><strong>4</strong><span>Net üretim adımı</span></div>
+    <div><strong>TR</strong><span>Türkiye geneli teslimat</span></div>
+  </section>
+
+  <section class="about-story section-block">
+    <SectionHeading
+      eyebrow="Yaklaşımımız"
+      title="İyi promosyon, dağıtıldığı gün değil kullanıldığı her gün değer üretir."
+      text="Bu nedenle kataloğu yalnızca fiyat veya adet üzerinden değil; kullanım değeri, marka uyumu ve üretim gerçekliği üzerinden kurguluyoruz."
+    />
+    <div class="about-story-grid">
+      <article data-reveal>
+        <span>01</span>
+        <h3>Önce ihtiyacı anlarız.</h3>
+        <p>Hedef kitleyi, kullanım anını, bütçeyi ve teslim tarihini birlikte netleştiririz.</p>
+      </article>
+      <article data-reveal>
+        <span>02</span>
+        <h3>Ürünü markaya uyarlarız.</h3>
+        <p>Renk, logo alanı, baskı tekniği ve ambalaj seçimini bütün bir marka deneyimi olarak ele alırız.</p>
+      </article>
+      <article data-reveal>
+        <span>03</span>
+        <h3>Üretimi takip ederiz.</h3>
+        <p>Onaydan kalite kontrole, paketlemeden sevkiyata kadar süreci görünür ve takip edilebilir tutarız.</p>
+      </article>
+    </div>
   </section>
 
   <section class="section-block alt-band">
     <SectionHeading
-      eyebrow="Kime uygun?"
-      title="Bayi, etkinlik, lansman ve çalışan deneyimleri için"
-      text="Queen Promosyon yapısı, promosyon satın alma sürecini hem kurumsal ekipler hem de ajanslar için hızlı okunur hale getirir."
+      eyebrow="Kimlerle çalışıyoruz?"
+      title="Satın alma, pazarlama ve ajans ekipleri için tek temas noktası."
+      text="Fuar, lansman, çalışan deneyimi, bayi iletişimi ve dönemsel kampanyalarda ürün araştırmasını hızlandıran bir katalog ve teklif yapısı sunuyoruz."
     />
     <div class="audience-grid">
       <div data-reveal>
         <h3>Satın alma ekipleri</h3>
-        <p>Ürün grubu, adet, baskı ve teslim bilgilerini hızlı değerlendirir.</p>
+        <p>Adet, termin, baskı ve teslim bilgilerini tek akışta değerlendirir.</p>
       </div>
       <div data-reveal>
         <h3>Pazarlama ekipleri</h3>
-        <p>Kampanya, fuar ve lansman hedeflerine göre görünürlük etkisini planlar.</p>
+        <p>Kampanyaya uygun ürünleri marka tonu ve hedef kitleyle birlikte seçer.</p>
       </div>
       <div data-reveal>
         <h3>Ajanslar</h3>
-        <p>Müşteri brieflerine uygun ürünleri kısa listeler ve teklif sürecini hızlandırır.</p>
+        <p>Müşteri brieflerine uygun alternatifleri hızla kısa listeye dönüştürür.</p>
       </div>
     </div>
   </section>

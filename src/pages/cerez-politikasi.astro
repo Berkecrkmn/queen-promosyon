@@ -1,0 +1,60 @@
+---
+import LegalPage from "@components/LegalPage.astro";
+import { site } from "@data/site";
+---
+
+<LegalPage
+  title="Çerez Politikası"
+  description="Queen Promosyon internet sitesinde kullanılan çerezler ve ziyaretçi tercih yönetimine ilişkin politika."
+  canonical="/cerez-politikasi"
+  eyebrow="Çerezler"
+  intro="Bu politika, sitede kullanılan çerez ve benzeri teknolojilerin amaçlarını ve tercihlerinizi nasıl yönetebileceğinizi açıklar."
+>
+  <section>
+    <h2>Çerez ve benzeri teknolojiler nedir?</h2>
+    <p>
+      Çerezler internet sitelerinin tarayıcınıza kaydettiği küçük bilgi parçalarıdır. Bu sitede tercihlerinizi
+      hatırlamak için tarayıcının yerel depolama özelliği de kullanılabilir.
+    </p>
+  </section>
+  <section>
+    <h2>Kullanım kategorileri</h2>
+    <div class="legal-table-wrap">
+      <table>
+        <thead><tr><th>Kategori</th><th>Amaç</th><th>Varsayılan durum</th></tr></thead>
+        <tbody>
+          <tr><td>Kesinlikle gerekli</td><td>Güvenlik, temel site işlevleri ve çerez tercihinizin hatırlanması.</td><td>Her zaman açık</td></tr>
+          <tr><td>Analitik</td><td>Ziyaretlerin toplu olarak ölçülmesi ve sitenin iyileştirilmesi.</td><td>Onay verilene kadar kapalı</td></tr>
+          <tr><td>Pazarlama</td><td>İlgi alanına dayalı iletişim ve reklam ölçümü.</td><td>Onay verilene kadar kapalı</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section>
+    <h2>Mevcut teknoloji listesi</h2>
+    <div class="legal-table-wrap">
+      <table>
+        <thead><tr><th>Ad</th><th>Sağlayıcı</th><th>Amaç</th><th>Süre</th></tr></thead>
+        <tbody>
+          <tr><td>queen_cookie_consent_v1</td><td>Queen Promosyon</td><td>Çerez tercihlerini hatırlamak için tarayıcı yerel depolamasında tutulur.</td><td>12 ay</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Sitede şu anda analitik veya pazarlama amaçlı bir takip aracı etkin değildir. Bu tür araçlar eklenirse,
+      ilgili bilgiler bu sayfada güncellenecek ve araçlar yalnızca onayınızdan sonra çalıştırılacaktır.
+    </p>
+  </section>
+  <section>
+    <h2>Tercihlerinizi yönetme</h2>
+    <p>
+      İlk ziyaretinizde görünen panel üzerinden tümünü kabul edebilir, reddedebilir veya kategori bazında
+      seçim yapabilirsiniz. Tercihinizi daha sonra sayfanın altındaki “Çerez Tercihleri” bağlantısından
+      değiştirebilirsiniz. Ayrıca tarayıcı ayarlarınızdan kayıtlı verileri silebilirsiniz.
+    </p>
+  </section>
+  <section>
+    <h2>İletişim</h2>
+    <p>Çerez kullanımıyla ilgili sorularınızı <a href={`mailto:${site.email}`}>{site.email}</a> adresine iletebilirsiniz.</p>
+  </section>
+</LegalPage>
