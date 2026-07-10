@@ -27,6 +27,7 @@ const {
 const canonicalUrl = new URL(withBase(canonical), site.url).toString();
 const imageUrl = new URL(withBase(image), site.url).toString();
 const titleTemplate = title.includes(site.name) ? title : `${title} | ${site.name}`;
+const gaMeasurementId = "G-K9Y9B78PYT";
 const schema = Array.isArray(structuredData) ? structuredData : [structuredData];
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -66,6 +67,33 @@ const organizationSchema = {
     <meta name="twitter:image" content={imageUrl} />
     <link rel="icon" type="image/png" href={withBase("/assets/brand/queen-logo-transparent.png")} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify([organizationSchema, ...schema])} />
+    <script is:inline define:vars={{ gaMeasurementId }}>
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function () {
+        window.dataLayer.push(arguments);
+      };
+
+      window.gtag("consent", "default", {
+        analytics_storage: "denied",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        wait_for_update: 500,
+      });
+
+      window.__queenLoadGa4 = () => {
+        if (window.__queenGa4Loaded) return;
+        window.__queenGa4Loaded = true;
+
+        const googleTag = document.createElement("script");
+        googleTag.async = true;
+        googleTag.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaMeasurementId)}`;
+        document.head.appendChild(googleTag);
+
+        window.gtag("js", new Date());
+        window.gtag("config", gaMeasurementId);
+      };
+    </script>
   </head>
   <body>
     <Header />
@@ -282,6 +310,13 @@ const organizationSchema = {
       const applyConsent = (consent) => {
         document.documentElement.dataset.analyticsConsent = consent.analytics ? "granted" : "denied";
         document.documentElement.dataset.marketingConsent = consent.marketing ? "granted" : "denied";
+        window.gtag?.("consent", "update", {
+          analytics_storage: consent.analytics ? "granted" : "denied",
+          ad_storage: consent.marketing ? "granted" : "denied",
+          ad_user_data: consent.marketing ? "granted" : "denied",
+          ad_personalization: consent.marketing ? "granted" : "denied",
+        });
+        if (consent.analytics) window.__queenLoadGa4?.();
         window.dispatchEvent(new CustomEvent("queen:consent-updated", { detail: consent }));
       };
 
