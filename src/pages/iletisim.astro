@@ -2,7 +2,8 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Breadcrumbs from "@components/Breadcrumbs.astro";
 import QuotePanel from "@components/QuotePanel.astro";
-import { site } from "@data/site";
+import { makeMailto, site } from "@data/site";
+import { withBase } from "@utils/paths";
 
 const contactSchema = {
   "@context": "https://schema.org",
@@ -10,6 +11,15 @@ const contactSchema = {
   name: "Queen Promosyon iletişim",
   url: `${site.url}/iletisim`,
 };
+
+const generalMail = [
+  "Merhaba Queen Promosyon,",
+  "",
+  "Aşağıdaki konuda bilgi almak istiyorum:",
+  "",
+  "Konu:",
+  "Mesaj:",
+].join("\n");
 ---
 
 <BaseLayout
@@ -22,17 +32,47 @@ const contactSchema = {
     <div data-reveal>
       <Breadcrumbs items={[{ label: "İletişim" }]} />
       <span class="eyebrow">İletişim</span>
-      <h1>Promosyon ürün talebiniz için Queen ekibine ulaşın.</h1>
+      <h1>Bir ürün fikriyle başlayın. Gerisini birlikte netleştirelim.</h1>
       <p>
-        Ürün adı, adet, baskı notu ve teslimat şehrini paylaşmanız teklif sürecini hızlandırır.
+        Ürün, adet, logo uygulaması ve teslimat şehrini paylaşın. Queen ekibi doğru seçenekleri
+        hazırlayıp size dönüş yapsın.
       </p>
+      <div class="contact-primary-actions">
+        <a class="button-primary" href={withBase("/teklif-al")}>Teklif talebi oluştur</a>
+        <a class="button-secondary" href={makeMailto("Queen Promosyon bilgi talebi", generalMail)}>E-posta gönder</a>
+      </div>
     </div>
 
     <div class="contact-panel" data-reveal>
+      <span class="contact-panel-label">Queen Promosyon</span>
       <h2>İletişim bilgileri</h2>
-      <a href={`mailto:${site.email}`}>{site.email}</a>
-      <p>WhatsApp ve telefon bilgisi eklendiğinde bu alan merkezi config üzerinden güncellenecek.</p>
+      <dl class="contact-details">
+        <div><dt>E-posta</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+        <div><dt>Konum</dt><dd>{site.address}</dd></div>
+        <div><dt>Çalışma saatleri</dt><dd>{site.workingHours}</dd></div>
+      </dl>
     </div>
+  </section>
+
+  <section class="contact-options" aria-label="İletişim konuları">
+    <article data-reveal>
+      <span>01</span>
+      <h2>Ürün ve teklif</h2>
+      <p>Kategori, tahmini adet ve teslim tarihini paylaşarak teklif sürecini başlatın.</p>
+      <a href={withBase("/teklif-al")}>Teklif alın <span>›</span></a>
+    </article>
+    <article data-reveal>
+      <span>02</span>
+      <h2>Baskı ve üretim</h2>
+      <p>Logo alanı, baskı tekniği, numune ve termin adımlarının nasıl ilerlediğini inceleyin.</p>
+      <a href={withBase("/baski-ve-uretim-sureci")}>Süreci görün <span>›</span></a>
+    </article>
+    <article data-reveal>
+      <span>03</span>
+      <h2>Katalog desteği</h2>
+      <p>Briefinize uygun ürünleri bulmak için kategori ve ürün seçkisini birlikte değerlendirelim.</p>
+      <a href={withBase("/kategoriler")}>Kategorileri açın <span>›</span></a>
+    </article>
   </section>
 
   <QuotePanel />

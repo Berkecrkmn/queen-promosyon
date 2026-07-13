@@ -1,0 +1,104 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { categories, products } from "@data/catalog";
+import { withBase } from "@utils/paths";
+
+const primaryPages = [
+  { label: "Anasayfa", href: "/", note: "Queen Promosyon ana vitrini" },
+  { label: "Tüm Kategoriler", href: "/kategoriler", note: "Ürün gruplarını keşfedin" },
+  { label: "Tüm Ürünler", href: "/urunler", note: "Ürün seçkisinin tamamı" },
+  { label: "Teklif Al", href: "/teklif-al", note: "Projeniz için talep oluşturun" },
+];
+
+const companyPages = [
+  { label: "Hakkımızda", href: "/kurumsal" },
+  { label: "Baskı ve Üretim Süreci", href: "/baski-ve-uretim-sureci" },
+  { label: "İletişim", href: "/iletisim" },
+];
+
+const legalPages = [
+  { label: "KVKK Aydınlatma Metni", href: "/kvkk-aydinlatma-metni" },
+  { label: "Gizlilik Politikası", href: "/gizlilik-politikasi" },
+  { label: "Çerez Politikası", href: "/cerez-politikasi" },
+  { label: "Kullanım Koşulları", href: "/kullanim-kosullari" },
+];
+---
+
+<BaseLayout
+  title="Site Haritası"
+  description="Queen Promosyon kategorileri, ürünleri, kurumsal sayfaları ve yasal metinlerine tek noktadan ulaşın."
+  canonical="/site-haritasi"
+>
+  <main class="sitemap-page">
+    <header class="sitemap-hero" data-reveal>
+      <span class="eyebrow">Site haritası</span>
+      <h1>Aradığınız her şey.<br /><span>Tek bir yerde.</span></h1>
+      <p>Kategorilerden yasal metinlere kadar Queen Promosyon’daki bütün sayfalara buradan ulaşabilirsiniz.</p>
+    </header>
+
+    <section class="sitemap-featured" aria-labelledby="sitemap-featured-title" data-reveal>
+      <h2 id="sitemap-featured-title">Hızlı başlangıç</h2>
+      <div>
+        {primaryPages.map((page) => (
+          <a href={withBase(page.href)}>
+            <span>{page.note}</span>
+            <strong>{page.label}</strong>
+            <i aria-hidden="true">›</i>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <div class="sitemap-sections">
+      <section aria-labelledby="sitemap-categories-title" data-reveal>
+        <div class="sitemap-section-heading">
+          <span>01</span>
+          <h2 id="sitemap-categories-title">Kategoriler</h2>
+        </div>
+        <div class="sitemap-link-grid">
+          {categories.map((category) => (
+            <a href={withBase(`/kategoriler/${category.slug}`)}>
+              <span>{category.eyebrow}</span>
+              <strong>{category.title}</strong>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section aria-labelledby="sitemap-products-title" data-reveal>
+        <div class="sitemap-section-heading">
+          <span>02</span>
+          <h2 id="sitemap-products-title">Ürünler</h2>
+        </div>
+        <div class="sitemap-link-grid sitemap-product-links">
+          {products.map((product) => (
+            <a href={withBase(`/urunler/${product.slug}`)}>
+              <span>{categories.find((category) => category.slug === product.categorySlug)?.title}</span>
+              <strong>{product.name}</strong>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="sitemap-compact-section" aria-labelledby="sitemap-company-title" data-reveal>
+        <div class="sitemap-section-heading">
+          <span>03</span>
+          <h2 id="sitemap-company-title">Queen</h2>
+        </div>
+        <div class="sitemap-compact-links">
+          {companyPages.map((page) => <a href={withBase(page.href)}>{page.label}<span aria-hidden="true">›</span></a>)}
+        </div>
+      </section>
+
+      <section class="sitemap-compact-section" aria-labelledby="sitemap-legal-title" data-reveal>
+        <div class="sitemap-section-heading">
+          <span>04</span>
+          <h2 id="sitemap-legal-title">Yasal</h2>
+        </div>
+        <div class="sitemap-compact-links">
+          {legalPages.map((page) => <a href={withBase(page.href)}>{page.label}<span aria-hidden="true">›</span></a>)}
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

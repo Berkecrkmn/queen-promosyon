@@ -1,0 +1,57 @@
+---
+import LegalPage from "@components/LegalPage.astro";
+import { site } from "@data/site";
+---
+
+<LegalPage
+  title="Kullanım Koşulları"
+  description="Queen Promosyon internet sitesinin kullanımına, içeriklerine ve teklif süreçlerine ilişkin koşullar."
+  canonical="/kullanim-kosullari"
+  eyebrow="Site kullanımı"
+  intro="Bu internet sitesini kullanarak aşağıdaki koşulları kabul etmiş sayılırsınız. Koşulları kabul etmiyorsanız siteyi kullanmamanız gerekir."
+>
+  <section>
+    <h2>Sitenin amacı</h2>
+    <p>
+      Bu site, Queen Promosyon ürün kategorileri, örnek ürünler, baskı süreçleri ve iletişim seçenekleri
+      hakkında genel bilgi sağlar. Sitede çevrim içi satış veya ödeme işlemi yapılmamaktadır.
+    </p>
+  </section>
+  <section>
+    <h2>Ürün ve teklif bilgileri</h2>
+    <p>
+      Görseller, ürün özellikleri, minimum adetler ve tahmini teslim süreleri bilgilendirme amaçlıdır.
+      Stok, üretim yöntemi, döviz kuru, baskı kapsamı ve proje koşullarına göre değişebilir. Bağlayıcı ticari
+      koşullar, Queen Promosyon tarafından ayrıca gönderilen yazılı teklifte yer alır.
+    </p>
+  </section>
+  <section>
+    <h2>Fikri mülkiyet</h2>
+    <p>
+      Sitedeki marka, logo, tasarım, metin ve özgün içeriklerin hakları Queen Promosyon’a veya ilgili hak
+      sahiplerine aittir. Yazılı izin olmadan ticari amaçla çoğaltılamaz, yayımlanamaz veya uyarlanamaz.
+    </p>
+  </section>
+  <section>
+    <h2>Kabul edilebilir kullanım</h2>
+    <p>
+      Site güvenliğini ihlal eden, hizmeti kesintiye uğratan, otomatik yollarla aşırı trafik oluşturan veya
+      üçüncü kişilerin haklarını ihlal eden kullanımlara izin verilmez.
+    </p>
+  </section>
+  <section>
+    <h2>Sorumluluğun sınırı</h2>
+    <p>
+      İçeriklerin güncel ve doğru tutulması için makul özen gösterilir. Bununla birlikte site içeriğinin
+      kesintisiz veya hatasız olacağı garanti edilmez. Üçüncü taraf bağlantıların içerik ve hizmetlerinden
+      ilgili sağlayıcılar sorumludur.
+    </p>
+  </section>
+  <section>
+    <h2>Değişiklikler ve iletişim</h2>
+    <p>
+      Bu koşullar gerektiğinde güncellenebilir ve yeni sürüm yayımlandığı anda yürürlüğe girer. Sorularınızı
+      <a href={`mailto:${site.email}`}>{site.email}</a> adresine iletebilirsiniz.
+    </p>
+  </section>
+</LegalPage>

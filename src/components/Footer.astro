@@ -1,30 +1,41 @@
 ---
 import { categories } from "@data/catalog";
-import { navItems, site } from "@data/site";
+import { site } from "@data/site";
 import { withBase } from "@utils/paths";
 
 const footerCategories = categories.slice(0, 6);
+const companyLinks = [
+  { label: "Hakkımızda", href: "/kurumsal" },
+  { label: "Baskı ve Üretim", href: "/baski-ve-uretim-sureci" },
+  { label: "İletişim", href: "/iletisim" },
+  { label: "Site Haritası", href: "/site-haritasi" },
+  { label: "Teklif Al", href: "/teklif-al" },
+];
+const legalLinks = [
+  { label: "KVKK Aydınlatma Metni", href: "/kvkk-aydinlatma-metni" },
+  { label: "Gizlilik Politikası", href: "/gizlilik-politikasi" },
+  { label: "Çerez Politikası", href: "/cerez-politikasi" },
+  { label: "Kullanım Koşulları", href: "/kullanim-kosullari" },
+];
 ---
 
 <footer class="site-footer">
+  <div class="footer-note">
+    <p>
+      Ürün görselleri temsilidir. Stok, renk, baskı alanı, minimum adet ve teslim süresi proje koşullarına göre değişebilir.
+      Bağlayıcı bilgiler yazılı teklifte paylaşılır.
+    </p>
+  </div>
+
   <div class="footer-grid">
     <section class="footer-brand" aria-label="Queen Promosyon">
-      <img src={withBase("/assets/brand/queen-logo-transparent.png")} alt="Queen Promosyon logo" width="96" height="96" loading="lazy" />
-      <p>
-        Kurumsal markalar için logolu promosyon ürünleri, özel hediye setleri ve baskılı tanıtım çözümleri.
-      </p>
+      <img src={withBase("/assets/brand/queen-logo-transparent.png")} alt="Queen Promosyon logo" width="868" height="751" loading="lazy" />
+      <p>Kurumsal markalar için ürün, baskı, üretim ve teslimat çözümleri.</p>
       <a href={`mailto:${site.email}`}>{site.email}</a>
     </section>
 
     <section>
-      <h2>Menü</h2>
-      <ul>
-        {navItems.map((item) => <li><a href={withBase(item.href)}>{item.label}</a></li>)}
-      </ul>
-    </section>
-
-    <section>
-      <h2>Kategoriler</h2>
+      <h2>Ürünler</h2>
       <ul>
         {footerCategories.map((category) => (
           <li><a href={withBase(`/kategoriler/${category.slug}`)}>{category.title}</a></li>
@@ -33,14 +44,30 @@ const footerCategories = categories.slice(0, 6);
     </section>
 
     <section>
-      <h2>Teklif</h2>
-      <p>Ürün, adet, baskı ve teslimat bilgilerini gönderin; size uygun çözümü birlikte netleştirelim.</p>
+      <h2>Queen</h2>
+      <ul>
+        {companyLinks.map((item) => <li><a href={withBase(item.href)}>{item.label}</a></li>)}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Yasal</h2>
+      <ul>
+        {legalLinks.map((item) => <li><a href={withBase(item.href)}>{item.label}</a></li>)}
+        <li><button type="button" data-cookie-settings>Çerez Tercihleri</button></li>
+      </ul>
+    </section>
+
+    <section class="footer-contact">
+      <h2>İletişim</h2>
+      <p>{site.address}</p>
+      <p>{site.workingHours}</p>
       <a class="footer-action" href={withBase("/teklif-al")}>Teklif talebi oluştur</a>
     </section>
   </div>
 
   <div class="footer-bottom">
     <span>© 2026 Queen Promosyon. Tüm hakları saklıdır.</span>
-    <a href="https://queenpromosyon.com">queenpromosyon.com</a>
+    <span>İstanbul, Türkiye</span>
   </div>
 </footer>

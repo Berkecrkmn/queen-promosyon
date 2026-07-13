@@ -1,0 +1,59 @@
+---
+import LegalPage from "@components/LegalPage.astro";
+import { site } from "@data/site";
+---
+
+<LegalPage
+  title="Gizlilik Politikası"
+  description="Queen Promosyon internet sitesinin gizlilik, veri güvenliği ve ziyaretçi bilgilerinin korunmasına ilişkin politikası."
+  canonical="/gizlilik-politikasi"
+  eyebrow="Gizlilik"
+  intro="Queen Promosyon, ziyaretçi ve müşteri bilgilerinin amaca uygun, sınırlı ve güvenli biçimde kullanılmasını esas alır."
+>
+  <section>
+    <h2>Topladığımız bilgiler</h2>
+    <p>
+      Siteyi yalnızca ziyaret ettiğinizde temel sunucu kayıtları oluşabilir. E-posta veya teklif bağlantıları
+      üzerinden bizimle iletişime geçtiğinizde, mesajınızda paylaştığınız iletişim ve proje bilgilerini işleriz.
+      Site üzerinde üyelik, ödeme veya çevrim içi sipariş altyapısı bulunmamaktadır.
+    </p>
+  </section>
+  <section>
+    <h2>Bilgileri nasıl kullanıyoruz?</h2>
+    <ul>
+      <li>Sorularınıza ve teklif taleplerinize yanıt vermek.</li>
+      <li>Ürün, üretim, baskı ve teslimat seçeneklerini hazırlamak.</li>
+      <li>Sitenin güvenli ve kesintisiz çalışmasını sağlamak.</li>
+      <li>Yasal yükümlülükleri yerine getirmek.</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Paylaşım ve hizmet sağlayıcılar</h2>
+    <p>
+      Bilgileriniz satılmaz veya ilgisiz pazarlama amaçlarıyla üçüncü kişilere verilmez. Hizmetin sunulması
+      için gerekli olduğu ölçüde barındırma, e-posta, üretim ve lojistik sağlayıcılarıyla paylaşım yapılabilir.
+      Bu sağlayıcılardan uygun gizlilik ve güvenlik önlemleri beklenir.
+    </p>
+  </section>
+  <section>
+    <h2>Bilgi güvenliği</h2>
+    <p>
+      Yetkisiz erişim, kayıp ve kötüye kullanımı önlemek amacıyla makul teknik ve idari önlemler uygulanır.
+      Bununla birlikte internet üzerinden veri iletiminin mutlak güvenlik sağlamadığı unutulmamalıdır.
+    </p>
+  </section>
+  <section>
+    <h2>Bağlantılar ve üçüncü taraf siteler</h2>
+    <p>
+      Sitede üçüncü taraf internet sitelerine bağlantılar bulunabilir. Bu sitelerin içerik ve gizlilik
+      uygulamalarından Queen Promosyon sorumlu değildir; ilgili sitenin politikasını incelemenizi öneririz.
+    </p>
+  </section>
+  <section>
+    <h2>İletişim</h2>
+    <p>
+      Gizlilik uygulamalarımızla ilgili sorularınızı <a href={`mailto:${site.email}`}>{site.email}</a>
+      adresine iletebilirsiniz.
+    </p>
+  </section>
+</LegalPage>

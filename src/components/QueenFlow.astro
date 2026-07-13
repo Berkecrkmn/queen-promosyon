@@ -1,0 +1,158 @@
+---
+import { withBase } from "@utils/paths";
+
+const flowSteps = [
+  {
+    label: "Seçim",
+    title: "Doğru ürün, doğru etki.",
+    text: "Hedef kitlenizi, kullanım anını ve bütçenizi birlikte okuyup gerçekten kullanılacak seçkiyi oluşturuyoruz.",
+    href: "/kategoriler",
+    accent: "#e6bb82",
+    glow: "rgba(214, 155, 84, 0.48)",
+    deep: "#342014",
+  },
+  {
+    label: "Uygulama",
+    title: "Markanız ürüne dönüşür.",
+    text: "Renk, yüzey ve logonuz için doğru tekniği seçiyor; her uygulamayı ürüne aitmiş gibi tasarlıyoruz.",
+    href: "/baski-ve-uretim-sureci",
+    accent: "#a8bfff",
+    glow: "rgba(91, 125, 255, 0.46)",
+    deep: "#101d42",
+  },
+  {
+    label: "Üretim",
+    title: "Her detay aynı standardı taşır.",
+    text: "Numune onayından baskı tutarlılığına, paketlemeden son kontrole kadar bütün üretimi tek akışta izliyoruz.",
+    href: "/baski-ve-uretim-sureci",
+    accent: "#e8a9c4",
+    glow: "rgba(222, 103, 155, 0.42)",
+    deep: "#351523",
+  },
+  {
+    label: "Teslim",
+    title: "Doğru zamanda, eksiksiz.",
+    text: "Siparişinizi planlanan tarihte, sunuma hazır biçimde Türkiye’nin her yerine güvenle ulaştırıyoruz.",
+    href: "/iletisim",
+    accent: "#9fe0cf",
+    glow: "rgba(66, 196, 162, 0.42)",
+    deep: "#0e302a",
+  },
+];
+---
+
+<section
+  class="queen-flow"
+  data-queen-flow
+  aria-labelledby="queen-flow-title"
+  style={`--flow-accent: ${flowSteps[0].accent}; --flow-glow: ${flowSteps[0].glow}; --flow-deep: ${flowSteps[0].deep}`}
+>
+  <div class="queen-flow-ambient" aria-hidden="true"></div>
+
+  <div class="queen-flow-shell">
+    <header class="queen-flow-heading" data-reveal="heading">
+      <span><i aria-hidden="true"></i> Queen akışı / 04 aşama</span>
+      <h2 id="queen-flow-title">Fikirden teslimata.<br /><em>Tek bir kusursuz akış.</em></h2>
+      <p>Her adım birbirine bağlı. Her detay Queen standardında.</p>
+    </header>
+
+    <div class="queen-flow-stage" data-reveal="media">
+      <div class="queen-flow-visual" aria-hidden="true">
+        <div class="queen-flow-orbit queen-flow-orbit-outer"></div>
+        <div class="queen-flow-orbit queen-flow-orbit-inner"></div>
+        <div class="queen-flow-core">
+          <span></span>
+          <img src={withBase("/assets/brand/queen-logo-transparent.png")} alt="" width="868" height="751" />
+        </div>
+        <span class="queen-flow-pulse"></span>
+      </div>
+
+      <div class="queen-flow-panels">
+        {flowSteps.map((step, index) => (
+          <article
+            id={`queen-flow-panel-${index}`}
+            class:list={["queen-flow-panel", { "is-active": index === 0 }]}
+            data-flow-panel
+            role="tabpanel"
+            aria-labelledby={`queen-flow-tab-${index}`}
+            hidden={index !== 0}
+          >
+            <span>{String(index + 1).padStart(2, "0")} / 04 · {step.label}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+            <a href={withBase(step.href)}>Bu adımı keşfedin <span aria-hidden="true">↗</span></a>
+          </article>
+        ))}
+      </div>
+
+      <div class="queen-flow-tabs" role="tablist" aria-label="Queen sipariş süreci">
+        {flowSteps.map((step, index) => (
+          <button
+            id={`queen-flow-tab-${index}`}
+            class:list={{ "is-active": index === 0 }}
+            type="button"
+            role="tab"
+            aria-selected={index === 0 ? "true" : "false"}
+            aria-controls={`queen-flow-panel-${index}`}
+            tabindex={index === 0 ? "0" : "-1"}
+            data-flow-tab
+            data-flow-index={index}
+            data-flow-accent={step.accent}
+            data-flow-glow={step.glow}
+            data-flow-deep={step.deep}
+          >
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <strong>{step.label}</strong>
+            <i aria-hidden="true"></i>
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-queen-flow]").forEach((section) => {
+    const tabs = [...section.querySelectorAll<HTMLButtonElement>("[data-flow-tab]")];
+    const panels = [...section.querySelectorAll<HTMLElement>("[data-flow-panel]")];
+
+    const setActive = (index: number, moveFocus = false) => {
+      const activeTab = tabs[index];
+      if (!activeTab || !panels[index]) return;
+
+      section.style.setProperty("--flow-accent", activeTab.dataset.flowAccent || "#e6bb82");
+      section.style.setProperty("--flow-glow", activeTab.dataset.flowGlow || "rgba(214, 155, 84, 0.48)");
+      section.style.setProperty("--flow-deep", activeTab.dataset.flowDeep || "#342014");
+
+      tabs.forEach((tab, tabIndex) => {
+        const isActive = tabIndex === index;
+        tab.classList.toggle("is-active", isActive);
+        tab.setAttribute("aria-selected", String(isActive));
+        tab.tabIndex = isActive ? 0 : -1;
+      });
+
+      panels.forEach((panel, panelIndex) => {
+        const isActive = panelIndex === index;
+        panel.classList.toggle("is-active", isActive);
+        panel.hidden = !isActive;
+      });
+
+      if (moveFocus) activeTab.focus();
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => setActive(index));
+      tab.addEventListener("pointerenter", () => setActive(index));
+      tab.addEventListener("keydown", (event) => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const nextIndex = event.key === "Home"
+          ? 0
+          : event.key === "End"
+            ? tabs.length - 1
+            : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+        setActive(nextIndex, true);
+      });
+    });
+  });
+</script>

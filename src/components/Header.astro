@@ -1,11 +1,10 @@
 ---
-import { navItems, site } from "@data/site";
-import { categories, products } from "@data/catalog";
+import { navItems } from "@data/site";
+import { categories } from "@data/catalog";
 import { stripBase, withBase } from "@utils/paths";
 
-const quickCategories = categories.slice(0, 8);
-const popularProducts = products.filter((product) => product.popular).slice(0, 4);
 const primaryNavItems = navItems.filter((item) => item.label !== "Teklif Al");
+const quickCategories = categories.slice(0, 8);
 const currentPath = stripBase(Astro.url.pathname);
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(`${href}/`);
 ---
@@ -13,16 +12,10 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
 <header class="site-header">
   <a class="skip-link" href="#icerik">İçeriğe geç</a>
   <div class="header-shell">
-    <a class="brand" href={withBase("/")} aria-label={`${site.name} anasayfa`}>
-      <img src={withBase("/assets/brand/queen-logo-transparent.png")} alt="Queen Promosyon logo" width="92" height="92" />
+    <a class="brand" href={withBase("/")} aria-label="Queen Promosyon anasayfa">
+      <img class="brand-wordmark" src={withBase("/assets/brand/queen-wordmark-header.png")} alt="" width="856" height="298" />
+      <span class="sr-only">Queen Promosyon</span>
     </a>
-
-    <button class="menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span class="sr-only">Menüyü aç veya kapat</span>
-    </button>
 
     <nav id="site-nav" class="site-nav" data-nav-panel aria-label="Ana menü">
       {primaryNavItems.map((item) => (
@@ -30,29 +23,24 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
           <div class="nav-group">
             <a class:list={["nav-link", { "is-active": isActive(item.href) }]} href={withBase(item.href)}>Kategoriler</a>
             <div class="mega-menu" aria-label="Kategori hızlı erişim">
-              <div class="mega-visual">
-                <img src={withBase("/assets/images/queen-promosyon-header-kurumsal-vitrin.webp")} alt="Queen Promosyon kurumsal hediye seti vitrini" width="360" height="300" loading="lazy" />
-                <span>Yeni sezon seçkisi</span>
-              </div>
               <div class="mega-copy">
-                <span>Koleksiyon</span>
-                <strong>Kurumsal hediye ve promosyon seçkisi</strong>
-                <p>Markanıza uygun ürün gruplarını kullanım amacı, baskı tekniği ve sunum algısına göre keşfedin.</p>
-                <a href={withBase("/urunler")}>Ürün seçkisini gör</a>
+                <span>Keşfedin</span>
+                <strong>Ürün Kategorileri</strong>
+                <a href={withBase("/kategoriler")}>Tüm kategorileri görün</a>
+                <a href={withBase("/urunler")}>Tüm ürünleri görün</a>
+                <a href={withBase("/teklif-al")}>Teklif alın</a>
               </div>
               <div class="mega-list">
+                <span>Kategoriler</span>
                 {quickCategories.map((category) => (
-                  <a href={withBase(`/kategoriler/${category.slug}`)}>
-                    <span>{category.eyebrow}</span>
-                    <strong>{category.title}</strong>
-                  </a>
+                  <a href={withBase(`/kategoriler/${category.slug}`)}>{category.title}</a>
                 ))}
               </div>
               <div class="mega-products">
-                <span>Çok talep edilenler</span>
-                {popularProducts.map((product) => (
-                  <a href={withBase(`/urunler/${product.slug}`)}>{product.name}</a>
-                ))}
+                <span>Queen ile alışveriş</span>
+                <a href={withBase("/baski-ve-uretim-sureci")}>Baskı ve üretim</a>
+                <a href={withBase("/kurumsal")}>Kurumsal çözümler</a>
+                <a href={withBase("/iletisim")}>Uzman desteği</a>
               </div>
             </div>
           </div>
@@ -60,11 +48,15 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
           <a class:list={["nav-link", { "is-active": isActive(item.href) }]} href={withBase(item.href)}>{item.label}</a>
         )
       ))}
+      <a class:list={["nav-mobile-cta", { "is-active": isActive("/teklif-al") }]} href={withBase("/teklif-al")}>Teklif Al</a>
     </nav>
 
-    <div class="header-actions">
-      <a class="header-mail" href={`mailto:${site.email}`}>{site.email}</a>
-      <a class:list={["header-cta", { "is-active": isActive("/teklif-al") }]} href={withBase("/teklif-al")}>Teklif iste</a>
-    </div>
+    <a class:list={["header-cta", { "is-active": isActive("/teklif-al") }]} href={withBase("/teklif-al")}>Teklif Al</a>
+
+    <button class="menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span>
+      <span></span>
+      <span class="sr-only">Menüyü aç veya kapat</span>
+    </button>
   </div>
 </header>

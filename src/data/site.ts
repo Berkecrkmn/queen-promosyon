@@ -3,11 +3,13 @@ const siteUrl = (import.meta.env.PUBLIC_SITE_URL || "https://queenpromosyon.com"
 export const site = {
   name: "Queen Promosyon",
   shortName: "Queen",
+  legalName: "Queen Promosyon",
   url: siteUrl,
   email: "info@queenpromosyon.com",
   phone: "",
   whatsapp: "",
   address: "İstanbul, Türkiye",
+  workingHours: "Pazartesi - Cuma, 09.00 - 18.00",
   description:
     "Queen Promosyon, kurumsal markalar için logolu promosyon ürünleri, özel hediye setleri ve baskılı tanıtım çözümleri sunar.",
   social: {
@@ -19,7 +21,7 @@ export const site = {
 export const navItems = [
   { label: "Kategoriler", href: "/kategoriler" },
   { label: "Ürünler", href: "/urunler" },
-  { label: "Kurumsal", href: "/kurumsal" },
+  { label: "Hakkımızda", href: "/kurumsal" },
   { label: "Süreç", href: "/baski-ve-uretim-sureci" },
   { label: "Teklif Al", href: "/teklif-al" },
   { label: "İletişim", href: "/iletisim" },

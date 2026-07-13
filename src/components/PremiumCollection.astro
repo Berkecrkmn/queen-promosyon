@@ -1,0 +1,174 @@
+---
+import { withBase } from "@utils/paths";
+
+const collection = [
+  {
+    title: "Hediyelik Setler",
+    subtitle: "Tek kutuda güçlü bir ilk izlenim",
+    href: "/kategoriler/hediyelik-setler",
+    image: "/assets/images/queen-edit-hediyelik-set-queen.webp",
+    alt: "Queen logolu özel kutulu kurumsal hediye seti",
+    surface: "#d8cfc2",
+    accent: "#765237",
+  },
+  {
+    title: "Defter & Ajanda",
+    subtitle: "Fikirlerinize eşlik eden ofis prestiji",
+    href: "/kategoriler/defter-ajanda",
+    image: "/assets/images/queen-edit-defter-ajanda-queen.webp",
+    alt: "Queen sıcak yaldız uygulamalı deri defter ve ajanda seçkisi",
+    surface: "#ccb9ad",
+    accent: "#7a4638",
+  },
+  {
+    title: "Kalem Seçkisi",
+    subtitle: "Günlük temasa rafine bir imza",
+    href: "/kategoriler/promosyon-kalem",
+    image: "/assets/images/queen-edit-kalem-seti-queen.webp",
+    alt: "Queen logolu kutuda iki premium metal kalem",
+    surface: "#d6d1c7",
+    accent: "#57544d",
+  },
+  {
+    title: "Termos & Matara",
+    subtitle: "Her gün kullanılan kalıcı görünürlük",
+    href: "/kategoriler/termos-matara",
+    image: "/assets/images/queen-edit-matara-queen.webp",
+    alt: "Queen logolu pembe ve şeffaf kurumsal matara",
+    surface: "#b8c4b9",
+    accent: "#3f604c",
+  },
+  // Official Piili visual: https://www.piili.com/urun/standli-magsafe-powerbank-5-000-mah-gold/
+  {
+    title: "Teknoloji",
+    subtitle: "İş gününün akışına modern çözümler",
+    href: "/kategoriler/powerbank",
+    image: "/assets/images/queen-edit-teknoloji-piili.webp",
+    alt: "Piili standlı MagSafe powerbank ve kablosuz şarj kullanımı",
+    surface: "#b9c5d0",
+    accent: "#365a77",
+  },
+  {
+    title: "Kurumsal Tekstil",
+    subtitle: "Ekibiniz için tek ve güçlü bir görünüm",
+    href: "/kategoriler/tekstil",
+    image: "/assets/images/queen-edit-tekstil-queen.webp",
+    alt: "Queen nakış uygulamalı sweatshirt ve şapka seçkisi",
+    surface: "#c9bdb4",
+    accent: "#704f42",
+  },
+];
+---
+
+<section class="queen-edit" data-queen-edit aria-labelledby="queen-edit-title">
+  <header class="queen-edit-intro" data-reveal="heading">
+    <div>
+      <h2 id="queen-edit-title">Sadece ürün değil.<br /><span>Markanız için seçilmiş bir koleksiyon.</span></h2>
+    </div>
+    <div class="queen-edit-intro-copy">
+      <p>Malzeme, renk ve baskı tekniğini markanızın karakterine göre birlikte seçiyoruz.</p>
+      <a href={withBase("/kategoriler")}>Tüm koleksiyonu görün <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <div class="queen-edit-shell">
+    <nav class="queen-edit-list" data-reveal aria-label="Queen premium ürün seçkisi">
+      {collection.map((item, index) => (
+        <a
+          class:list={["queen-edit-item", { "is-active": index === 0 }]}
+          style={`--item-accent: ${item.accent}`}
+          href={withBase(item.href)}
+          data-edit-trigger
+          data-edit-index={index}
+          data-edit-title={item.title}
+          aria-controls={`queen-edit-panel-${index}`}
+          aria-current={index === 0 ? "true" : "false"}
+        >
+          <span class="queen-edit-index">{String(index + 1).padStart(2, "0")}</span>
+          <span class="queen-edit-item-copy">
+            <strong>{item.title}</strong>
+            <small>{item.subtitle}</small>
+          </span>
+          <span class="queen-edit-arrow" aria-hidden="true">↗</span>
+          <figure class="queen-edit-mobile-visual" aria-hidden="true">
+            <img src={withBase(item.image)} alt="" loading="lazy" width="1440" height="1080" />
+          </figure>
+        </a>
+      ))}
+    </nav>
+
+    <div class="queen-edit-stage" data-edit-stage data-reveal="media">
+      {collection.map((item, index) => (
+        <article
+          id={`queen-edit-panel-${index}`}
+          class:list={["queen-edit-panel", { "is-active": index === 0 }]}
+          style={`--panel-surface: ${item.surface}; --panel-accent: ${item.accent}`}
+          data-edit-panel
+          aria-hidden={index === 0 ? "false" : "true"}
+        >
+          <figure>
+            <img
+              src={withBase(item.image)}
+              alt={item.alt}
+              loading={index === 0 ? "eager" : "lazy"}
+              width="1440"
+              height="1080"
+            />
+          </figure>
+        </article>
+      ))}
+      <span class="sr-only" data-edit-status aria-live="polite">{collection[0].title} gösteriliyor.</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-queen-edit]").forEach((section) => {
+    const triggers = [...section.querySelectorAll<HTMLAnchorElement>("[data-edit-trigger]")];
+    const panels = [...section.querySelectorAll<HTMLElement>("[data-edit-panel]")];
+    const status = section.querySelector<HTMLElement>("[data-edit-status]");
+    let activeIndex = 0;
+
+    const setActive = (index: number, announce = false) => {
+      if (!triggers[index] || !panels[index] || index === activeIndex) return;
+      activeIndex = index;
+
+      triggers.forEach((trigger, triggerIndex) => {
+        const isActive = triggerIndex === index;
+        trigger.classList.toggle("is-active", isActive);
+        trigger.setAttribute("aria-current", String(isActive));
+      });
+
+      panels.forEach((panel, panelIndex) => {
+        const isActive = panelIndex === index;
+        panel.classList.toggle("is-active", isActive);
+        panel.setAttribute("aria-hidden", String(!isActive));
+      });
+
+      if (announce && status) {
+        status.textContent = `${triggers[index].dataset.editTitle} gösteriliyor.`;
+      }
+    };
+
+    triggers.forEach((trigger, index) => {
+      trigger.addEventListener("pointerenter", () => setActive(index));
+      trigger.addEventListener("focus", () => setActive(index, true));
+    });
+
+    if (window.matchMedia("(max-width: 833px)").matches && "IntersectionObserver" in window) {
+      const mobileObserver = new IntersectionObserver(
+        (entries) => {
+          const visibleEntry = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (!visibleEntry) return;
+          const index = Number((visibleEntry.target as HTMLElement).dataset.editIndex);
+          if (Number.isFinite(index)) setActive(index);
+        },
+        { rootMargin: "-55% 0px -30% 0px", threshold: [0, 0.25, 0.6] }
+      );
+
+      triggers.forEach((trigger) => mobileObserver.observe(trigger));
+    }
+  });
+</script>
