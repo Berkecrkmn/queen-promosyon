@@ -52,7 +52,7 @@ const categorySchema = {
         {category.tags.map((tag) => <span>{tag}</span>)}
       </div>
     </div>
-    <figure data-reveal>
+    <figure class:list={[category.visual && `visual-${category.visual}`]} data-reveal>
       <img src={withBase(category.image)} alt={category.alt} width="900" height="680" />
     </figure>
   </section>

@@ -22,7 +22,7 @@ import { withBase } from "@utils/paths";
       class="unboxing-scene"
       data-unboxing-scene
       role="img"
-      aria-label="Queen logolu defter, hediye kutusu, matara ve Piili teknoloji ürünlerinden oluşan hareketli ürün sahnesi"
+      aria-label="Queen logolu defter, hediye kutusu ve mataradan oluşan hareketli ürün sahnesi"
     >
       <span class="unboxing-floor" aria-hidden="true"></span>
 
@@ -58,18 +58,6 @@ import { withBase } from "@utils/paths";
             alt=""
             width="1024"
             height="768"
-            loading="eager"
-          />
-        </span>
-      </div>
-
-      <div class="unboxing-object unboxing-piili" aria-hidden="true">
-        <span>
-          <img
-            src={withBase("/assets/images/queen-edit-teknoloji-piili.webp")}
-            alt=""
-            width="1240"
-            height="866"
             loading="eager"
           />
         </span>
@@ -416,26 +404,6 @@ import { withBase } from "@utils/paths";
     object-fit: contain;
   }
 
-  .unboxing-piili {
-    z-index: 9;
-    right: 9%;
-    top: 38%;
-    width: 31%;
-    aspect-ratio: 1.43;
-    opacity: 0;
-    filter: drop-shadow(0 31px 26px rgba(25, 31, 35, 0.24));
-    transform: translate3d(-128%, 32%, -90px) rotate(-11deg) scale(0.24);
-    animation: unboxing-piili-in 1.5s 1.05s cubic-bezier(0.16, 0.84, 0, 1) forwards;
-  }
-
-  .unboxing-piili > span {
-    transform: translate3d(0, 0, 0);
-  }
-
-  .unboxing-piili img {
-    object-fit: contain;
-  }
-
   @keyframes unboxing-box-in {
     0% { opacity: 0; transform: translate3d(0, 34%, -80px) rotateX(18deg) scale(0.72); }
     55% { opacity: 1; }
@@ -450,11 +418,6 @@ import { withBase } from "@utils/paths";
   @keyframes unboxing-bottle-in {
     0% { opacity: 0; transform: translate3d(-118%, 82%, -100px) rotate(8deg) scale(0.28); }
     100% { opacity: 1; transform: translate3d(0, 0, 150px) rotate(5deg) scale(1); }
-  }
-
-  @keyframes unboxing-piili-in {
-    0% { opacity: 0; transform: translate3d(-128%, 32%, -90px) rotate(-11deg) scale(0.24); }
-    100% { opacity: 1; transform: translate3d(0, 0, 190px) rotate(-6deg) scale(1); }
   }
 
   @keyframes unboxing-stage-glow {
@@ -601,12 +564,6 @@ import { withBase } from "@utils/paths";
       right: 9%;
       top: 4%;
       width: 26%;
-    }
-
-    .unboxing-piili {
-      right: 12%;
-      top: 40%;
-      width: 29%;
     }
 
     .unboxing-box {

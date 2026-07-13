@@ -38,15 +38,16 @@ const collection = [
     surface: "#b8c4b9",
     accent: "#3f604c",
   },
-  // Official Piili visual: https://www.piili.com/urun/standli-magsafe-powerbank-5-000-mah-gold/
+  // Official Piili visual: https://www.piili.com/urun/mag-ring-stand-10-000-mah-p-pb8-powerbank-gri/
   {
     title: "Teknoloji",
     subtitle: "İş gününün akışına modern çözümler",
     href: "/kategoriler/powerbank",
-    image: "/assets/images/queen-edit-teknoloji-piili.webp",
-    alt: "Piili standlı MagSafe powerbank ve kablosuz şarj kullanımı",
+    image: "/assets/piili/piili-mag-ring-powerbank-pb8.png",
+    alt: "Piili Mag Ring Stand kablosuz powerbank ürün görseli",
     surface: "#b9c5d0",
     accent: "#365a77",
+    cutout: true,
   },
   {
     title: "Kurumsal Tekstil",
@@ -90,7 +91,7 @@ const collection = [
             <small>{item.subtitle}</small>
           </span>
           <span class="queen-edit-arrow" aria-hidden="true">↗</span>
-          <figure class="queen-edit-mobile-visual" aria-hidden="true">
+          <figure class:list={["queen-edit-mobile-visual", { "is-cutout": item.cutout }]} aria-hidden="true">
             <img src={withBase(item.image)} alt="" loading="lazy" width="1440" height="1080" />
           </figure>
         </a>
@@ -101,7 +102,7 @@ const collection = [
       {collection.map((item, index) => (
         <article
           id={`queen-edit-panel-${index}`}
-          class:list={["queen-edit-panel", { "is-active": index === 0 }]}
+          class:list={["queen-edit-panel", { "is-active": index === 0, "is-cutout": item.cutout }]}
           style={`--panel-surface: ${item.surface}; --panel-accent: ${item.accent}`}
           data-edit-panel
           aria-hidden={index === 0 ? "false" : "true"}

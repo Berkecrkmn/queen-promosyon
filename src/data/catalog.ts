@@ -4,6 +4,7 @@ export type Category = {
   eyebrow: string;
   description: string;
   image: string;
+  visual?: "photo" | "cutout-light" | "cutout-dark";
   alt: string;
   featured: boolean;
   tags: string[];
@@ -18,6 +19,7 @@ export type Product = {
   summary: string;
   description: string;
   image: string;
+  visual?: "photo" | "cutout-light" | "cutout-dark";
   alt: string;
   minQuantity: string;
   leadTime: string;
@@ -33,8 +35,8 @@ export const categories: Category[] = [
     eyebrow: "VIP sunum",
     description:
       "Yeni müşteri, bayi, lansman ve yıl sonu kampanyaları için kutulu kurumsal hediye setleri.",
-    image: "/assets/images/queen-promosyon-hediyelik-set.webp",
-    alt: "Queen Promosyon kutulu kurumsal hediye seti",
+    image: "/assets/images/queen-edit-hediyelik-set-queen.webp",
+    alt: "Queen logolu premium kutulu kurumsal hediye seti",
     featured: true,
     tags: ["VIP", "Kutu", "Lansman"],
     seoTitle: "Kurumsal Hediyelik Setler | Queen Promosyon",
@@ -47,8 +49,8 @@ export const categories: Category[] = [
     eyebrow: "Günlük temas",
     description:
       "Metal, plastik, roller ve soft touch kalemlerde logo baskılı promosyon çözümleri.",
-    image: "/assets/images/queen-promosyon-kalem-defter.webp",
-    alt: "Logo baskıya uygun promosyon kalem ve defterler",
+    image: "/assets/catalog/queen-metal-pen.webp",
+    alt: "Queen lazer uygulamalı premium metal kalem",
     featured: true,
     tags: ["Metal", "Roller", "Soft Touch"],
     seoTitle: "Promosyon Kalem Modelleri | Queen Promosyon",
@@ -61,8 +63,8 @@ export const categories: Category[] = [
     eyebrow: "Ofis prestiji",
     description:
       "Tarihsiz defter, organizer, ajanda ve notluk gruplarında kurumsal baskı alternatifleri.",
-    image: "/assets/images/queen-promosyon-defter-ajanda.webp",
-    alt: "Kurumsal promosyon defter ajanda ve kalem",
+    image: "/assets/images/queen-edit-defter-ajanda-queen.webp",
+    alt: "Queen sıcak yaldız uygulamalı deri defter ve ajanda",
     featured: true,
     tags: ["Ajanda", "Organizer", "Notluk"],
     seoTitle: "Promosyon Defter ve Ajanda | Queen Promosyon",
@@ -75,8 +77,8 @@ export const categories: Category[] = [
     eyebrow: "Uzun kullanım",
     description:
       "Çelik termos, mug, matara ve bardak gruplarında lazer ve serigrafi baskılı ürünler.",
-    image: "/assets/images/queen-promosyon-termos-matara.webp",
-    alt: "Logo baskılı çelik termos ve matara modelleri",
+    image: "/assets/images/queen-edit-matara-queen.webp",
+    alt: "Queen logolu premium matara seçkisi",
     featured: true,
     tags: ["Çelik", "Mug", "Matara"],
     seoTitle: "Promosyon Termos ve Matara | Queen Promosyon",
@@ -89,8 +91,9 @@ export const categories: Category[] = [
     eyebrow: "Teknoloji",
     description:
       "Fuar, saha ekibi ve müşteri sadakati için taşınabilir şarj cihazı promosyonları.",
-    image: "/assets/images/queen-promosyon-powerbank.webp",
-    alt: "Promosyon powerbank ile telefon şarjı",
+    image: "/assets/piili/piili-mag-ring-powerbank-pb8.png",
+    visual: "cutout-light",
+    alt: "Piili Mag Ring Stand kablosuz powerbank",
     featured: true,
     tags: ["USB-C", "Wireless", "Hızlı Şarj"],
     seoTitle: "Promosyon Powerbank Modelleri | Queen Promosyon",
@@ -103,8 +106,8 @@ export const categories: Category[] = [
     eyebrow: "Veri taşıma",
     description:
       "Metal, kart, anahtarlık ve özel gövdeli USB belleklerde markalı teslimat çözümleri.",
-    image: "/assets/images/queen-promosyon-usb-bellek.webp",
-    alt: "Kurumsal promosyon USB bellek ve teknoloji aksesuarları",
+    image: "/assets/catalog/queen-usb-family.webp",
+    alt: "Queen logolu kart metal ve anahtarlık USB bellek seçkisi",
     featured: false,
     tags: ["16 GB", "32 GB", "Kart USB"],
     seoTitle: "Promosyon USB Bellek | Queen Promosyon",
@@ -117,8 +120,8 @@ export const categories: Category[] = [
     eyebrow: "Ekip görünürlüğü",
     description:
       "Tişört, şapka, sweatshirt ve iş etkinliği tekstillerinde baskı ve nakış uygulamaları.",
-    image: "/assets/images/queen-promosyon-tekstil.webp",
-    alt: "Promosyon tekstil için baskıya uygun tişörtler",
+    image: "/assets/images/queen-edit-tekstil-queen.webp",
+    alt: "Queen nakış uygulamalı kurumsal sweatshirt ve şapka",
     featured: true,
     tags: ["Tişört", "Şapka", "Nakış"],
     seoTitle: "Promosyon Tekstil Ürünleri | Queen Promosyon",
@@ -131,8 +134,8 @@ export const categories: Category[] = [
     eyebrow: "Basılı görünürlük",
     description:
       "Broşür, katalog, kartvizit, bloknot ve özel kesimli basılı materyal üretimleri.",
-    image: "/assets/images/queen-promosyon-matbaa-urunleri.webp",
-    alt: "Kurumsal matbaa ürünleri ve basılı promosyon materyalleri",
+    image: "/assets/catalog/queen-brochure-catalog-suite.webp",
+    alt: "Queen logolu premium broşür ve katalog baskı seti",
     featured: false,
     tags: ["Katalog", "Broşür", "Bloknot"],
     seoTitle: "Matbaa Ürünleri ve Baskı | Queen Promosyon",
@@ -145,8 +148,8 @@ export const categories: Category[] = [
     eyebrow: "Sürdürülebilir temas",
     description:
       "Bez çanta, fuar çantası, laptop çantası ve alışveriş çantalarında logo baskı.",
-    image: "/assets/images/queen-promosyon-bez-canta.webp",
-    alt: "Logo baskılı bez çanta promosyon ürünü",
+    image: "/assets/catalog/queen-premium-canvas-tote.webp",
+    alt: "Queen logolu premium kanvas promosyon çantası",
     featured: true,
     tags: ["Bez", "Fuar", "Laptop"],
     seoTitle: "Promosyon Çanta Modelleri | Queen Promosyon",
@@ -159,8 +162,8 @@ export const categories: Category[] = [
     eyebrow: "Ofiste kalıcı etki",
     description:
       "Masa seti, notluk, kartvizitlik, takvim ve ofis aksesuarlarında markalı ürünler.",
-    image: "/assets/images/queen-promosyon-masaustu-urunler.webp",
-    alt: "Promosyon masaüstü ürünleri ve ofis aksesuarları",
+    image: "/assets/catalog/queen-executive-desktop-suite.webp",
+    alt: "Queen logolu masaüstü notluk takvim ve kartvizitlik seti",
     featured: false,
     tags: ["Notluk", "Takvim", "Kartvizitlik"],
     seoTitle: "Promosyon Masaüstü Ürünler | Queen Promosyon",
@@ -177,8 +180,8 @@ export const products: Product[] = [
     summary: "Defter, metal kalem ve termos kombinasyonlu yönetici seti.",
     description:
       "Yeni iş ortakları, bayi toplantıları ve özel lansmanlar için yüksek algılı kutulu set.",
-    image: "/assets/images/queen-promosyon-premium-kutulu-hediye-seti.webp",
-    alt: "Premium kutulu kurumsal hediye seti ve defter sunumu",
+    image: "/assets/images/queen-edit-hediyelik-set-queen.webp",
+    alt: "Queen logolu premium kutulu kurumsal hediye seti",
     minQuantity: "50 adet",
     leadTime: "7-12 iş günü",
     printing: ["Lazer baskı", "UV baskı", "Kutu üstü sıcak yaldız"],
@@ -192,8 +195,8 @@ export const products: Product[] = [
     summary: "Günlük kullanım için şık ve dayanıklı logo baskılı kalem.",
     description:
       "Fuar, toplantı ve saha satış ekipleri için ekonomik ama kurumsal görünümü güçlü kalem modeli.",
-    image: "/assets/images/queen-promosyon-metal-tukenmez-kalem.webp",
-    alt: "Metal promosyon tükenmez kalem",
+    image: "/assets/catalog/queen-metal-pen.webp",
+    alt: "Queen lazer uygulamalı metal tükenmez kalem",
     minQuantity: "250 adet",
     leadTime: "4-7 iş günü",
     printing: ["Lazer baskı", "Tampon baskı"],
@@ -207,8 +210,8 @@ export const products: Product[] = [
     summary: "Mat dokulu, konforlu tutuş sunan modern promosyon kalemi.",
     description:
       "Genç ve dinamik marka iletişimi için renk seçenekleri güçlü, yumuşak yüzeyli kalem.",
-    image: "/assets/images/queen-promosyon-soft-touch-kalem.webp",
-    alt: "Soft touch promosyon kalem ve not defteri",
+    image: "/assets/catalog/queen-soft-touch-pen.webp",
+    alt: "Queen altın uygulamalı lacivert soft touch kalem",
     minQuantity: "500 adet",
     leadTime: "4-8 iş günü",
     printing: ["Tampon baskı", "UV baskı"],
@@ -221,8 +224,8 @@ export const products: Product[] = [
     summary: "13x21 cm tarihsiz defter, kapak baskısı ve kalem tutucu ile.",
     description:
       "Toplantı, eğitim ve iç iletişim kullanımı için prestijli defter çözümü.",
-    image: "/assets/images/queen-promosyon-termo-deri-defter-urun.webp",
-    alt: "Logo baskılı termo deri defter ve ajanda",
+    image: "/assets/catalog/queen-leather-notebook.webp",
+    alt: "Queen sıcak yaldız uygulamalı kahverengi termo deri defter",
     minQuantity: "100 adet",
     leadTime: "6-10 iş günü",
     printing: ["Sıcak baskı", "Serigrafi", "Lazer plaka"],
@@ -236,8 +239,8 @@ export const products: Product[] = [
     summary: "Uzun ömürlü kullanım için çift cidarlı logo baskılı termos.",
     description:
       "Müşterinin günlük rutini içinde uzun süre görünür kalan premium promosyon ürünü.",
-    image: "/assets/images/queen-promosyon-celik-termos-500ml.webp",
-    alt: "500 ml çelik promosyon termos",
+    image: "/assets/catalog/queen-steel-thermos.webp",
+    alt: "Queen lazer uygulamalı 500 ml çelik termos",
     minQuantity: "100 adet",
     leadTime: "6-9 iş günü",
     printing: ["Lazer baskı", "Serigrafi"],
@@ -251,11 +254,12 @@ export const products: Product[] = [
     summary: "Kablosuz şarj destekli, modern teknoloji promosyonu.",
     description:
       "Teknoloji odaklı markalar, fuar hediyeleri ve saha ekipleri için pratik bir hediye.",
-    image: "/assets/images/queen-promosyon-wireless-powerbank.webp",
-    alt: "Kablosuz şarj destekli promosyon powerbank",
+    image: "/assets/piili/piili-mag-ring-powerbank-pb8.png",
+    visual: "cutout-light",
+    alt: "Piili Mag Ring Stand kablosuz powerbank",
     minQuantity: "100 adet",
     leadTime: "7-12 iş günü",
-    printing: ["UV baskı", "Işıklı logo", "Tampon baskı"],
+    printing: ["UV baskı", "Tampon baskı"],
     specs: ["10.000 mAh", "USB-C giriş", "Wireless şarj desteği"],
     popular: true,
   },
@@ -266,8 +270,8 @@ export const products: Product[] = [
     summary: "Kartvizit formunda, tam yüzey baskılı USB bellek.",
     description:
       "Sunum dosyaları, kataloglar ve dijital teklif materyalleri için kompakt veri taşıyıcı.",
-    image: "/assets/images/queen-promosyon-kart-usb-bellek.webp",
-    alt: "Kart formunda logo baskılı USB bellek",
+    image: "/assets/catalog/queen-card-usb.webp",
+    alt: "Queen logolu lacivert kart USB bellek",
     minQuantity: "100 adet",
     leadTime: "5-8 iş günü",
     printing: ["UV baskı", "Tam yüzey renkli baskı"],
@@ -280,8 +284,8 @@ export const products: Product[] = [
     summary: "Fuar ve etkinliklerde sürdürülebilir marka görünürlüğü.",
     description:
       "Tekrar kullanılabilir yapısıyla kampanya ve etkinliklerde uzun süreli temas sağlar.",
-    image: "/assets/images/queen-promosyon-ham-bez-canta.webp",
-    alt: "Logo baskılı ham bez çanta",
+    image: "/assets/catalog/queen-premium-canvas-tote.webp",
+    alt: "Queen logolu doğal kanvas bez çanta",
     minQuantity: "250 adet",
     leadTime: "5-9 iş günü",
     printing: ["Serigrafi", "Transfer baskı"],
@@ -295,8 +299,8 @@ export const products: Product[] = [
     summary: "Etkinlik, ekip ve kampanya kullanımı için kurumsal tekstil.",
     description:
       "Marka ekiplerinin görünürlüğünü artıran, farklı renk ve gramaj seçenekli tişört.",
-    image: "/assets/images/queen-promosyon-logo-baskili-tisort.webp",
-    alt: "Logo baskılı promosyon tişört",
+    image: "/assets/catalog/queen-premium-tshirt.webp",
+    alt: "Queen altın nakış uygulamalı lacivert premium tişört",
     minQuantity: "100 adet",
     leadTime: "6-10 iş günü",
     printing: ["Serigrafi", "DTF", "Nakış"],
@@ -309,8 +313,8 @@ export const products: Product[] = [
     summary: "Lansman ve satış ekipleri için kaliteli basılı tanıtım materyali.",
     description:
       "Kampanya, ürün tanıtımı ve saha satış görüşmelerinde profesyonel basılı iletişim.",
-    image: "/assets/images/queen-promosyon-kurumsal-brosur.webp",
-    alt: "Kurumsal broşür ve katalog baskı örnekleri",
+    image: "/assets/catalog/queen-brochure-catalog-suite.webp",
+    alt: "Queen logolu kurumsal broşür ve katalog seti",
     minQuantity: "500 adet",
     leadTime: "3-6 iş günü",
     printing: ["Ofset baskı", "Selefon", "Özel kesim"],
@@ -323,8 +327,8 @@ export const products: Product[] = [
     summary: "Ofis masasında kalıcı marka görünürlüğü sağlayan set.",
     description:
       "Not kağıdı, kalemlik ve takvim seçenekleriyle masa üzerinde sürekli temas yaratır.",
-    image: "/assets/images/queen-promosyon-masaustu-notluk-seti.webp",
-    alt: "Promosyon masaüstü notluk seti",
+    image: "/assets/catalog/queen-executive-desktop-suite.webp",
+    alt: "Queen logolu yönetici masaüstü notluk seti",
     minQuantity: "100 adet",
     leadTime: "7-11 iş günü",
     printing: ["Serigrafi", "UV baskı", "Dijital baskı"],
@@ -337,8 +341,8 @@ export const products: Product[] = [
     summary: "Toplantı, eğitim ve bayi ziyaretleri için kompakt kurumsal set.",
     description:
       "Defter ve metal kalem kombinasyonuyla hızlı hazırlanabilen, ekonomik ama kurumsal algısı güçlü set.",
-    image: "/assets/images/queen-promosyon-kalem-defter-hediye-seti.webp",
-    alt: "Kalem ve defterden oluşan kurumsal promosyon seti",
+    image: "/assets/images/queen-edit-kalem-seti-queen.webp",
+    alt: "Queen logolu kutulu kalem ve defter hediye seti",
     minQuantity: "100 adet",
     leadTime: "5-8 iş günü",
     printing: ["Sıcak baskı", "Lazer baskı", "Kutu etiketi"],
@@ -348,15 +352,15 @@ export const products: Product[] = [
     slug: "teknoloji-hediye-seti",
     categorySlug: "hediyelik-setler",
     name: "Teknoloji Hediye Seti",
-    summary: "Powerbank, USB ve kablo kombinasyonlu modern promosyon seti.",
+    summary: "Piili powerbank, kablo ve şarj istasyonlu modern teknoloji seti.",
     description:
       "Fuar, saha satış ve teknoloji odaklı kampanyalarda yüksek kullanım değeri sunan hediye seti.",
-    image: "/assets/images/queen-promosyon-teknoloji-hediye-seti.webp",
-    alt: "Powerbank ve teknoloji aksesuarlarından oluşan promosyon seti",
+    image: "/assets/catalog/piili-technology-gift-set.webp",
+    alt: "Piili powerbank kablo ve kablosuz şarj istasyonlu teknoloji seti",
     minQuantity: "50 adet",
     leadTime: "8-12 iş günü",
     printing: ["UV baskı", "Tampon baskı", "Kutu üstü baskı"],
-    specs: ["Powerbank", "USB bellek", "Çoklu şarj kablosu"],
+    specs: ["Piili powerbank", "Kablosuz şarj istasyonu", "3'ü 1 arada şarj kablosu"],
   },
   {
     slug: "plastik-tukenmez-kalem",
@@ -365,8 +369,8 @@ export const products: Product[] = [
     summary: "Geniş adetli dağıtımlar için ekonomik promosyon kalemi.",
     description:
       "Etkinlik, okul, saha ve mağaza kullanımları için farklı renklerde hızlı üretilebilen kalem.",
-    image: "/assets/images/queen-promosyon-plastik-tukenmez-kalem.webp",
-    alt: "Plastik gövdeli promosyon tükenmez kalemler",
+    image: "/assets/catalog/queen-soft-touch-pen.webp",
+    alt: "Queen uygulamalı modern promosyon tükenmez kalem",
     minQuantity: "1000 adet",
     leadTime: "3-6 iş günü",
     printing: ["Tampon baskı", "UV baskı"],
@@ -379,8 +383,8 @@ export const products: Product[] = [
     summary: "Yönetici hediyesi ve imza setleri için premium kalem grubu.",
     description:
       "Kutulu sunum ve lazer baskı seçeneğiyle üst segment kurumsal hediye ihtiyacına cevap verir.",
-    image: "/assets/images/queen-promosyon-roller-kalem-seti.webp",
-    alt: "Kutulu roller kalem promosyon seti",
+    image: "/assets/catalog/queen-roller-pen-set.webp",
+    alt: "Queen logolu kutulu roller ve tükenmez kalem seti",
     minQuantity: "100 adet",
     leadTime: "6-10 iş günü",
     printing: ["Lazer baskı", "Kutu üstü baskı"],
@@ -393,8 +397,8 @@ export const products: Product[] = [
     summary: "Eğitim, seminer ve toplantı kullanımı için pratik bloknot.",
     description:
       "Kapak, iç sayfa ve alt karton baskısıyla tamamen kurumsal kampanyaya göre hazırlanabilir.",
-    image: "/assets/images/queen-promosyon-spiralli-bloknot.webp",
-    alt: "Logo baskılı spiralli promosyon bloknot",
+    image: "/assets/catalog/queen-spiral-notebook.webp",
+    alt: "Queen sıcak yaldız uygulamalı spiralli bloknot",
     minQuantity: "250 adet",
     leadTime: "5-8 iş günü",
     printing: ["Dijital baskı", "Ofset baskı"],
@@ -407,8 +411,8 @@ export const products: Product[] = [
     summary: "Dönemsel planlama ve kurumsal hediye için organizer ajanda.",
     description:
       "Bayi ve müşteri ilişkilerinde uzun süre elde kalan, düzenli kullanım sağlayan ajanda çözümü.",
-    image: "/assets/images/queen-promosyon-organizer-ajanda.webp",
-    alt: "Kurumsal organizer ajanda promosyon ürünü",
+    image: "/assets/catalog/queen-organizer-agenda.webp",
+    alt: "Queen sıcak yaldız uygulamalı organizer ajanda",
     minQuantity: "100 adet",
     leadTime: "8-12 iş günü",
     printing: ["Sıcak baskı", "Lazer plaka", "Serigrafi"],
@@ -421,8 +425,8 @@ export const products: Product[] = [
     summary: "Ofis ve araç kullanımına uygun kapaklı promosyon bardak.",
     description:
       "Günlük içecek rutininde marka görünürlüğünü koruyan, kompakt ve pratik promosyon ürünü.",
-    image: "/assets/images/queen-promosyon-mug-termos-bardak.webp",
-    alt: "Kapaklı promosyon mug termos bardak",
+    image: "/assets/catalog/queen-thermal-mug.webp",
+    alt: "Queen logolu kapaklı pembe termos mug",
     minQuantity: "100 adet",
     leadTime: "6-9 iş günü",
     printing: ["Lazer baskı", "Serigrafi", "UV baskı"],
@@ -435,8 +439,8 @@ export const products: Product[] = [
     summary: "Spor, saha ve ofis kullanımı için logo baskılı matara.",
     description:
       "Uzun ömürlü ve tekrar kullanılabilir yapısıyla sürdürülebilir kampanyalarda tercih edilir.",
-    image: "/assets/images/queen-promosyon-celik-matara.webp",
-    alt: "Logo baskılı çelik promosyon matara",
+    image: "/assets/catalog/queen-steel-bottle.webp",
+    alt: "Queen lazer uygulamalı lacivert çelik matara",
     minQuantity: "100 adet",
     leadTime: "6-9 iş günü",
     printing: ["Lazer baskı", "Serigrafi"],
@@ -449,8 +453,9 @@ export const products: Product[] = [
     summary: "Kablosuz manyetik kullanım destekli yeni nesil powerbank.",
     description:
       "Teknoloji hediyelerinde modern algı yaratmak isteyen markalar için dikkat çekici ürün.",
-    image: "/assets/images/queen-promosyon-magsafe-powerbank.webp",
-    alt: "MagSafe uyumlu promosyon powerbank",
+    image: "/assets/piili/piili-magsafe-powerbank-pb3-black.png",
+    visual: "cutout-light",
+    alt: "Piili MagSafe uyumlu siyah powerbank",
     minQuantity: "100 adet",
     leadTime: "8-12 iş günü",
     printing: ["UV baskı", "Tampon baskı"],
@@ -463,12 +468,13 @@ export const products: Product[] = [
     summary: "Telefon ve tabletler için çok uçlu promosyon teknoloji ürünü.",
     description:
       "Fuar ve saha dağıtımlarında az yer kaplayan, pratik ve düşük bütçeli teknoloji hediyesi.",
-    image: "/assets/images/queen-promosyon-coklu-sarj-kablosu.webp",
-    alt: "Çoklu uçlu promosyon şarj kablosu",
+    image: "/assets/piili/piili-3-in-1-magnetic-charge-cable.png",
+    visual: "cutout-light",
+    alt: "Piili 3'ü 1 arada manyetik şarj kablosu",
     minQuantity: "250 adet",
     leadTime: "5-8 iş günü",
     printing: ["Tampon baskı", "UV baskı"],
-    specs: ["USB-C / Lightning / Micro uç", "Kompakt tasarım", "Logo alanı"],
+    specs: ["USB-C / Lightning / Watch şarjı", "Örgülü kompakt tasarım", "Piili ürün gövdesi"],
   },
   {
     slug: "metal-usb-bellek",
@@ -477,8 +483,8 @@ export const products: Product[] = [
     summary: "Kurumsal sunum ve dosya teslimleri için dayanıklı USB bellek.",
     description:
       "Metal gövde ve lazer baskı seçeneğiyle uzun süre kullanılan veri taşıma promosyonu.",
-    image: "/assets/images/queen-promosyon-metal-usb-bellek.webp",
-    alt: "Metal gövdeli promosyon USB bellek",
+    image: "/assets/catalog/queen-brushed-metal-usb.webp",
+    alt: "Queen lazer uygulamalı fırçalanmış metal USB bellek",
     minQuantity: "100 adet",
     leadTime: "5-8 iş günü",
     printing: ["Lazer baskı", "UV baskı"],
@@ -491,8 +497,8 @@ export const products: Product[] = [
     summary: "Anahtarlık formunda taşınabilir ve görünür promosyon USB.",
     description:
       "Günlük kullanımda taşınabilirliği yüksek, logo görünürlüğü güçlü küçük teknoloji ürünü.",
-    image: "/assets/images/queen-promosyon-anahtarlik-usb-bellek.webp",
-    alt: "Anahtarlık formunda logo baskılı USB bellek",
+    image: "/assets/catalog/queen-keychain-usb.webp",
+    alt: "Queen logolu lacivert anahtarlık USB bellek",
     minQuantity: "100 adet",
     leadTime: "5-8 iş günü",
     printing: ["Lazer baskı", "Tampon baskı"],
@@ -505,8 +511,8 @@ export const products: Product[] = [
     summary: "Açık hava etkinliği ve saha ekipleri için promosyon şapka.",
     description:
       "Nakış veya baskı uygulamasıyla ekip görünürlüğünü artıran tekstil promosyon ürünü.",
-    image: "/assets/images/queen-promosyon-logo-baskili-sapka.webp",
-    alt: "Logo baskılı promosyon şapka",
+    image: "/assets/images/queen-edit-tekstil-queen.webp",
+    alt: "Queen taç nakışlı lacivert kurumsal şapka",
     minQuantity: "100 adet",
     leadTime: "6-10 iş günü",
     printing: ["Nakış", "Transfer baskı", "Serigrafi"],
@@ -519,8 +525,8 @@ export const products: Product[] = [
     summary: "Ekip giyimi, lansman ve iç iletişim için premium tekstil.",
     description:
       "Marka ekiplerinin günlük kullanımına uygun, daha kalıcı ve yüksek algılı tekstil promosyonu.",
-    image: "/assets/images/queen-promosyon-nakisli-sweatshirt.webp",
-    alt: "Nakış logolu kurumsal sweatshirt",
+    image: "/assets/images/queen-edit-tekstil-queen.webp",
+    alt: "Queen altın nakışlı antrasit kurumsal sweatshirt",
     minQuantity: "50 adet",
     leadTime: "8-12 iş günü",
     printing: ["Nakış", "DTF", "Transfer baskı"],
@@ -533,8 +539,8 @@ export const products: Product[] = [
     summary: "Ürün ve hizmet tanıtımları için kurumsal katalog üretimi.",
     description:
       "Satış ekiplerinin kullanacağı kalıcı basılı materyaller için kaliteli kağıt ve kaplama seçenekleri.",
-    image: "/assets/images/queen-promosyon-katalog-baski.webp",
-    alt: "Kurumsal katalog baskı promosyon matbaa ürünü",
+    image: "/assets/catalog/queen-brochure-catalog-suite.webp",
+    alt: "Queen logolu premium kurumsal katalog baskısı",
     minQuantity: "250 adet",
     leadTime: "5-8 iş günü",
     printing: ["Ofset baskı", "Dijital baskı", "Selefon"],
@@ -547,8 +553,8 @@ export const products: Product[] = [
     summary: "Kartvizit, antetli kağıt ve zarf üretimi için set çözüm.",
     description:
       "Yeni marka, bayi veya şube açılışlarında tutarlı kurumsal basılı materyal ihtiyacını karşılar.",
-    image: "/assets/images/queen-promosyon-kurumsal-kimlik-baski-seti.webp",
-    alt: "Kartvizit antetli kağıt ve zarf baskı seti",
+    image: "/assets/catalog/queen-corporate-stationery-suite.webp",
+    alt: "Queen logolu kartvizit antetli kağıt ve zarf seti",
     minQuantity: "500 adet",
     leadTime: "4-7 iş günü",
     printing: ["Ofset baskı", "Yaldız", "Kabartma"],
@@ -561,8 +567,8 @@ export const products: Product[] = [
     summary: "Katalog, broşür ve numune taşıma için etkinlik çantası.",
     description:
       "Fuar alanında yüksek görünürlük sağlayan, geniş baskı yüzeyli ve tekrar kullanılabilir çanta.",
-    image: "/assets/images/queen-promosyon-fuar-bez-canta.webp",
-    alt: "Fuar için logo baskılı bez çanta",
+    image: "/assets/catalog/queen-trade-fair-tote.webp",
+    alt: "Queen logolu lacivert fuar bez çantası",
     minQuantity: "250 adet",
     leadTime: "5-9 iş günü",
     printing: ["Serigrafi", "Transfer baskı"],
@@ -575,8 +581,8 @@ export const products: Product[] = [
     summary: "Çalışan ve müşteri hediyesi için fonksiyonel kurumsal çanta.",
     description:
       "Daha yüksek bütçeli kurumsal hediye projelerinde kullanım değeri yüksek bir seçenek sunar.",
-    image: "/assets/images/queen-promosyon-laptop-cantasi.webp",
-    alt: "Logo baskıya uygun laptop çantası",
+    image: "/assets/catalog/queen-slim-laptop-bag.webp",
+    alt: "Queen logolu ince premium laptop çantası",
     minQuantity: "50 adet",
     leadTime: "8-12 iş günü",
     printing: ["Nakış", "Transfer baskı", "Etiket uygulama"],
@@ -589,8 +595,8 @@ export const products: Product[] = [
     summary: "Yıl boyu masa üzerinde kalan kurumsal görünürlük ürünü.",
     description:
       "Bayi, müşteri ve çalışan masalarında sürekli marka hatırlatıcısı olarak kullanılan klasik promosyon.",
-    image: "/assets/images/queen-promosyon-masa-takvimi.webp",
-    alt: "Logo baskılı promosyon masa takvimi",
+    image: "/assets/catalog/queen-executive-desktop-suite.webp",
+    alt: "Queen logolu masa takvimi ve ofis seti",
     minQuantity: "250 adet",
     leadTime: "6-10 iş günü",
     printing: ["Ofset baskı", "Dijital baskı", "Selefon"],
@@ -603,8 +609,8 @@ export const products: Product[] = [
     summary: "Masaüstü ve kişisel kullanım için şık promosyon aksesuarı.",
     description:
       "Satış ekipleri, bayi hediyeleri ve yönetici setleri için küçük ama kalıcı bir kurumsal ürün.",
-    image: "/assets/images/queen-promosyon-metal-kartvizitlik.webp",
-    alt: "Metal promosyon kartvizitlik",
+    image: "/assets/catalog/queen-executive-desktop-suite.webp",
+    alt: "Queen lazer uygulamalı metal kartvizitlik",
     minQuantity: "100 adet",
     leadTime: "5-8 iş günü",
     printing: ["Lazer baskı", "UV baskı"],

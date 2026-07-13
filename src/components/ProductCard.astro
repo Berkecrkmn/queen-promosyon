@@ -9,19 +9,13 @@ type Props = {
 
 const { product } = Astro.props;
 const category = getCategoryForProduct(product);
-const productCode = `QP-${product.slug
-  .split("-")
-  .map((part) => part.slice(0, 2).toUpperCase())
-  .join("")
-  .slice(0, 6)}`;
 const printingOptions = product.printing.slice(0, 2);
 ---
 
 <article class="product-card" data-reveal>
-  <a class="product-media" href={withBase(`/urunler/${product.slug}`)} aria-label={`${product.name} detay sayfası`}>
+  <a class:list={["product-media", product.visual && `visual-${product.visual}`]} href={withBase(`/urunler/${product.slug}`)} aria-label={`${product.name} detay sayfası`}>
     <img src={withBase(product.image)} alt={product.alt} loading="lazy" width="640" height="520" />
     {product.popular && <span class="product-badge">Çok talep edilen</span>}
-    <span class="product-code">{productCode}</span>
   </a>
   <div class="product-card-body">
     <div class="product-meta-row">

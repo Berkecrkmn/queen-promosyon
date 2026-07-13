@@ -12,7 +12,7 @@ const { category, large = false, index } = Astro.props;
 ---
 
 <a class:list={["category-card", { "category-card-large": large }]} href={withBase(`/kategoriler/${category.slug}`)} data-reveal>
-  <figure>
+  <figure class:list={[category.visual && `visual-${category.visual}`]}>
     <img src={withBase(category.image)} alt={category.alt} loading="lazy" width="720" height="540" />
   </figure>
   <div class="category-card-content">

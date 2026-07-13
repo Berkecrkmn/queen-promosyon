@@ -74,7 +74,7 @@ const productSchema = {
         </button>
       </div>
     </div>
-    <figure data-reveal>
+    <figure class:list={[product.visual && `visual-${product.visual}`]} data-reveal>
       <img src={withBase(product.image)} alt={product.alt} width="920" height="720" />
     </figure>
   </section>
