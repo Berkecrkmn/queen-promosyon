@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import PremiumCollection from "@components/PremiumCollection.astro";
+import QueenFlow from "@components/QueenFlow.astro";
 import { site } from "@data/site";
 import { withBase } from "@utils/paths";
 
@@ -212,37 +213,7 @@ const homeSchema = {
       ))}
     </section>
 
-    <section class="apple-services" aria-labelledby="services-title">
-      <div class="apple-services-heading" data-reveal="heading">
-        <h2 id="services-title">Queen farkı. <span>Kurumsal siparişin her adımında.</span></h2>
-      </div>
-      <div class="apple-service-grid">
-        <article data-reveal>
-          <span class="service-index" aria-hidden="true">01</span>
-          <h3>Size özel ürün seçimi.</h3>
-          <p>Hedef kitlenize, bütçenize ve kullanım senaryonuza uygun ürünleri birlikte belirleyin.</p>
-          <a href={withBase("/kategoriler")} aria-label="Ürün seçimi hakkında daha fazla bilgi">+</a>
-        </article>
-        <article data-reveal>
-          <span class="service-index" aria-hidden="true">02</span>
-          <h3>Markanıza uygun baskı.</h3>
-          <p>Lazer, serigrafi, UV ve tekstil uygulamalarında ürüne en uygun üretim tekniği.</p>
-          <a href={withBase("/baski-ve-uretim-sureci")} aria-label="Baskı seçenekleri hakkında daha fazla bilgi">+</a>
-        </article>
-        <article data-reveal>
-          <span class="service-index" aria-hidden="true">03</span>
-          <h3>Türkiye geneli teslimat.</h3>
-          <p>Üretim, kalite kontrol, paketleme ve sevkiyat tek bir akışta takip edilir.</p>
-          <a href={withBase("/iletisim")} aria-label="Teslimat hakkında daha fazla bilgi">+</a>
-        </article>
-        <article data-reveal>
-          <span class="service-index" aria-hidden="true">04</span>
-          <h3>Teklif boyunca destek.</h3>
-          <p>Ürün seçiminizden teslimata kadar Queen ekibiyle doğrudan iletişim kurun.</p>
-          <a href={withBase("/teklif-al")} aria-label="Teklif desteği hakkında daha fazla bilgi">+</a>
-        </article>
-      </div>
-    </section>
+    <QueenFlow />
 
     <section class="apple-final-cta" data-reveal>
       <div>
