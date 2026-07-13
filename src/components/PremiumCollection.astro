@@ -5,8 +5,6 @@ const collection = [
   {
     title: "Hediyelik Setler",
     subtitle: "Tek kutuda güçlü bir ilk izlenim",
-    edition: "Executive Edit",
-    finish: "Özel kutu · Sıcak yaldız",
     href: "/kategoriler/hediyelik-setler",
     image: "/assets/images/queen-edit-hediyelik-set-queen.webp",
     alt: "Queen logolu özel kutulu kurumsal hediye seti",
@@ -16,8 +14,6 @@ const collection = [
   {
     title: "Defter & Ajanda",
     subtitle: "Fikirlerinize eşlik eden ofis prestiji",
-    edition: "Desk Edit",
-    finish: "Termo deri · Sıcak baskı",
     href: "/kategoriler/defter-ajanda",
     image: "/assets/images/queen-edit-defter-ajanda-queen.webp",
     alt: "Queen sıcak yaldız uygulamalı deri defter ve ajanda seçkisi",
@@ -27,8 +23,6 @@ const collection = [
   {
     title: "Kalem Seçkisi",
     subtitle: "Günlük temasa rafine bir imza",
-    edition: "Writing Edit",
-    finish: "Metal gövde · Lazer baskı",
     href: "/kategoriler/promosyon-kalem",
     image: "/assets/images/queen-edit-kalem-seti-queen.webp",
     alt: "Queen logolu kutuda iki premium metal kalem",
@@ -38,8 +32,6 @@ const collection = [
   {
     title: "Termos & Matara",
     subtitle: "Her gün kullanılan kalıcı görünürlük",
-    edition: "Daily Edit",
-    finish: "Çelik yüzey · Lazer baskı",
     href: "/kategoriler/termos-matara",
     image: "/assets/images/queen-edit-matara-queen.webp",
     alt: "Queen logolu pembe ve şeffaf kurumsal matara",
@@ -50,8 +42,6 @@ const collection = [
   {
     title: "Teknoloji",
     subtitle: "İş gününün akışına modern çözümler",
-    edition: "Piili Power",
-    finish: "5.000 mAh · 15W MagSafe",
     href: "/kategoriler/powerbank",
     image: "/assets/images/queen-edit-teknoloji-piili.webp",
     alt: "Piili standlı MagSafe powerbank ve kablosuz şarj kullanımı",
@@ -61,8 +51,6 @@ const collection = [
   {
     title: "Kurumsal Tekstil",
     subtitle: "Ekibiniz için tek ve güçlü bir görünüm",
-    edition: "Team Edit",
-    finish: "Premium kumaş · Nakış",
     href: "/kategoriler/tekstil",
     image: "/assets/images/queen-edit-tekstil-queen.webp",
     alt: "Queen nakış uygulamalı sweatshirt ve şapka seçkisi",
@@ -75,7 +63,6 @@ const collection = [
 <section class="queen-edit" data-queen-edit aria-labelledby="queen-edit-title">
   <header class="queen-edit-intro" data-reveal="heading">
     <div>
-      <span class="queen-edit-kicker"><i aria-hidden="true"></i> Queen Edit / 01</span>
       <h2 id="queen-edit-title">Sadece ürün değil.<br /><span>Markanız için seçilmiş bir koleksiyon.</span></h2>
     </div>
     <div class="queen-edit-intro-copy">
@@ -119,10 +106,6 @@ const collection = [
           data-edit-panel
           aria-hidden={index === 0 ? "false" : "true"}
         >
-          <div class="queen-edit-meta">
-            <span>{item.edition}</span>
-            <span>{String(index + 1).padStart(2, "0")} / {String(collection.length).padStart(2, "0")}</span>
-          </div>
           <figure>
             <img
               src={withBase(item.image)}
@@ -132,10 +115,6 @@ const collection = [
               height="1080"
             />
           </figure>
-          <div class="queen-edit-caption">
-            <span>Uygulama</span>
-            <strong>{item.finish}</strong>
-          </div>
         </article>
       ))}
       <span class="sr-only" data-edit-status aria-live="polite">{collection[0].title} gösteriliyor.</span>

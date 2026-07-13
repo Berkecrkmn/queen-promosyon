@@ -1,0 +1,784 @@
+---
+import { withBase } from "@utils/paths";
+
+const monogramScenes = [
+  {
+    image: "/assets/images/queen-edit-defter-ajanda-queen.webp",
+    alt: "Queen sıcak yaldız logolu deri defter ve kalem",
+    swatch: "#9f6541",
+  },
+  {
+    image: "/assets/images/queen-edit-hediyelik-set-queen.webp",
+    alt: "Queen logolu premium kurumsal hediye seti",
+    swatch: "#1c1a18",
+  },
+  {
+    image: "/assets/images/queen-edit-kalem-seti-queen.webp",
+    alt: "Queen logolu kutuda premium metal kalem seti",
+    swatch: "#c9ae87",
+  },
+];
+---
+
+<section class="apple-hero hero-monogram" data-hero-monogram aria-labelledby="hero-title">
+  <div class="hero-monogram-grain" aria-hidden="true"></div>
+  <div class="hero-monogram-foil" aria-hidden="true"></div>
+  <div class="hero-monogram-aura" aria-hidden="true"><span></span><span></span></div>
+
+  <div class="hero-monogram-shell">
+    <header class="hero-monogram-copy">
+      <span class="hero-monogram-eyebrow">Queen Promosyon</span>
+      <h1 id="hero-title">İmzanız.<br /><em>forma dönüşür.</em></h1>
+      <p>Ürünü yalnızca logolamıyor; markanızın elde tutulan, kullanılan ve hatırlanan haline dönüştürüyoruz.</p>
+      <div class="apple-actions">
+        <a class="apple-button hero-monogram-primary" href={withBase("/kategoriler")}>Koleksiyonu keşfedin</a>
+        <a class="hero-monogram-link" href={withBase("/teklif-al")}>Projenizi konuşalım <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+
+    <div class="hero-q-stage" data-q-stage>
+      <div class="hero-q-stack" aria-hidden="true">
+        <span class="hero-q-echo hero-q-echo-one">Q</span>
+        <span class="hero-q-echo hero-q-echo-two">Q</span>
+        <span class="hero-q-outline">Q</span>
+        {monogramScenes.map((scene, index) => (
+          <span
+            class:list={["hero-q-image", { "is-active": index === 0 }]}
+            style={`--q-image: url('${withBase(scene.image)}')`}
+            data-q-image={index}
+          >Q</span>
+        ))}
+      </div>
+
+      <div class="hero-q-lens" aria-hidden="true">
+        {monogramScenes.map((scene, index) => (
+          <img
+            class:list={[{ "is-active": index === 0 }]}
+            data-q-lens-image={index}
+            src={withBase(scene.image)}
+            alt=""
+            loading={index === 0 ? "eager" : "lazy"}
+            width="1440"
+            height="1080"
+          />
+        ))}
+      </div>
+
+      <nav class="hero-q-picker" aria-label="Açılış ürün görseli">
+        {monogramScenes.map((scene, index) => (
+          <button
+            class:list={[{ "is-active": index === 0 }]}
+            type="button"
+            style={`--swatch: ${scene.swatch}`}
+            data-q-trigger={index}
+            aria-label={`${index + 1}. Queen ürün sahnesini göster`}
+            aria-pressed={index === 0 ? "true" : "false"}
+          ><span></span></button>
+        ))}
+      </nav>
+    </div>
+
+    <div class="hero-monogram-edge" aria-hidden="true"><span></span></div>
+  </div>
+
+  <span class="sr-only" data-q-status aria-live="polite">Birinci Queen ürün sahnesi gösteriliyor.</span>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-hero-monogram]").forEach((section) => {
+    const stage = section.querySelector<HTMLElement>("[data-q-stage]");
+    const triggers = Array.from(section.querySelectorAll<HTMLButtonElement>("[data-q-trigger]"));
+    const images = Array.from(section.querySelectorAll<HTMLElement>("[data-q-image]"));
+    const lensImages = Array.from(section.querySelectorAll<HTMLImageElement>("[data-q-lens-image]"));
+    const status = section.querySelector<HTMLElement>("[data-q-status]");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const precisePointer = window.matchMedia("(pointer: fine)").matches;
+    let activeIndex = 0;
+    let sceneTimer = 0;
+
+    const selectScene = (index: number, announce = false) => {
+      activeIndex = index;
+      triggers.forEach((trigger, triggerIndex) => {
+        const active = triggerIndex === index;
+        trigger.classList.toggle("is-active", active);
+        trigger.setAttribute("aria-pressed", String(active));
+      });
+      images.forEach((image, imageIndex) => image.classList.toggle("is-active", imageIndex === index));
+      lensImages.forEach((image, imageIndex) => image.classList.toggle("is-active", imageIndex === index));
+      if (announce && status) status.textContent = `${index + 1}. Queen ürün sahnesi gösteriliyor.`;
+    };
+
+    const startSceneFilm = () => {
+      if (reduceMotion || sceneTimer) return;
+      sceneTimer = window.setInterval(() => selectScene((activeIndex + 1) % triggers.length), 4400);
+    };
+
+    const restartSceneFilm = () => {
+      window.clearInterval(sceneTimer);
+      sceneTimer = 0;
+      startSceneFilm();
+    };
+
+    triggers.forEach((trigger, index) => {
+      trigger.addEventListener("pointerenter", () => {
+        selectScene(index);
+        restartSceneFilm();
+      });
+      trigger.addEventListener("focus", () => {
+        selectScene(index, true);
+        restartSceneFilm();
+      });
+      trigger.addEventListener("click", () => {
+        selectScene(index, true);
+        restartSceneFilm();
+      });
+    });
+
+    startSceneFilm();
+
+    if (!stage || reduceMotion || !precisePointer) return;
+    let frame = 0;
+    section.addEventListener("pointermove", (event) => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const rect = section.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        stage.style.setProperty("--q-x", `${(x * 15).toFixed(2)}px`);
+        stage.style.setProperty("--q-y", `${(y * 12).toFixed(2)}px`);
+        stage.style.setProperty("--q-r", `${(x * 1.8).toFixed(2)}deg`);
+        stage.style.setProperty("--lens-x", `${(x * -13).toFixed(2)}px`);
+        stage.style.setProperty("--lens-y", `${(y * -10).toFixed(2)}px`);
+      });
+    });
+
+    section.addEventListener("pointerleave", () => {
+      ["--q-x", "--q-y", "--lens-x", "--lens-y"].forEach((property) => stage.style.setProperty(property, "0px"));
+      stage.style.setProperty("--q-r", "0deg");
+    });
+  });
+</script>
+
+<style>
+  .hero-monogram {
+    min-height: clamp(780px, calc(100svh - 98px), 940px);
+    align-items: stretch;
+    color: #191817;
+    background:
+      linear-gradient(118deg, rgba(255, 255, 255, 0.74), transparent 42%),
+      linear-gradient(145deg, #f4efe7 0%, #e8e3da 46%, #d9dfdb 100%);
+  }
+
+  .hero-monogram::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    inset: -24% -12%;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 72% 35%, rgba(183, 218, 219, 0.72), transparent 25%),
+      radial-gradient(circle at 58% 73%, rgba(245, 204, 159, 0.63), transparent 24%),
+      radial-gradient(circle at 88% 72%, rgba(207, 185, 159, 0.45), transparent 19%);
+    opacity: 0.82;
+  }
+
+  .hero-monogram-grain {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.2;
+    background-image: radial-gradient(rgba(25, 24, 23, 0.17) 0.65px, transparent 0.65px);
+    background-size: 6px 6px;
+    mask-image: linear-gradient(90deg, transparent 3%, #000 34%, #000 86%, transparent);
+  }
+
+  .hero-monogram-foil {
+    position: absolute;
+    z-index: 1;
+    right: -10%;
+    top: -25%;
+    width: 58%;
+    height: 160%;
+    pointer-events: none;
+    opacity: 0.5;
+    background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.52) 46%, transparent 68%);
+    transform: skewX(-13deg);
+    animation: hero-foil-pass 8s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+  }
+
+  .hero-monogram-aura {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-monogram-aura span {
+    position: absolute;
+    width: min(430px, 34vw);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    opacity: 0.36;
+    mix-blend-mode: multiply;
+  }
+
+  .hero-monogram-aura span:first-child {
+    right: 12%;
+    top: 3%;
+    background: radial-gradient(circle, rgba(151, 196, 197, 0.64), rgba(151, 196, 197, 0) 68%);
+    animation: hero-aura-one 11s ease-in-out infinite alternate;
+  }
+
+  .hero-monogram-aura span:last-child {
+    right: 35%;
+    bottom: -16%;
+    background: radial-gradient(circle, rgba(229, 176, 119, 0.56), rgba(229, 176, 119, 0) 68%);
+    animation: hero-aura-two 13s ease-in-out infinite alternate;
+  }
+
+  .hero-monogram-shell {
+    position: relative;
+    z-index: 2;
+    width: min(1460px, calc(100% - 72px));
+    min-height: inherit;
+    margin: 0 auto;
+  }
+
+  .hero-monogram-copy {
+    position: absolute;
+    z-index: 5;
+    left: 22px;
+    top: 47%;
+    width: min(610px, 46%);
+    transform: translateY(-43%);
+    animation: hero-monogram-arrive 900ms cubic-bezier(0.2, 0.72, 0, 1) both;
+  }
+
+  .hero-monogram-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 24px;
+    color: rgba(25, 24, 23, 0.48);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .hero-monogram-eyebrow::before {
+    content: "";
+    width: 37px;
+    height: 1px;
+    background: #8e6241;
+  }
+
+  .hero-monogram-copy h1 {
+    margin: 0;
+    font-size: clamp(72px, 7vw, 108px);
+    font-weight: 680;
+    line-height: 0.82;
+    letter-spacing: -0.078em;
+  }
+
+  .hero-monogram-copy h1 em {
+    display: inline-block;
+    margin-top: 0.14em;
+    color: #755037;
+    font-family: "Bodoni 72", Didot, "Times New Roman", serif;
+    font-size: 0.91em;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.055em;
+    text-shadow: 0 18px 50px rgba(84, 57, 38, 0.09);
+  }
+
+  .hero-monogram-copy p {
+    max-width: 520px;
+    margin: 29px 0 0;
+    color: rgba(25, 24, 23, 0.66);
+    font-size: 20px;
+    line-height: 1.4;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-monogram-copy .apple-actions {
+    justify-content: flex-start;
+    gap: 22px;
+    margin-top: 30px;
+  }
+
+  .hero-monogram-primary {
+    color: #fff;
+    background: #1b1a19;
+    border-color: #1b1a19;
+    box-shadow: 0 16px 38px rgba(28, 25, 22, 0.15);
+  }
+
+  .hero-monogram-primary:hover {
+    color: #fff;
+    background: #000;
+    border-color: #000;
+    transform: translateY(-1px);
+  }
+
+  .hero-monogram-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #543927;
+    font-size: 15px;
+    font-weight: 650;
+  }
+
+  .hero-monogram-link span {
+    transition: transform 200ms ease;
+  }
+
+  .hero-monogram-link:hover span {
+    transform: translate(2px, -2px);
+  }
+
+  .hero-q-stage {
+    --q-x: 0px;
+    --q-y: 0px;
+    --q-r: 0deg;
+    --lens-x: 0px;
+    --lens-y: 0px;
+    position: absolute;
+    z-index: 3;
+    right: -2%;
+    top: 50%;
+    width: min(870px, 65vw);
+    height: min(760px, 88%);
+    transform: translateY(-50%);
+    animation: hero-monogram-arrive 1100ms cubic-bezier(0.2, 0.72, 0, 1) 90ms both;
+  }
+
+  .hero-q-stack {
+    position: absolute;
+    inset: 0;
+    transform: translate3d(var(--q-x), var(--q-y), 0) rotate(var(--q-r));
+    transform-origin: 52% 50%;
+    transition: transform 650ms cubic-bezier(0.2, 0.72, 0, 1);
+    animation: hero-q-settle 1400ms cubic-bezier(0.16, 0.78, 0, 1) both;
+  }
+
+  .hero-q-image,
+  .hero-q-outline,
+  .hero-q-echo {
+    position: absolute;
+    left: 50%;
+    top: 53%;
+    font-family: "Bodoni 72", Didot, "Times New Roman", serif;
+    font-size: min(760px, 61vw);
+    font-weight: 700;
+    line-height: 0.8;
+    letter-spacing: -0.09em;
+    transform: translate(-50%, -50%);
+    user-select: none;
+  }
+
+  .hero-q-image {
+    z-index: 3;
+    color: transparent;
+    background-image: var(--q-image);
+    background-position: center;
+    background-size: 112% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    filter: saturate(0.92) contrast(1.03);
+    opacity: 0;
+    text-shadow: 0 34px 52px rgba(59, 47, 38, 0.14);
+    transition: opacity 620ms cubic-bezier(0.2, 0.7, 0, 1);
+  }
+
+  .hero-q-image.is-active {
+    opacity: 1;
+    animation: hero-q-breathe 4400ms cubic-bezier(0.2, 0.72, 0, 1) both;
+  }
+
+  .hero-q-outline {
+    z-index: 4;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.68);
+    text-shadow: 0 1px rgba(93, 72, 56, 0.13);
+  }
+
+  .hero-q-echo {
+    z-index: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(99, 77, 60, 0.13);
+  }
+
+  .hero-q-echo-one {
+    transform: translate(-54%, -54%);
+    animation: hero-echo-one 8s ease-in-out infinite alternate;
+  }
+
+  .hero-q-echo-two {
+    transform: translate(-46%, -42%);
+    animation: hero-echo-two 10s ease-in-out infinite alternate;
+  }
+
+  .hero-q-lens {
+    position: absolute;
+    z-index: 6;
+    right: 8%;
+    bottom: 12%;
+    width: clamp(132px, 14vw, 186px);
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.86);
+    border-radius: 50%;
+    box-shadow:
+      0 28px 70px rgba(58, 46, 37, 0.22),
+      inset 0 1px rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(15px) saturate(120%);
+    -webkit-backdrop-filter: blur(15px) saturate(120%);
+    transform: translate3d(var(--lens-x), var(--lens-y), 0);
+    transition: transform 720ms cubic-bezier(0.2, 0.72, 0, 1);
+    animation: hero-lens-liquid 6.2s ease-in-out infinite alternate;
+  }
+
+  .hero-q-lens::after {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    pointer-events: none;
+    border: 10px solid rgba(255, 255, 255, 0.13);
+    border-radius: inherit;
+  }
+
+  .hero-q-lens img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.18);
+    transition: opacity 520ms ease, transform 760ms cubic-bezier(0.2, 0.7, 0, 1);
+  }
+
+  .hero-q-lens img.is-active {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+
+  .hero-q-picker {
+    position: absolute;
+    z-index: 8;
+    right: 9%;
+    bottom: 2%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-q-picker button {
+    width: 18px;
+    height: 18px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    transition: width 320ms cubic-bezier(0.2, 0.7, 0, 1), border-color 250ms ease;
+  }
+
+  .hero-q-picker button span {
+    width: 8px;
+    aspect-ratio: 1;
+    background: var(--swatch);
+    border-radius: 50%;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);
+  }
+
+  .hero-q-picker button.is-active {
+    width: 37px;
+    border-color: rgba(45, 38, 32, 0.28);
+  }
+
+  .hero-monogram-edge {
+    position: absolute;
+    z-index: 2;
+    left: 22px;
+    right: 22px;
+    bottom: 28px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(41, 35, 30, 0.22), rgba(41, 35, 30, 0.04) 47%, transparent 80%);
+  }
+
+  .hero-monogram-edge span {
+    position: absolute;
+    left: 0;
+    top: -3px;
+    width: 7px;
+    aspect-ratio: 1;
+    background: #765037;
+    border-radius: 50%;
+  }
+
+  @keyframes hero-monogram-arrive {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes hero-q-settle {
+    from {
+      opacity: 0;
+      scale: 1.18;
+      rotate: -2deg;
+    }
+    to {
+      opacity: 1;
+      scale: 1;
+      rotate: 0deg;
+    }
+  }
+
+  @keyframes hero-q-breathe {
+    0% {
+      scale: 1.035;
+      opacity: 0;
+    }
+    13% {
+      opacity: 1;
+    }
+    100% {
+      scale: 1;
+      opacity: 1;
+    }
+  }
+
+  @keyframes hero-echo-one {
+    from { translate: -5px -2px; }
+    to { translate: 8px 5px; }
+  }
+
+  @keyframes hero-echo-two {
+    from { translate: 6px 5px; }
+    to { translate: -8px -4px; }
+  }
+
+  @keyframes hero-lens-liquid {
+    from {
+      border-radius: 48% 52% 46% 54% / 54% 46% 54% 46%;
+      scale: 0.98;
+    }
+    to {
+      border-radius: 55% 45% 53% 47% / 45% 56% 44% 55%;
+      scale: 1.035;
+    }
+  }
+
+  @keyframes hero-foil-pass {
+    0%, 22% { translate: -18% 0; opacity: 0.18; }
+    52% { opacity: 0.58; }
+    82%, 100% { translate: 22% 0; opacity: 0.18; }
+  }
+
+  @keyframes hero-aura-one {
+    from { translate: -4% -3%; scale: 0.92; }
+    to { translate: 12% 8%; scale: 1.12; }
+  }
+
+  @keyframes hero-aura-two {
+    from { translate: 7% 5%; scale: 1.08; }
+    to { translate: -13% -8%; scale: 0.9; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-monogram-foil,
+    .hero-monogram-aura span,
+    .hero-q-stack,
+    .hero-q-image.is-active,
+    .hero-q-echo,
+    .hero-q-lens {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .hero-monogram-copy {
+      left: 0;
+      width: 48%;
+    }
+
+    .hero-monogram-copy h1 {
+      font-size: clamp(66px, 8vw, 86px);
+    }
+
+    .hero-q-stage {
+      right: -8%;
+      width: 69vw;
+    }
+  }
+
+  @media (max-width: 833px) {
+    .hero-monogram {
+      min-height: 930px;
+    }
+
+    .hero-monogram-shell {
+      width: calc(100% - 48px);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      align-content: start;
+      padding: 50px 0 28px;
+    }
+
+    .hero-monogram-copy {
+      position: relative;
+      left: auto;
+      top: auto;
+      bottom: auto;
+      width: min(650px, 100%);
+      margin: 0 auto;
+      text-align: center;
+      transform: none;
+    }
+
+    .hero-monogram-eyebrow,
+    .hero-monogram-copy .apple-actions {
+      justify-content: center;
+    }
+
+    .hero-monogram-copy h1 {
+      font-size: clamp(62px, 10.5vw, 78px);
+    }
+
+    .hero-monogram-copy p {
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .hero-q-stage {
+      position: relative;
+      right: auto;
+      top: auto;
+      width: 100%;
+      height: 490px;
+      margin-top: 18px;
+      transform: none;
+    }
+
+    .hero-q-image,
+    .hero-q-outline,
+    .hero-q-echo {
+      top: 42%;
+      font-size: min(600px, 82vw);
+    }
+
+    .hero-q-lens {
+      right: 13%;
+      bottom: 11%;
+    }
+
+    .hero-q-picker {
+      right: 15%;
+      bottom: 1%;
+    }
+
+    .hero-monogram-edge {
+      left: 0;
+      right: 0;
+      bottom: 24px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero-monogram {
+      min-height: 820px;
+    }
+
+    .hero-monogram-shell {
+      width: calc(100% - 32px);
+      padding: 36px 0 20px;
+    }
+
+    .hero-monogram-eyebrow {
+      gap: 9px;
+      margin-bottom: 15px;
+      font-size: 9px;
+    }
+
+    .hero-monogram-eyebrow::before {
+      width: 24px;
+    }
+
+    .hero-monogram-copy h1 {
+      font-size: clamp(49px, 14.3vw, 57px);
+      line-height: 0.87;
+    }
+
+    .hero-monogram-copy h1 em {
+      margin-top: 0.2em;
+      font-size: 0.88em;
+    }
+
+    .hero-monogram-copy p {
+      max-width: 345px;
+      margin-top: 18px;
+      font-size: 16px;
+      line-height: 1.36;
+    }
+
+    .hero-monogram-copy .apple-actions {
+      gap: 15px;
+      margin-top: 21px;
+    }
+
+    .hero-monogram-copy .apple-button {
+      min-height: 39px;
+      padding: 9px 14px;
+      font-size: 13px;
+    }
+
+    .hero-monogram-link {
+      font-size: 12px;
+    }
+
+    .hero-q-stage {
+      height: 385px;
+      margin-top: 10px;
+    }
+
+    .hero-q-image,
+    .hero-q-outline,
+    .hero-q-echo {
+      top: 42%;
+      font-size: min(410px, 99vw);
+    }
+
+    .hero-q-image {
+      background-size: 126% auto;
+    }
+
+    .hero-q-lens {
+      right: 4%;
+      bottom: 12%;
+      width: 112px;
+    }
+
+    .hero-q-picker {
+      right: 6%;
+      bottom: 1%;
+    }
+
+    .hero-monogram-edge {
+      bottom: 13px;
+    }
+  }
+</style>
