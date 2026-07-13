@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import HeroAtelier from "@components/HeroAtelier.astro";
 import PremiumCollection from "@components/PremiumCollection.astro";
 import QueenFlow from "@components/QueenFlow.astro";
 import { site } from "@data/site";
@@ -106,49 +107,42 @@ const homeSchema = {
   </div>
 
   <div class="apple-home">
-    <section class="apple-hero apple-hero-workspace" aria-labelledby="hero-title">
-      <div class="hero-product-shell">
+    <HeroAtelier />
+
+    <section class="apple-hero apple-hero-bottle" aria-labelledby="bottle-title">
+      <div class="bottle-story-shell">
         <div class="apple-hero-copy apple-hero-copy-dark" data-reveal="copy">
-          <span>Queen Promosyon</span>
-          <h1 id="hero-title">Markanızın.<br />En iyi hali.</h1>
-          <p>İnsanların gerçekten kullanmak isteyeceği kurumsal ürünler.</p>
+          <span>Termos & Matara</span>
+          <h2 id="bottle-title">Her gün görünür.<br />Her yudumda hatırlanır.</h2>
+          <p>Queen baskısıyla tamamlanan, gerçekten kullanılmak için seçilmiş modeller.</p>
           <div class="apple-actions">
-            <a class="apple-button" href={withBase("/kategoriler")}>Koleksiyonu keşfedin</a>
+            <a class="apple-button" href={withBase("/kategoriler/termos-matara")}>Daha fazla bilgi</a>
             <a class="apple-button apple-button-outline" href={withBase("/teklif-al")}>Teklif alın</a>
           </div>
         </div>
-        <figure class="hero-product-visual" data-reveal="media">
-          <img data-parallax src={withBase("/assets/images/queen-home-hero-stationery.webp")} alt="Açık renkli çalışma masasında defter ve kalem seçkisi" width="2400" height="3600" />
+        <figure class="bottle-product-visual" data-reveal="media">
+          <span>Queen uygulaması</span>
+          <img src={withBase("/assets/images/queen-edit-matara-queen.webp")} alt="Queen sıcak yaldız logolu pembe ve şeffaf matara" loading="lazy" width="1440" height="1080" />
         </figure>
       </div>
-    </section>
-
-    <section class="apple-hero apple-hero-bottle" aria-labelledby="bottle-title">
-      <div class="apple-hero-copy apple-hero-copy-dark" data-reveal="copy">
-        <span>Termos & Matara</span>
-        <h2 id="bottle-title">Her gün görünür.<br />Her yudumda hatırlanır.</h2>
-        <p>Uzun ömürlü kullanım için seçilen premium modeller.</p>
-        <div class="apple-actions">
-          <a class="apple-button" href={withBase("/kategoriler/termos-matara")}>Daha fazla bilgi</a>
-          <a class="apple-button apple-button-outline" href={withBase("/teklif-al")}>Teklif alın</a>
-        </div>
-      </div>
-      <img data-parallax src={withBase("/assets/images/queen-apple-bottle.webp")} alt="Yeşil tonlu çelik matara" loading="lazy" width="1800" height="2700" />
     </section>
 
     <section class="apple-hero apple-hero-tech" aria-labelledby="tech-title">
       <div class="tech-story-shell">
         <div class="apple-hero-copy apple-hero-copy-dark" data-reveal="copy">
-          <span>Teknoloji Ürünleri</span>
+          <span>Piili ile Teknoloji</span>
           <h2 id="tech-title">Gücünüz yanınızda.<br />Markanız akılda.</h2>
-          <p>Powerbank, USB ve günlük kullanıma hazır şarj çözümleri.</p>
+          <p>Standlı MagSafe powerbank ile masada, toplantıda ve yolculukta kesintisiz güç.</p>
           <div class="apple-actions">
             <a class="apple-button" href={withBase("/kategoriler/powerbank")}>Ürünleri keşfedin</a>
             <a class="apple-button apple-button-outline" href={withBase("/teklif-al")}>Teklif alın</a>
           </div>
         </div>
         <figure class="tech-product-visual" data-reveal="media">
-          <img data-parallax src={withBase("/assets/images/queen-home-tech-powerbank.webp")} alt="Beyaz powerbank ve mavi çoklu şarj kabloları" loading="lazy" width="2400" height="1600" />
+          <div class="tech-energy-ring" aria-hidden="true"></div>
+          <!-- Official product visual: https://www.piili.com/urun/standli-magsafe-powerbank-5-000-mah-gold/ -->
+          <img data-parallax src={withBase("/assets/images/queen-edit-teknoloji-piili.webp")} alt="Piili standlı MagSafe powerbank ve kablosuz şarj kullanımı" loading="lazy" width="1240" height="866" />
+          <figcaption><span>Piili P-MS25</span><strong>5.000 mAh · 15W MagSafe</strong></figcaption>
         </figure>
       </div>
     </section>
